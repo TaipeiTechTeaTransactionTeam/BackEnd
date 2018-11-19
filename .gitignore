@@ -185,4 +185,5 @@ pyvenv.cfg
 pip-selfcheck.json
 .vscode/
 my.cnf
+local.py
 # End of https://www.gitignore.io/api/python,dja
