@@ -19,6 +19,7 @@ from django.conf.urls import include, url
 from test01.views import sayHelloWorld
 
 urlpatterns = [
-    url(r'^$', sayHelloWorld),
+    url('^$', sayHelloWorld),
     path('admin/', admin.site.urls),
+    path('polls/', include('polls.urls')),
 ]
