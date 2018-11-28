@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(
 # Application definition
 
 INSTALLED_APPS = [
+    'storeApp',
     'test01',
     'polls.apps.PollsConfig',
     'django.contrib.admin',
