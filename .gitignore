@@ -186,5 +186,4 @@ pip-selfcheck.json
 .vscode/
 my.cnf
 local.py
-manage.py
 # End of https://www.gitignore.io/api/python,dja
