@@ -10,7 +10,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<head>
 				{% load static %}
 				<link rel="stylesheet" href="{% static 'css/style.css' %}" >
-			  <title>{%block headTitle%} TaipeiTech Tea Transaction {%endblock headTitle%}</title>
+			  <title>{% block headTitle%} TaipeiTech Tea Transaction {% endblock headTitle %}</title>
 			  <!-- for-mobile-apps -->
 			  <meta name="viewport" content="width=device-width, initial-scale=1" />
 			  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -210,7 +210,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="container">
 			<ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
 				<li><a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>首頁</a></li>
-				<li class="active">???</li>
+				{%block breadcrumb%}
+				
+				{%endblock breadcrumb%}
 			</ol>
 		</div>
 	</div>
@@ -218,9 +220,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <!-- //插入區-->
 
-{%block content%}
+{% block content %}
 
-{%endblock content%}
+{% endblock content %}
 
 
 
