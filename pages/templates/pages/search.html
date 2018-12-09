@@ -1,0 +1,140 @@
+{% extends 'header-footer.html' %}
+	{% load static %}
+    {%block breadcrumb%} 
+	<li class="active">商品搜尋</li>
+    {%endblock breadcrumb%}
+   <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super--> 
+
+{% block content %}
+    {%if False %}
+    {%block login%}
+        <li><a href="userpanel">使用者名稱</a></li>
+        <li><a href="logout">登出</a></li>
+    {%endblock login%}
+    {%endif%}
+
+    <div class="container">
+        <div class="item-list">
+			
+			<!--搜尋結果-->
+			{%block search%}
+            <div class="products">
+		
+                <div class="container">
+                    <h2>搜尋結果</h2>
+
+                    <!--價格排序按鈕-->	
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            價格排列
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item h4" style = "padding-left: 5px" href="#">高到低</a>
+                            <div class="dropdown-divider h4"></div>
+                            <a class="dropdown-item h4" style = "padding-left: 5px" href="#">低到高</a>
+                        </div>
+                    </div>
+                    <!--價格排序按鈕-->	
+                    	
+               
+                <div class="col-md-2 products-left">																										
+                </div>
+                    <div class="col-md-8 products-right">
+                        <div class="agile_top_brands_grids">
+                            <div class="col-md-4 top_brand_left">
+                                <div class="hover14 column">
+                                    <div class="agile_top_brand_left_grid">
+                                        <div class="agile_top_brand_left_grid1">
+
+                                            <!--一筆搜尋結果區塊-->
+                                            {%block oneProductSearch%}
+                                            <figure>
+                                                <div class="snipcart-item block">
+
+                                                    <div class="snipcart-thumb">
+
+                                                        <!--照片插入處-->
+                                                        <a href="single.html"><img title=" " alt=" " src="images/pc1.png"></a>	
+                                                        <!--照片插入處-->
+                                                        
+                                                        <!--產品名稱和價格-->
+                                                        <p>後端拿資料</p>
+                                                        <h4>$35.99 <span>$55.00</span></h4>
+                                                        <!--產品名稱和價格-->
+                                                    </div>
+
+                                                    <!--加入購物車的小視窗-->
+                                                    <div class="snipcart-details top_brand_home_details">
+                                                        <form action="#" method="post">
+                                                            <fieldset>
+                                                                <input type="hidden" name="cmd" value="_cart">
+
+                                                                <!--使用者加入的數量-->
+                                                                <input type="hidden" name="add" value="1">
+                                                                <!--使用者加入的數量-->
+
+                                                                <!--商品名稱-->
+                                                                <input type="hidden" name="item_name" value="test">
+                                                                <!--商品名稱-->
+
+                                                                <!--商品價格-->
+                                                                <input type="hidden" name="amount" value="35.99">
+                                                                <!--商品價格-->
+
+                                                                <!--折扣價格-->
+                                                                <input type="hidden" name="discount_amount" value="1.00">
+                                                                <!--折扣價格-->
+ 
+                                                                <input type="hidden" name="currency_code" value="USD">
+                                                                <input type="submit" name="submit" value="加入購物車" class="button">
+                                                            </fieldset>
+                                                        </form>
+                                                    </div>
+                                                    <!--加入購物車的小視窗-->
+                                                    
+                                                </div>
+                                            </figure>
+                                            {%endblock oneProductSearch%}
+                                            <!--一筆搜尋結果區塊-->
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--一筆搜尋結果顯示-->
+
+                            </div>
+                            <div class="col-md-4 top_brand_left">
+                            </div>
+                                <div class="clearfix"> </div>
+                        </div>
+                       
+                        <!--換頁按鈕-->
+                        <nav class="numbering">
+                            <ul class="pagination paging">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="active"><a href="#">1<span class="sr-only">(current)</span></a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!--換頁按鈕-->
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+			{%endblock search%}
+			
+        </div>
+    </div>
+{% endblock content %}
