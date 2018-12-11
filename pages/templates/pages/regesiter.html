@@ -1,0 +1,44 @@
+{% extends 'header-footer.html' %}
+{% load static %}
+{%block breadcrumb%}
+<li class="active">註冊</li>
+{%endblock breadcrumb%}
+<!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
+
+{% block content %}
+
+<!-- register -->
+<div class="register">
+		<div class="container">
+			<h2>註冊</h2>
+			<div class="login-form-grids">
+				<h5>個人資訊</h5>
+				<form action="#" method="post">
+					<input type="text" placeholder="First Name..." required=" " >
+					<input type="text" placeholder="Last Name..." required=" " >
+				</form>
+				<div class="register-check-box">
+					<div class="check">
+						<label class="checkbox"><input type="checkbox" name="checkbox"><i> </i>訂閱最新資訊</label>
+					</div>
+				</div>
+				<h6>帳號資訊</h6>
+					<form action="#" method="post">
+					<input type="email" placeholder="Email Address" required=" " >
+					<input type="password" placeholder="Password" required=" " >
+					<input type="password" placeholder="Password Confirmation" required=" " >
+					<div class="register-check-box">
+						<div class="check">
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i> </i>我接受並同意上述條件</label>
+						</div>
+					</div>
+					<input type="submit" value="Register">
+				</form>
+			</div>
+			<div class="register-home">
+				<a href="index.html">首頁</a>
+			</div>
+		</div>
+	</div>
+<!-- //register -->
+{% endblock content %}
