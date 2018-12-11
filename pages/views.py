@@ -20,3 +20,6 @@ def report(request):
 
 def teas(request):
     return render(request,'pages/teas.html')
+
+def login(request):
+    return render(request,'pages/login.html')
