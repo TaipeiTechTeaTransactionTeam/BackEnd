@@ -17,3 +17,6 @@ def accountPanel(request):
     return render(request,'pages/accountPanel.html')
 def report(request):
     return render(request,'pages/report.html')
+
+def teas(request):
+    return render(request,'pages/teas.html')

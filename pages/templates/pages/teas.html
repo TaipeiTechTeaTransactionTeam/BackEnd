@@ -1,0 +1,160 @@
+{% extends 'header-footer.html' %}
+{% load static %}
+{%block breadcrumb%}
+<li class="active">茶種類</li>
+{%endblock breadcrumb%}
+<!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
+
+{% block content %}
+
+<div class="products">
+    <div class="container">
+        <div class="col-md-4 products-left">
+
+            {% block categories %}
+            <!--- 目錄列表 -->
+            <div class="categories">
+                <h2>目錄</h2>
+                <ul class="cate">
+                    <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Fruits And Vegetables</a></li>
+                        <ul>
+                            <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Cuts & Sprouts</a></li>
+                        </ul>
+                    <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Grocery & Staples</a></li>
+                        <ul>
+                            <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Dals & Pulses</a> </li>
+                        </ul>
+                    <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>PersonalCare</a></li>
+                        <ul>
+                            <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Baby Care</a> </li>
+                        </ul>
+                </ul>
+            </div>
+            <!--- 目錄列表 -->		
+            {% endblock categories %}
+           																																										
+        </div>
+        <div class="col-md-8 products-right">
+            <div class="products-right-grid">
+                <div class="products-right-grids">
+
+                    {% block menu %}
+                    <!--- 下拉選單 -->
+                    <div class="sorting">
+                        <select id="country" onchange="change_country(this.value)" class="frm-field required sect">
+                            <option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Default sorting</option>
+                            <option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Sort by popularity</option> 
+                            <option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Sort by average rating</option>					
+                            <option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Sort by price</option>								
+                        </select>
+                    </div>
+                    <div class="sorting-left">
+                        <select id="country1" onchange="change_country(this.value)" class="frm-field required sect">
+                            <option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Item on page 9</option>
+                            <option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Item on page 18</option> 
+                            <option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Item on page 32</option>					
+                            <option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>All</option>								
+                        </select>
+                    </div>
+                    <!--- 下拉選單 -->
+                    {% endblock menu %}
+
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+            <div class="agile_top_brands_grids">
+                <div class="col-md-4 top_brand_left">
+                    <div class="hover14 column">
+                        <div class="agile_top_brand_left_grid">
+                            <div class="agile_top_brand_left_grid_pos">
+                                
+                            </div>
+                            {% block product %}
+                            <div class="agile_top_brand_left_grid1">
+                                <!--- 一筆商品 -->
+                                <figure>
+                                    <div class="snipcart-item block">
+                                        <div class="snipcart-thumb">
+                                            <!--- 商品照片 -->
+                                            <a href="single.html"><img title=" " alt=" " src="images/14.png"></a>
+                                            <!--- 商品照片 -->
+                                            
+                                            <!--- 商品名稱 -->
+                                            <p>Toor Dal</p>
+                                            <!--- 商品名稱 -->
+
+                                             <!--- 商品價錢 -->
+                                            <h4>$35.99 <span>$55.00</span></h4>
+                                             <!--- 商品價錢 -->
+                                        </div>
+
+                                        <!--加入購物車的小視窗-->
+                                        <div class="snipcart-details top_brand_home_details">
+                                            <form action="#" method="post">
+                                                <fieldset>
+                                                    <input type="hidden" name="cmd" value="_cart">
+                    
+                                                    <!--使用者加入的數量-->
+                                                    <input type="hidden" name="add" value="1">
+                                                    <!--使用者加入的數量-->
+                    
+                                                    <!--商品名稱-->
+                                                    <input type="hidden" name="item_name" value="test">
+                                                    <!--商品名稱-->
+                    
+                                                    <!--商品價格-->
+                                                    <input type="hidden" name="amount" value="35.99">
+                                                    <!--商品價格-->
+                    
+                                                    <!--折扣價格-->
+                                                    <input type="hidden" name="discount_amount" value="1.00">
+                                                    <!--折扣價格-->
+                    
+                                                    <input type="hidden" name="currency_code" value="USD">
+                                                    <input type="submit" name="submit" value="加入購物車" class="button">
+                                                </fieldset>
+                                             </form>
+                                        </div>
+                                            <!--加入購物車的小視窗-->
+                                    </div>
+                                </figure>
+                                <!--- 一筆商品 -->
+                            </div>
+                            {% endblock product %}
+
+                        </div>
+                    </div>
+                </div>
+                    <div class="clearfix"> </div>
+            </div>
+            
+            <!--- 換頁按鈕 -->
+            <nav class="numbering">
+                <ul class="pagination paging">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="active"><a href="#">1<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!--- 換頁按鈕 -->
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<!--- groceries --->
+
+  </div>
+</div>
+{% endblock content %}
