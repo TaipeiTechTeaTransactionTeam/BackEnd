@@ -16,7 +16,7 @@
                     <div class="d-flex justify-content-center">
                         <figure class="imghvr-fade col-12 col-xs-12 col-md-12 col-sm-12  col-lg-8">
                             <div class="row ">
-                                <img src="images/no_images.png" class="col-12 " alt="" onerror="this.src='./images/no_images.png'" />
+                                <img src="{%block imageSrc%}images/no_images.png{%endblock imageSrc%}" class="col-12 " alt="" onerror="this.src='./images/no_images.png'" />
                                 <figcaption style="background-color: #baa619">
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  ">
                                         <span class="input input--ichiro">
@@ -36,25 +36,27 @@
                         <input class="input__field input__field--ichiro" type="text" id="productName" name="name"
                             placeholder=" " required="" />
                         <label class="input__label input__label--ichiro" for="productName">
-                            <span class="input__label-content input__label-content--ichiro">商品名稱</span>
+                            <span class="input__label-content input__label-content--ichiro">{%block productName%}商品名稱{%endblock productName%}</span>
                         </label>
                     </span>
                     <span class="input input--ichiro">
                         <input class="input__field input__field--ichiro" type="number" min="1" id="productAmount" name="amount"
                             placeholder=" " required="" value="1" />
                         <label class="input__label input__label--ichiro" for="productAmount">
-                            <span class="input__label-content input__label-content--ichiro">數量</span>
+                            <span class="input__label-content input__label-content--ichiro">{%block numberOfProduct%}數量{%endblock numberOfProduct%}</span>
                         </label>
                     </span>
 
+                    <!--在要選取的茶類區塊塞入selected-->
                     <select name="type" class="input input--ichiro form-control custom-select" id="inputGroupSelect01">
                         <option selected>種類</option>
-                        <option value="blacktea" selected>紅茶</option>
-                        <option value="greentea">綠茶</option>
-                        <option value="oolong">烏龍茶</option>
+                        <option value="blacktea" {%block chooseBlackTea%}selected{%endblock chooseBlackTea%}>紅茶</option>
+                        <option value="greentea" {%block chooseGreenTea%}{%endblock chooseGreenTea%}>綠茶</option>
+                        <option value="oolong" {%block chooseOolongTea%}{%endblock chooseOolongTea%}>烏龍茶</option>
                     </select>
 
-                    <textarea name="description" placeholder="商品描述" required=""></textarea>
+                    <!--block productDescripyion-->
+                    <textarea name="description" placeholder="商品描述" required="">{%block productDescripyion%}{%endblock productDescripyion%}</textarea>
                     <input type="submit" value="Submit" />
                 </form>
             </div>
