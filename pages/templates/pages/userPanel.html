@@ -1,6 +1,6 @@
-{% extends 'header-footer' %}
+{% extends 'header-footer.html' %}
 {% load static %}
-{% with "綠茶ㄅㄧㄠˇ" as username %}
+
 {%block breadcrumb%}
 
 <!--使用者名稱-->
@@ -16,8 +16,12 @@
 
     <div class="userpanel-image-container">
       <img src="images/綠茶.jpg" alt="" class="userpanel-main_image" />
+
+      <!--使用者名稱-->
       <h3>使用者名稱:{{username}}</h3>
+      <!--使用者名稱-->
     </div>
+
     <div class="container">
       <div class="row">
         <div class="col-12">
@@ -50,7 +54,10 @@
                       </div>
                     </a>
                     <a class="list-group-item  list-group-item-action">
+
+                      <!-- 折價券數量 -->
                       <span class="badge">14</span> 折價券
+                      <!-- 折價券數量 -->
                     </a>
                     <a
                       class="list-group-item list-group-item-action"
