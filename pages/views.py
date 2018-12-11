@@ -9,3 +9,6 @@ def home(request):
 
 def search(request):
     return render(request, 'pages/search.html')
+
+def userPanel(request):
+    eturn render(request, 'pages/userPanel.html')
