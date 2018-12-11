@@ -12,3 +12,6 @@ def search(request):
 
 def userPanel(request):
     return render(request, 'pages/userPanel.html')
+
+def accountPanel(request):
+    return render(request,'pages/accountPanel.html')
