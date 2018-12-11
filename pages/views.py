@@ -23,3 +23,6 @@ def teas(request):
 
 def login(request):
     return render(request,'pages/login.html')
+
+def regesiter(request):
+    return render(request,'pages/regesiter.html')
