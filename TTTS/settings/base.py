@@ -28,7 +28,6 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'pages',
-    'test01',
     'base',
     'polls.apps.PollsConfig',
     'django.contrib.admin',
