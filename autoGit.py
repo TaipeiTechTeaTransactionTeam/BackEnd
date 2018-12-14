@@ -34,11 +34,11 @@ def isChangeBranch(branch):
         f.write(branch)
     finally:
         f.close()
-    return lastBranch==branch
+    return not lastBranch==branch
 def push():
     branchName = [x for x in getoutput("git branch").split("\n") if x[0]=="*"][0][2:]
     if(isChangeBranch(branchName)):
-        if(input("<Warning!!!> You change the different branch, are you sure that you want to push the changes to\""+branchName+"\"(y/n)\n> ") in ["n","N"]):
+        if(input("<Warning!!!> You change the different branch, are you sure that you want to push the changes to \""+branchName+"\" (y/n)\n> ") in ["n","N"]):
             return
     print(getoutput("git push origin "+branchName))
 def step(op):
