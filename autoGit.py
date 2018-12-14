@@ -1,5 +1,6 @@
 from subprocess import getoutput
 from sys import argv 
+BranchCheckLogPath="./branch.log"
 def add():
     getoutput("git add .")
     getoutput("git reset HEAD manage.py")
@@ -19,8 +20,26 @@ def commit():
         return commitName
     commitName=getCommitName()
     print(getoutput("git commit -m "+commitName))
+def isChangeBranch(branch):
+    lastBranch=branch
+    try:
+        bf=open(BranchCheckLogPath,"rt")
+        lastBranch=bf.readline()
+    except:
+        pass
+    else:
+        bf.close()
+    try:
+        f=open(BranchCheckLogPath,'wt')
+        f.write(branch)
+    finally:
+        f.close()
+    return lastBranch==branch
 def push():
     branchName = [x for x in getoutput("git branch").split("\n") if x[0]=="*"][0][2:]
+    if(isChangeBranch(branchName)):
+        if(input("<Warning!!!> You change the different branch, are you sure that you want to push the changes to\""+branchName+"\"(y/n)\n> ") in ["n","N"]):
+            return
     print(getoutput("git push origin "+branchName))
 def step(op):
     ops={"a":add,"c":commit,"p":push}
