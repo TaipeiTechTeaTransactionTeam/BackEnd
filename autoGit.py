@@ -90,12 +90,4 @@ def argsJudge():
    # print(steps)
     for op in steps:
         step(op)
-
-
 argsJudge()
-
-
-
-    
-
-
