@@ -1,5 +1,5 @@
 /*- 產品項目中圖片大小限制 -*/
-.snipcart-thumb img
+.snipcart-thumb img,td.invert-image img.img-responsive
 {
     width:150px;
     height: 150px;
