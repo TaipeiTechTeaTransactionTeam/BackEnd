@@ -7,6 +7,9 @@ class ProductAdmin(admin.ModelAdmin):
     fields = ('name','teaType','image','amount','price','description')
     ordering = ('AddDate',)
 
+class TeaTypeAdmin(admin.ModelAdmin):
+    list_display = ('name','image')
+
 admin.site.register(product,ProductAdmin)
 admin.site.register(store)
-admin.site.register(teaType)
+admin.site.register(teaType,TeaTypeAdmin)

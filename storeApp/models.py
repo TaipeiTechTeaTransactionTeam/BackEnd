@@ -15,6 +15,7 @@ class store(models.Model):
 
 class teaType(models.Model):
     name = models.CharField(max_length = 255, null = False)
+    image = models.ImageField(upload_to='teaType')
     def __str__(self):
         return self.name
 
