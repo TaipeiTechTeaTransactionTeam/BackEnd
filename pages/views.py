@@ -26,3 +26,6 @@ def login(request):
 
 def regesiter(request):
     return render(request,'pages/regesiter.html')
+
+def contact(request):
+    return render(request, 'pages/contact.html')
