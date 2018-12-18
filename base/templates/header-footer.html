@@ -68,7 +68,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
           {%else %}
           <li><a href="{% url 'pages:regesiter' %}"> 建立帳戶 </a></li>
           <li><a href="{% url 'pages:login' %}">登入</a></li>
-          {%endif%}
+		  {%endif%}
+		  <li><a href="{checkout}">購物車</a></li>
           <li><a href="{% url 'pages:contact' %}">幫助</a></li>
         </ul>
       </div>
@@ -129,53 +130,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
           <ul class="nav navbar-nav">
             <li class="active"><a href="{% url 'pages:home' %}" class="act">首頁</a></li>
             <!-- Mega Menu -->
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">紅茶<b class="caret"></b></a>
-              <ul class="dropdown-menu multi-column columns-3">
-                <div class="row">
-                  <div class="multi-gd-img">
-                    <ul class="multi-column-dropdown">
-                      <h6>紅茶總覽</h6>
-                      <li><a href="blacktea">錫蘭紅茶</a></li>
-                      <li><a href="blacktea">阿薩姆紅茶</a></li>
-                      <li><a href="blacktea">台灣紅茶</a></li>
-                      <li><a href="blacktea">大吉嶺紅茶</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </ul>
+            <li>
+              <a href="#" >紅茶</a>
+           
             </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">綠茶<b class="caret"></b></a>
-              <ul class="dropdown-menu multi-column columns-3">
-                <div class="row">
-                  <div class="multi-gd-img">
-                    <ul class="multi-column-dropdown">
-                      <h6>綠茶總覽</h6>
-                      <li><a href="greentea">台灣碧螺春綠茶</a></li>
-                      <li><a href="greentea">台灣龍井茶</a></li>
-                      <li><a href="greentea">桂平西山茶</a></li>
-                      <li><a href="greentea">午子仙毫茶</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </ul>
+            <li>
+              <a href="#" >綠茶</a>
+            
             </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">烏龍茶<b class="caret"></b></a>
-              <ul class="dropdown-menu multi-column columns-3">
-                <div class="row">
-                  <div class="multi-gd-img">
-                    <ul class="multi-column-dropdown">
-                      <h6>烏龍茶總覽</h6>
-                      <li><a href="oolong">大紅袍</a></li>
-                      <li><a href="oolong">鐵觀音</a></li>
-                      <li><a href="oolong">凍頂烏龍茶</a></li>
-                      <li><a href="oolong">東方美人茶</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </ul>
+            <li>
+              <a href="#" >烏龍茶</a>
+              
             </li>
             <li><a href="contact">聯絡我們</a></li>
           </ul>
@@ -219,7 +184,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
           <h3>聯絡地址</h3>
 
           <ul class="address">
-            <li><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i>106台北市大安區忠孝東路三段1號</li>
+            <li><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i>台北市大安區忠孝東路三段1號</li>
             <li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="https://www.ntut.edu.tw">NTUT</a></li>
             <li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>02 2771 2171</li>
           </ul>
@@ -251,7 +216,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="col-md-3 w3_footer_grid">
           <h3>個人資訊</h3>
           <ul class="info">
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:products' $}">商店</a></li>
             <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{checkout}">購物車</a></li>
             {%block accountBar%}
             <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:login' %}">登入</a></li>
