@@ -14,10 +14,10 @@ class store(models.Model):
         return self.name
 
 class product(models.Model):
-
+    image = models.CharField(max_length = 255, null = False,default="")
     name = models.CharField(max_length = 255, null = False, unique = True)
-    amount = models.CharField(max_length = 255, null = False)
-    price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
+    amount = models.DecimalField(max_digits=10, decimal_places=0, null=False)
+    price = models.DecimalField(max_digits=10, decimal_places=0, null=False)
     description = models.TextField(max_length=255, null=False)
     
     def __str__(self):
@@ -42,7 +42,6 @@ class order(models.Model):
 
     def __str__(self):
         return self.ownUser.name
-
 
 class discount(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, null = False)
