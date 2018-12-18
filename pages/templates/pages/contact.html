@@ -1,0 +1,54 @@
+{% extends 'header-footer.html' %}
+{% load static %}
+{%block breadcrumb%}
+<li class="active">聯絡我們</li>
+{%endblock breadcrumb%}
+<!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
+
+{% block content %}
+
+<!-- contact -->
+<div class="about">
+    <div class="w3_agileits_contact_grids">
+        <div class="col-md-6 w3_agileits_contact_grid_left">
+
+            <!-- google map -->
+            <div class="agile_map">
+                <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANoZT8q6vdk9eRYy1GDoBTSzka6dK7PQU&q=北科大"  style="border:0"></iframe>
+            </div>
+            <!-- google map -->
+
+        </div>
+        <div class="col-md-6 w3_agileits_contact_grid_right">
+            <h2 class="w3_agile_header">留下<span> 您想說的話</span></h2>
+
+            <form action="#" method="post">
+                <!-- 輸入名字區塊 -->
+                <span class="input input--ichiro">
+                    <input class="input__field input__field--ichiro" type="text" id="input-25" name="Name" placeholder=" " required="" />
+                    <label class="input__label input__label--ichiro" for="input-25">
+                        <span class="input__label-content input__label-content--ichiro">您的名字</span>
+                    </label>
+                </span>
+                <!-- 輸入名字區塊 -->
+
+                <!-- 輸入信箱區塊 -->
+                <span class="input input--ichiro">
+                    <input class="input__field input__field--ichiro" type="email" id="input-26" name="Email" placeholder=" " required="" />
+                    <label class="input__label input__label--ichiro" for="input-26">
+                        <span class="input__label-content input__label-content--ichiro">您的信箱</span>
+                    </label>
+                </span>
+                <!-- 輸入信箱區塊 -->
+
+                <!-- 輸入留言區塊 -->
+                <textarea name="Message" placeholder="您的留言...." required=""></textarea>
+                <input type="submit" value="Submit">
+                <!-- 輸入留言區塊 -->
+            </form>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<!-- contact -->
+{% endblock content %}
