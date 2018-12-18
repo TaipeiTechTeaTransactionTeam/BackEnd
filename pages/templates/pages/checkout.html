@@ -1,0 +1,119 @@
+{% extends 'header-footer.html' %}
+{% load static %}
+{%block breadcrumb%}
+<li class="active">購物車</li>
+{%endblock breadcrumb%}
+<!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
+
+{% block content %}
+
+<!-- checkout -->
+<div class="checkout">
+		<div class="container">
+			<h2>您的購物車包含以下商品：</h2>
+			<div class="checkout-right">
+				<table class="timetable_sub">
+
+                    <!-- 表格標題 -->
+					<thead>
+						<tr>
+							<th>編號</th>	
+							<th>商品</th>
+							<th>數量</th>
+							<th>商品名稱</th>
+						
+							<th>價格</th>
+							<th>刪除</th>
+						</tr>
+                    </thead>
+                    <!-- 表格標題 -->
+
+                    {% block item %}
+                    <!--一筆商品 -->
+					<tr class="rem1">
+
+                        <!--編號 -->
+                        <td class="invert">1</td>
+                        <!--編號 -->
+
+                        <!--圖片 -->
+                        <td class="invert-image"><a href="single.html"><img src="images/1.png" alt=" " class="img-responsive" /></a></td>
+                        <!--圖片 -->
+
+                        <!--加減數量功能 -->
+						<td class="invert">
+							 <div class="quantity"> 
+								<div class="quantity-select">                           
+									<div class="entry value-minus">&nbsp;</div>
+									<div class="entry value"><span>1</span></div>
+									<div class="entry value-plus active">&nbsp;</div>
+								</div>
+							</div>
+                        </td>
+                        <!--加減數量功能 -->
+
+                        <!--名稱 -->
+						<td class="invert">Tata Salt</td>
+                        <!--名稱 -->
+                        
+                        <!--$$ -->
+                        <td class="invert">$290.00</td>
+                        <!--$$ -->
+
+                        <!--刪除動作-->
+						<td class="invert">
+							<div class="rem">
+								<div class="close1"> </div>
+							</div>
+							<script>$(document).ready(function(c) {
+								$('.close1').on('click', function(c){
+									$('.rem1').fadeOut('slow', function(c){
+										$('.rem1').remove();
+									});
+									});	  
+								});
+						   </script>
+                        </td>
+                        <!--刪除動作 -->
+                    </tr>
+                    <!--一筆商品 -->
+                    {% endblock item %}
+
+								<!--quantity-->
+									<script>
+									$('.value-plus').on('click', function(){
+										var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
+										divUpd.text(newVal);
+									});
+
+									$('.value-minus').on('click', function(){
+										var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
+										if(newVal>=1) divUpd.text(newVal);
+									});
+									</script>
+								<!--quantity-->
+				</table>
+            </div>
+
+            <!--總結算區塊 -->
+			<div class="checkout-left">	
+				<div class="checkout-left-basket">
+					<h4>繼續下單</h4>
+					<ul>
+                        <li>Product1 <i>-</i> <span>$15.00 </span></li>
+                        <li>Product2 <i>-</i> <span>$25.00 </span></li>
+                        <li>Product3 <i>-</i> <span>$29.00 </span></li>
+                        <li>Total Service Charges <i>-</i> <span>$15.00</span></li>
+                        <li>總金額 <i>-</i> <span>$84.00</span></li>
+					</ul>
+				</div>
+				<div class="checkout-right-basket">
+					<a href="single.html"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>繼續購物</a>
+				</div>
+				<div class="clearfix"> </div>
+            </div>
+             <!--總結算區塊 -->
+		</div>
+	</div>
+<!-- //checkout -->
+{% endblock content %}
