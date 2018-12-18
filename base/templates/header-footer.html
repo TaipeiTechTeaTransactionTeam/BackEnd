@@ -11,7 +11,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <head>
   {% load static %}
-  <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'base/css/bootstrap4.css' %}">
   <title>{% block headTitle%} TaipeiTech Tea Transaction {% endblock headTitle %}</title>
   <!-- for-mobile-apps -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -47,6 +47,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
       });
     });
   </script>
+    <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
   <!-- start-smoth-scrolling -->
 </head>
 
@@ -69,7 +70,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
           <li><a href="{% url 'pages:regesiter' %}"> 建立帳戶 </a></li>
           <li><a href="{% url 'pages:login' %}">登入</a></li>
 		  {%endif%}
-		  <li><a href="{checkout}">購物車</a></li>
+		  <li><a href="{% url 'pages:checkout' %}">購物車</a></li>
           <li><a href="{% url 'pages:contact' %}">幫助</a></li>
         </ul>
       </div>
@@ -216,7 +217,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="col-md-3 w3_footer_grid">
           <h3>個人資訊</h3>
           <ul class="info">
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{checkout}">購物車</a></li>
+            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:checkout' %}">購物車</a></li>
             {%block accountBar%}
             <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:login' %}">登入</a></li>
             <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:regesiter' %}">註冊帳號</a></li>

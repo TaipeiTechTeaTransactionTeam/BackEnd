@@ -29,3 +29,6 @@ def regesiter(request):
 
 def contact(request):
     return render(request, 'pages/contact.html')
+
+def checkout(request):
+    return render(request, 'pages/checkout.html')
