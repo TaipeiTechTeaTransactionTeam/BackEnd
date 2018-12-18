@@ -80,7 +80,7 @@ DATABASES = {
         },
     }
 }
-
+print(os.path.join(BASE_DIR,'my.cnf'))
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
