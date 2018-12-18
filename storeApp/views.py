@@ -3,6 +3,8 @@ from django.urls import reverse
 
 # Create your views here.
 
+teas_pageOne = 1 # first page
+
 def home(request):
     return render(request, 'storeApp/index.html')
 
