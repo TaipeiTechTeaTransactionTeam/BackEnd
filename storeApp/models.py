@@ -13,9 +13,16 @@ class store(models.Model):
     def __str__(self):
         return self.name
 
+class teaType(models.Model):
+    name = models.CharField(max_length = 255, null = False)
+    def __str__(self):
+        return self.name
+
 class product(models.Model):
+    
     image = models.CharField(max_length = 255, null = False,default="")
     name = models.CharField(max_length = 255, null = False, unique = True)
+    teaType = models.ForeignKey(teaType, on_delete=models.CASCADE,default="")
     amount = models.DecimalField(max_digits=10, decimal_places=0, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=0, null=False)
     description = models.TextField(max_length=255, null=False)
@@ -44,7 +51,7 @@ class order(models.Model):
         return self.ownUser.name
 
 class discount(models.Model):
-    price = models.DecimalField(max_digits=10, decimal_places=2, null = False)
+    discount = models.DecimalField(max_digits=10, decimal_places=2, null = False)
     type = models.CharField(max_length=25, null = False)
     start_date = models.DateField(null=False)
     end_date = models.DateField(null=False)
