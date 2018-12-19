@@ -1,0 +1,49 @@
+{% extends 'header-footer.html' %}
+{% load static %}
+
+{%block breadcrumb%}
+<li>
+
+  <!-- username -->
+  <a href="../userpanel/">{{username}}</a>
+  <!-- username -->
+
+</li>
+<li class="active">
+  帳號設定
+</li>
+
+
+{%endblock breadcrumb%}
+<!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
+
+{% block content %}
+
+
+<!-- //插入區 -->
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+
+      <h2 class="bheader mt-3">帳號設定</h2>
+      <a class="glyphicon glyphicon-menu-left" href="../userPanel/"></a>
+      <div class="container my-1">基本資料</div>
+      <div class="list-group">
+        <a class="list-group-item  list-group-item-action" href="../userSetting/">個人檔案設定</li>
+          <a class="list-group-item list-group-item-action">收件地址</a>
+          <a class="list-group-item list-group-item-action">支付信用卡/銀行設定</a>
+      </div>
+      <div class="container my-1">其他</div>
+      <div class="list-group">
+        <a class="list-group-item list-group-item-action">刪除帳號申請</a>
+        <a class="list-group-item list-group-item-action text-light bg-secondary">登出帳號</a>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<!-- //插入區 -->
+
+{% endblock content %}
