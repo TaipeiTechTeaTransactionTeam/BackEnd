@@ -5,7 +5,7 @@
 <li>
 
   <!-- username -->
-  <a href="../userpanel/">{{username}}</a>
+  <a href="{% url 'pages:userPanel' %}">{{username}}</a>
   <!-- username -->
 
 </li>
@@ -26,10 +26,10 @@
     <div class="col-12">
 
       <h2 class="bheader mt-3">帳號設定</h2>
-      <a class="glyphicon glyphicon-menu-left" href="../userPanel/"></a>
+      <a class="glyphicon glyphicon-menu-left" href="{% url 'pages:userPanel' %}"></a>
       <div class="container my-1">基本資料</div>
       <div class="list-group">
-        <a class="list-group-item  list-group-item-action" href="../userSetting/">個人檔案設定</li>
+        <a class="list-group-item  list-group-item-action" href="{% url 'pages:userSetting' %}">個人檔案設定</li>
           <a class="list-group-item list-group-item-action">收件地址</a>
           <a class="list-group-item list-group-item-action">支付信用卡/銀行設定</a>
       </div>
