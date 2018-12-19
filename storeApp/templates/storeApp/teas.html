@@ -16,18 +16,12 @@
       <div class="categories">
         <h2>目錄</h2>
         <ul class="cate">
-          <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Fruits And Vegetables</a></li>
-          <ul>
-            <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Cuts & Sprouts</a></li>
-          </ul>
-          <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Grocery & Staples</a></li>
-          <ul>
-            <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Dals & Pulses</a> </li>
-          </ul>
-          <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>PersonalCare</a></li>
-          <ul>
-            <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Baby Care</a> </li>
-          </ul>
+          <li><a href="{% url 'storeApp:teas' %}blacktea"><i class="fa fa-arrow-right" aria-hidden="true"></i>紅茶</a></li>
+
+          <li><a href="{% url 'storeApp:teas' %}greentea"><i class="fa fa-arrow-right" aria-hidden="true"></i>綠茶</a></li>
+
+          <li><a href="{% url 'storeApp:teas' %}oolong"><i class="fa fa-arrow-right" aria-hidden="true"></i>烏龍茶</a></li>
+   
         </ul>
       </div>
       <!--- 目錄列表 -->
