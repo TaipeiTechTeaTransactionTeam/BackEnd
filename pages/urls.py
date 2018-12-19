@@ -14,4 +14,10 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('regesiter/', views.regesiter, name='regesiter'),
     path('contact/', views.contact, name='contact'),
+    path('checkout/', views.checkout, name='checkout'),
+    path('detail/', views.detail, name='detail'),
+    path('blacktea/', views.blacktea, name='blacktea'),
+    path('greentea/', views.greentea, name='greentea'),
+    path('oolong/', views.oolong, name='oolong'),
+    path('teas/', views.teas, name='teas')
 ]
