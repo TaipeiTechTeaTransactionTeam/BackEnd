@@ -15,17 +15,19 @@ class store(models.Model):
 
 class teaType(models.Model):
     name = models.CharField(max_length = 255, null = False)
+    image = models.ImageField(upload_to='teaType')
     def __str__(self):
         return self.name
 
 class product(models.Model):
     
-    image = models.CharField(max_length = 255, null = False,default="")
+    image = models.ImageField(upload_to='product')
     name = models.CharField(max_length = 255, null = False, unique = True)
     teaType = models.ForeignKey(teaType, on_delete=models.CASCADE,default="")
     amount = models.DecimalField(max_digits=10, decimal_places=0, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=0, null=False)
     description = models.TextField(max_length=255, null=False)
+    AddDate = models.DateField(default = timezone.now)
     
     def __str__(self):
         return self.name

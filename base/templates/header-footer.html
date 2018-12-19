@@ -11,7 +11,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <head>
   {% load static %}
-  <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'base/css/bootstrap4.css' %}">
   <title>{% block headTitle%} TaipeiTech Tea Transaction {% endblock headTitle %}</title>
   <!-- for-mobile-apps -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -47,6 +47,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
       });
     });
   </script>
+    <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
   <!-- start-smoth-scrolling -->
 </head>
 
@@ -63,14 +64,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <ul>
           <!-- 登入登出區塊 預設為登入註冊 修改if condition 還有寫入使用者名稱-->
           {%if False %}
-          <li><a href="{% url 'pages:userpanel' %">使用者名稱</a></li>
+          <li><a href="{% url 'storeApp:userpanel' %}">使用者名稱</a></li>
           <li><a href="logout">登出</a></li>
           {%else %}
-          <li><a href="{% url 'pages:regesiter' %}"> 建立帳戶 </a></li>
-          <li><a href="{% url 'pages:login' %}">登入</a></li>
-		  {%endif%}
-		  <li><a href="{% url 'pages:checkout' %}">購物車</a></li>
-          <li><a href="{% url 'pages:contact' %}">幫助</a></li>
+          <li><a href="{% url 'storeApp:regesiter' %}"> 建立帳戶 </a></li>
+          <li><a href="{% url 'storeApp:login' %}">登入</a></li>
+		      {%endif%}
+		      <li><a href="{% url 'storeApp:checkout' %}">購物車</a></li>
+          <li><a href="{% url 'storeApp:contact' %}">幫助</a></li>
         </ul>
       </div>
       <div class="product_list_header">
@@ -97,10 +98,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </ul>
       </div>
       <div class="w3ls_logo_products_left">
-        <h1><a href="{% url 'pages:home' %}">TaipeiTech Tea</a></h1>
+        <h1><a href="{% url 'storeApp:home' %}">TaipeiTech Tea</a></h1>
       </div>
       <div class="w3l_search">
-        <form action="{% url 'pages:search' %}" method="post">
+        <form action="{% url 'storeApp:search' %}" method="post">
           {% csrf_token %}
           <input type="search" name="Search" placeholder="Search for a Product..." required="" />
           <button type="submit" class="btn btn-default search" aria-label="Left Align">
@@ -128,7 +129,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
         <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="{% url 'pages:home' %}" class="act">首頁</a></li>
+            <li class="active"><a href="{% url 'storeApp:home' %}" class="act">首頁</a></li>
             <!-- Mega Menu -->
             <li>
               <a href="{% url 'pages:blacktea' %}" >紅茶</a>
@@ -142,7 +143,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
               <a href="{% url 'pages:oolong' %}" >烏龍茶</a>
               
             </li>
-            <li><a href="contact">聯絡我們</a></li>
+            <li><a href="{% url 'pages:contact' %}">聯絡我們</a></li>
           </ul>
         </div>
       </nav>
@@ -208,8 +209,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
           <ul class="info">
             <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:checkout' %}">購物車</a></li>
             {%block accountBar%}
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:login' %}">登入</a></li>
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:regesiter' %}">註冊帳號</a></li>
+            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:login' %}">登入</a></li>
+            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:regesiter' %}">註冊帳號</a></li>
             {%endblock accountBar%}
           </ul>
         </div>

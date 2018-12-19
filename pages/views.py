@@ -12,6 +12,9 @@ def search(request):
 def userPanel(request):
     return render(request, 'pages/userPanel.html')
 
+def userSetting(request):
+    return render(request, 'pages/userSetting.html')
+
 def accountPanel(request):
     return render(request,'pages/accountPanel.html')
 
@@ -36,11 +39,12 @@ def checkout(request):
 def detail(request):
     return render(request, 'pages/detail.html')
 
-def blacktea(request):
-    return render(request, 'pages/teas')
+def editProduct(request):
+    return render(request, 'pages/editProduct.html')
 
-def greentea(request):
-    return render(request, 'pages/teas')
+def manageOrder(request):
+    return render(request, 'pages/manageOrder.html')
 
-def oolong(request):
-    return render(request, 'pages/teas')
+def manageProductAndDiscount(request):
+    return render(request, 'pages/manageProductAndDiscount.html')
+  

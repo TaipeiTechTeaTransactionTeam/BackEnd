@@ -57,8 +57,9 @@
               <figure>
                 <div class="snipcart-item block">
                   <div class="snipcart-thumb">
-                    <!-- 產品link and image -->
-                    <a href="{% url 'pages:detail' %}"><img title=" " alt=" " src="{% static 'pages/images/products/DaXiTeaFactoryBlackTea.jpg'%}"></a>
+
+                    <!-- 產品link and image *必填-->
+                    <a href="{% url 'pages:teas' %}blackteas/UID_LIKE_THIS_1234"><img title=" " alt=" " src="{% static 'pages/images/products/DaXiTeaFactoryBlackTea.jpg'%}"></a>
                     <!-- 產品link and image -->
 
                     <!-- 產品名稱 *必填-->
@@ -90,7 +91,6 @@
 
                         <!-- 每次按下新增的數量 *必填-->
                         <input type="hidden" name="add" value="1">
-
                         <!-- 每次按下新增的數量 -->
 
                         <!-- 在購物車內顯示的圖片 *必填 若不填不影響運作、但會在結帳顯示不出圖片 -->
@@ -147,7 +147,7 @@
               <figure>
                 <div class="snipcart-item block">
                   <div class="snipcart-thumb">
-                    <a href="{% url 'pages:detail' %}"><img title=" " alt=" " src="{% static 'base/images/15.png' %}"></a>
+                    <a href="products.html"><img title=" " alt=" " src="{% static 'base/images/15.png' %}"></a>
                     <p>Navaratan-dal</p>
                     <div class="stars">
                       <i class="fa fa-star blue-star" aria-hidden="true"></i>
@@ -197,7 +197,7 @@
               <figure>
                 <div class="snipcart-item block">
                   <div class="snipcart-thumb">
-                    <a href="{% url 'pages:detail' %}"><img src="{% static 'base/images/16.png' %}" alt=" " class="img-responsive"></a>
+                    <a href="products.html"><img src="{% static 'base/images/16.png' %}" alt=" " class="img-responsive"></a>
                     <p>White-peasmatar</p>
                     <div class="stars">
                       <i class="fa fa-star blue-star" aria-hidden="true"></i>
@@ -243,7 +243,7 @@
               <figure>
                 <div class="snipcart-item block">
                   <div class="snipcart-thumb">
-                    <a href="{% url 'pages:detail' %}"><img title=" " alt=" " src="{% static 'base/images/17.png' %}"></a>
+                    <a href="products.html"><img title=" " alt=" " src="{% static 'base/images/17.png' %}"></a>
                     <p>Channa-dal</p>
                     <div class="stars">
                       <i class="fa fa-star blue-star" aria-hidden="true"></i>
