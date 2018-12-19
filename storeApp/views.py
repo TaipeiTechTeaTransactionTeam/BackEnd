@@ -13,8 +13,8 @@ teas_pageOne = 1  # first page
 
 
 def home(request):
-    albums = product.objects.all()
-    return render(request, 'storeApp/index.html', {'albums': albums})
+    products = product.objects.all()
+    return render(request, 'storeApp/index.html', {'products': products})
 
 
 def search(request):
