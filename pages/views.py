@@ -13,6 +13,9 @@ def search(request):
 def userPanel(request):
     return render(request, 'pages/userPanel.html')
 
+def userSetting(request):
+    return render(request, 'pages/userSetting.html')
+
 def accountPanel(request):
     return render(request,'pages/accountPanel.html')
 def report(request):
@@ -32,3 +35,15 @@ def contact(request):
 
 def checkout(request):
     return render(request, 'pages/checkout.html')
+
+def detail(request):
+    return render(request, 'pages/detail.html')
+
+def editProduct(request):
+    return render(request, 'pages/editProduct.html')
+
+def manageOrder(request):
+    return render(request, 'pages/manageOrder.html')
+
+def manageProductAndDiscount(request):
+    return render(request, 'pages/manageProductAndDiscount.html')
