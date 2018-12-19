@@ -9,22 +9,25 @@
 
 <!-- login -->
 <div class="login">
-		<div class="container">
-			<h2>登入</h2>
-		
-			<div class="login-form-grids animated wow slideInUp" data-wow-delay=".5s">
-				<form>
-					<input type="email" placeholder="Email Address" required=" " >
-					<input type="password" placeholder="Password" required=" " >
-					<div class="forgot">
-						<a href="#">忘記密碼?</a>
-					</div>
-					<input type="submit" value="Login">
-				</form>
-			</div>
-			<h4>新手上路</h4>
-			<p><a href="registered.html">點擊註冊</a> 或者回到 <a href="index.html">首頁<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></p>
-		</div>
-	</div>
+  <div class="container">
+    <h2>登入</h2>
+
+    <div class="login-form-grids animated wow slideInUp" data-wow-delay=".5s">
+      <form>
+        <input type="email" placeholder="Email Address" required=" ">
+        <input type="password" placeholder="Password" required=" ">
+        <div class="forgot">
+          <a href="#">忘記密碼?</a>
+        </div>
+        <input type="submit" value="Login">
+      </form>
+    </div>
+    <h4>新手上路</h4>
+    <p>
+      <a href="{% url 'storeApp:regesiter' %}">點擊註冊</a> 或者回到
+      <a href="{% url 'storeApp:home' %}">首頁<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+    </p>
+  </div>
+</div>
 <!-- //login -->
 {% endblock content %}

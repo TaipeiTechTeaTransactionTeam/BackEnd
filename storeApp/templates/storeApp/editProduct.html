@@ -7,61 +7,61 @@
 
 {% block content %}
 <div class="about">
-    <div class="container">
-        <div class="w3_agileits_contact_grids">
-            <div class="col-md-12 product_edit">
-                <h2 class="w3_agile_header">編輯商品</h2>
+  <div class="container">
+    <div class="w3_agileits_contact_grids">
+      <div class="col-md-12 product_edit">
+        <h2 class="w3_agile_header">編輯商品</h2>
 
-                <form action="#" class="" method="post">
-                    <div class="d-flex justify-content-center">
-                        <figure class="imghvr-fade col-12 col-xs-12 col-md-12 col-sm-12  col-lg-8">
-                            <div class="row ">
-                                <img src="{%block imageSrc%}images/no_images.png{%endblock imageSrc%}" class="col-12 " alt="" onerror="this.src='./images/no_images.png'" />
-                                <figcaption style="background-color: #baa619">
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  ">
-                                        <span class="input input--ichiro">
-                                            <input class="input__field input__field--ichiro" type="text" id="productImage"
-                                                name="imageSrc" placeholder=" " required="" onchange="var img=this.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('img');img.src=this.value||img.src;" />
-                                            <label class="input__label input__label--ichiro" for="productImage">
-                                                <span class="input__label-content input__label-content--ichiro">產品圖片連結</span>
-                                            </label>
-                                        </span>
-                                    </div>
-                                </figcaption>
-                            </div>
-                        </figure>
-                    </div>
-
+        <form action="#" class="" method="post">
+          <div class="d-flex justify-content-center">
+            <figure class="imghvr-fade col-12 col-xs-12 col-md-12 col-sm-12  col-lg-8">
+              <div class="row ">
+                <img src="{%block imageSrc%}images/no_images.png{%endblock imageSrc%}" class="col-12 " alt="" onerror="this.src='./images/no_images.png'" />
+                <figcaption style="background-color: #baa619">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  ">
                     <span class="input input--ichiro">
-                        <input class="input__field input__field--ichiro" type="text" id="productName" name="name"
-                            placeholder=" " required="" value="{%block productName%}商品名稱{%endblock productName%}" />
-                        <label class="input__label input__label--ichiro" for="productName">
-                            <span class="input__label-content input__label-content--ichiro">商品名稱</span>
-                        </label>
+                      <input class="input__field input__field--ichiro" type="text" id="productImage" name="imageSrc"
+                        placeholder=" " required="" onchange="var img=this.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('img');img.src=this.value||img.src;" />
+                      <label class="input__label input__label--ichiro" for="productImage">
+                        <span class="input__label-content input__label-content--ichiro">產品圖片連結</span>
+                      </label>
                     </span>
-                    <span class="input input--ichiro">
-                        <input class="input__field input__field--ichiro" type="number" min="1" id="productAmount" name="amount"
-                            placeholder=" " required="" value="{%block numberOfProduct%}1{%endblock numberOfProduct%}" />
-                        <label class="input__label input__label--ichiro" for="productAmount">
-                            <span class="input__label-content input__label-content--ichiro">數量</span>
-                        </label>
-                    </span>
+                  </div>
+                </figcaption>
+              </div>
+            </figure>
+          </div>
 
-                    <!--在要選取的茶類區塊塞入selected-->
-                    <select name="type" class="input input--ichiro form-control custom-select" id="inputGroupSelect01">
-                        <option selected>種類</option>
-                        <option value="blacktea" {%block chooseBlackTea%}selected{%endblock chooseBlackTea%}>紅茶</option>
-                        <option value="greentea" {%block chooseGreenTea%}{%endblock chooseGreenTea%}>綠茶</option>
-                        <option value="oolong" {%block chooseOolongTea%}{%endblock chooseOolongTea%}>烏龍茶</option>
-                    </select>
+          <span class="input input--ichiro">
+            <input class="input__field input__field--ichiro" type="text" id="productName" name="name" placeholder=" "
+              required="" value="{%block productName%}商品名稱{%endblock productName%}" />
+            <label class="input__label input__label--ichiro" for="productName">
+              <span class="input__label-content input__label-content--ichiro">商品名稱</span>
+            </label>
+          </span>
+          <span class="input input--ichiro">
+            <input class="input__field input__field--ichiro" type="number" min="1" id="productAmount" name="amount"
+              placeholder=" " required="" value="{%block numberOfProduct%}1{%endblock numberOfProduct%}" />
+            <label class="input__label input__label--ichiro" for="productAmount">
+              <span class="input__label-content input__label-content--ichiro">數量</span>
+            </label>
+          </span>
 
-                    <!--block productDescripyion-->
-                    <textarea name="description" placeholder="商品描述" required="">{%block productDescripyion%}{%endblock productDescripyion%}</textarea>
-                    <input type="submit" value="Submit" />
-                </form>
-            </div>
-            <div class="clearfix"></div>
-        </div>
+          <!--在要選取的茶類區塊塞入selected-->
+          <select name="type" class="input input--ichiro form-control custom-select" id="inputGroupSelect01">
+            <option selected>種類</option>
+            <option value="blacktea" {%block chooseBlackTea%}selected{%endblock chooseBlackTea%}>紅茶</option>
+            <option value="greentea" {%block chooseGreenTea%}{%endblock chooseGreenTea%}>綠茶</option>
+            <option value="oolong" {%block chooseOolongTea%}{%endblock chooseOolongTea%}>烏龍茶</option>
+          </select>
+
+          <!--block productDescripyion-->
+          <textarea name="description" placeholder="商品描述" required="">{%block productDescripyion%}{%endblock productDescripyion%}</textarea>
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
+      <div class="clearfix"></div>
     </div>
+  </div>
 </div>
 {% endblock content %}

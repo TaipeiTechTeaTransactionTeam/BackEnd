@@ -6,9 +6,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE html>
 <html>
-
-
-
 <head>
   {% load static %}
   <link rel="stylesheet" href="{% static 'base/css/bootstrap4.css' %}">
@@ -47,7 +44,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
       });
     });
   </script>
-    <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
   <!-- start-smoth-scrolling -->
 </head>
 
@@ -69,8 +66,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
           {%else %}
           <li><a href="{% url 'storeApp:regesiter' %}"> 建立帳戶 </a></li>
           <li><a href="{% url 'storeApp:login' %}">登入</a></li>
-		      {%endif%}
-		      <li><a href="{% url 'storeApp:checkout' %}">購物車</a></li>
+          {%endif%}
+          <li><a href="{% url 'storeApp:checkout' %}">購物車</a></li>
           <li><a href="{% url 'storeApp:contact' %}">幫助</a></li>
         </ul>
       </div>
@@ -132,18 +129,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <li class="active"><a href="{% url 'storeApp:home' %}" class="act">首頁</a></li>
             <!-- Mega Menu -->
             <li>
-              <a href="{% url 'pages:blacktea' %}" >紅茶</a>
-              
+              <a href="{% url 'storeApp:blacktea' %}">紅茶</a>
+
             </li>
             <li>
-              <a href="{% url 'pages:greentea' %}" >綠茶</a>
-            
+              <a href="{% url 'storeApp:greentea' %}">綠茶</a>
+
             </li>
             <li>
-              <a href="{% url 'pages:oolong' %}" >烏龍茶</a>
-              
+              <a href="{% url 'storeApp:oolong' %}">烏龍茶</a>
+
             </li>
-            <li><a href="{% url 'pages:contact' %}">聯絡我們</a></li>
+            <li><a href="{% url 'storeApp:contact' %}">聯絡我們</a></li>
           </ul>
         </div>
       </nav>
@@ -156,7 +153,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   <div class="breadcrumbs">
     <div class="container">
       <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
-        <li><a href="{% url 'pages:home' %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>首頁</a></li>
+        <li><a href="{% url 'storeApp:home' %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>首頁</a></li>
         {%block breadcrumb%}
 
         {%endblock breadcrumb%}
@@ -193,21 +190,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="col-md-3 w3_footer_grid">
           <h3>詳細資訊</h3>
           <ul class="info">
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:contact' %}">聯絡我們</a></li>
+            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:contact' %}">聯絡我們</a></li>
           </ul>
         </div>
         <div class="col-md-3 w3_footer_grid">
           <h3>商品目錄</h3>
           <ul class="info">
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:blacktea' %}">紅茶</a></li>
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:greentea' %}">綠茶</a></li>
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:oolong' %}">烏龍茶</a></li>
+            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:blacktea' %}">紅茶</a></li>
+            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:greentea' %}">綠茶</a></li>
+            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:oolong' %}">烏龍茶</a></li>
           </ul>
         </div>
         <div class="col-md-3 w3_footer_grid">
           <h3>個人資訊</h3>
           <ul class="info">
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:checkout' %}">購物車</a></li>
+            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:checkout' %}">購物車</a></li>
             {%block accountBar%}
             <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:login' %}">登入</a></li>
             <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:regesiter' %}">註冊帳號</a></li>
