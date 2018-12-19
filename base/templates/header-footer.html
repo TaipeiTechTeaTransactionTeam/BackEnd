@@ -132,15 +132,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <li class="active"><a href="{% url 'storeApp:home' %}" class="act">首頁</a></li>
             <!-- Mega Menu -->
             <li>
-              <a href="#" >紅茶</a>
-           
+              <a href="{% url 'pages:blacktea' %}" >紅茶</a>
+              
             </li>
             <li>
-              <a href="#" >綠茶</a>
+              <a href="{% url 'pages:greentea' %}" >綠茶</a>
             
             </li>
             <li>
-              <a href="#" >烏龍茶</a>
+              <a href="{% url 'pages:oolong' %}" >烏龍茶</a>
               
             </li>
             <li><a href="{% url 'pages:contact' %}">聯絡我們</a></li>
@@ -193,25 +193,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="col-md-3 w3_footer_grid">
           <h3>詳細資訊</h3>
           <ul class="info">
-            <!--<li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="about">About Us</a></li>-->
             <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:contact' %}">聯絡我們</a></li>
-            <!--<li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="short-codes">Short Codes</a></li>
-						<li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="faq">FAQ's</a></li>
-						<li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="products">Special Products</a></li>-->
           </ul>
         </div>
         <div class="col-md-3 w3_footer_grid">
           <h3>商品目錄</h3>
           <ul class="info">
-            <!--<li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="groceries">Groceries</a></li>
-						<li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="household">Household</a></li>
-						<li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="personalcare">Personal Care</a></li>
-						<li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="packagedfoods">Packaged Foods</a></li>
-						<li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="beverages">Beverages</a></li>-->
-
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="blacktea">紅茶</a></li>
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="greentea">綠茶</a></li>
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="oolong">烏龍茶</a></li>
+            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:blacktea' %}">紅茶</a></li>
+            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:greentea' %}">綠茶</a></li>
+            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'pages:oolong' %}">烏龍茶</a></li>
           </ul>
         </div>
         <div class="col-md-3 w3_footer_grid">

@@ -6,7 +6,6 @@ from django.urls import reverse
 def home(request):
     return render(request, 'pages/index.html')
 
-
 def search(request):
     return render(request, 'pages/search.html')
 
@@ -18,6 +17,7 @@ def userSetting(request):
 
 def accountPanel(request):
     return render(request,'pages/accountPanel.html')
+
 def report(request):
     return render(request,'pages/report.html')
 
@@ -47,3 +47,4 @@ def manageOrder(request):
 
 def manageProductAndDiscount(request):
     return render(request, 'pages/manageProductAndDiscount.html')
+  
