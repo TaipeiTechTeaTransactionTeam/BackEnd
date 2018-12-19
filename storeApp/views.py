@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import Http404
-
+from django.views import generic
 from django.http import HttpResponseForbidden
 from django.http import HttpResponse
 
@@ -14,7 +14,13 @@ teas_pageOne = 1  # first page
 
 def home(request):
     products = product.objects.all()
-    return render(request, 'storeApp/index.html', {'products': products})
+    newoffers = list(products)
+    newoffers.reverse()
+    newoffers = newoffers[:4]
+    return render(request, 'storeApp/index.html', {
+        'products': products,
+        'newoffers': newoffers
+    })
 
 
 def search(request):
@@ -57,8 +63,15 @@ def checkout(request):
     return render(request, 'storeApp/checkout.html')
 
 
-def detail(request):
-    return render(request, 'storeApp/detail.html')
+def detail(request, pk):
+    product_ = get_object_or_404(product,pk=pk)
+    newoffers = list(product.objects.all())
+    newoffers.reverse()
+    newoffers = newoffers[:4]
+    return render(request, 'storeApp/detail.html', {
+        'product': product_,
+        'newoffers': newoffers
+        })
 
 
 def editProduct(request):
