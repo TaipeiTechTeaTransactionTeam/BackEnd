@@ -10,6 +10,7 @@
 
 <!-- //navigation -->
 <!-- main-slider -->
+
 <ul id="demo1">
   <li>
     <img src="{% static 'base/images/navigation.jpg'%}" alt="" />
@@ -18,7 +19,15 @@
       <h3>國韻天香，金枝玉葉</h3>
     </div>
   </li>
+  {% for album in albums %}
   <li>
+    <img src="{{ album.image.url }}" alt="" />
+    <div class="slide-desc">
+      <h3>{{ album }}</h3>
+    </div>
+  </li>
+  {% endfor %}
+  <!-- <li>
     <img src="{% static 'base/images/紅茶.jpg'%}" alt="" />
     <div class="slide-desc">
       <h3>紅茶</h3>
@@ -31,12 +40,13 @@
       <h3>綠茶</h3>
     </div>
   </li>
+  
   <li>
     <img src="{% static 'base/images/烏龍茶.jpg'%}" alt="" />
     <div class="slide-desc">
       <h3>烏龍茶</h3>
     </div>
-  </li>
+  </li> -->
 </ul>
 <!-- //main-slider -->
 <!-- //top-header and slider -->
