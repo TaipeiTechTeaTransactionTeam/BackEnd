@@ -52,11 +52,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   <!-- header -->
   <div class="agileits_header">
     <div class="container">
-      <div class="w3l_offers">
-        <!--
-					  <p>SALE UP TO 70% OFF. USE CODE "SALE70%" . <a href="products">SHOP NOW</a></p>
-					-->
-      </div>
+      <div class="w3l_offers"></div>
       <div class="agile-login">
         <ul>
           <!-- 登入登出區塊 預設為登入註冊 修改if condition 還有寫入使用者名稱-->
@@ -100,14 +96,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
       <div class="w3l_search">
         <form action="{% url 'storeApp:search' %}" method="post">
           {% csrf_token %}
-          <input type="search" name="Search" placeholder="Search for a Product..." required="" />
+          <input type="search" name="Search" placeholder="搜尋商品..." required="" />
           <button type="submit" class="btn btn-default search" aria-label="Left Align">
             <i class="fa fa-search" aria-hidden="true"> </i>
           </button>
           <div class="clearfix"></div>
         </form>
       </div>
-
       <div class="clearfix"></div>
     </div>
   </div>
@@ -128,32 +123,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
           <ul class="nav navbar-nav">
             <li class="active"><a href="{% url 'storeApp:home' %}" class="act">首頁</a></li>
             <!-- Mega Menu -->
-            <li>
-              <a href="{% url 'storeApp:teas' %}">紅茶</a>
-
-            </li>
-            <li>
-              <a href="{% url 'storeApp:teas' %}">綠茶</a>
-
-            </li>
-            <li>
-              <a href="{% url 'storeApp:teas' %}">烏龍茶</a>
-
-            </li>
+            <li><a href="{% url 'storeApp:teas' %}">紅茶</a></li>
+            <li><a href="{% url 'storeApp:teas' %}">綠茶</a></li>
+            <li><a href="{% url 'storeApp:teas' %}">烏龍茶</a></li>
             <li><a href="{% url 'storeApp:contact' %}">聯絡我們</a></li>
           </ul>
         </div>
       </nav>
     </div>
   </div>
-
   <!-- //navigation -->
   <!-- breadcrumbs -->
   {%block bc%}
   <div class="breadcrumbs">
     <div class="container">
       <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
-        <li><a href="{% url 'storeApp:home' %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>首頁</a></li>
+        <li>
+          <a href="{% url 'storeApp:home' %}">
+            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>首頁
+          </a>
+        </li>
         {%block breadcrumb%}
 
         {%endblock breadcrumb%}
@@ -164,16 +153,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   <!-- //breadcrumbs -->
 
   <!-- //插入區-->
-
   {% block content %}
-
   {% endblock content %}
-
-
-
-
   <!-- //插入區-->
-
 
   <div class="footer">
     <div class="container">
@@ -216,12 +198,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
 
     <div class="footer-copy">
-
       <div class="container">
         <p>© 2018 Tapei Tech Tea Factory. All rights reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
       </div>
     </div>
-
   </div>
   <div class="footer-botm">
     <div class="container">
