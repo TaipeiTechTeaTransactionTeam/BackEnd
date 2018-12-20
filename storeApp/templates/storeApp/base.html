@@ -4,6 +4,7 @@
   <div class="container">
     <h3>New offers</h3>
     <div class="agile_top_brands_grids">
+      {% if newoffers %}
       {% for newoffer in newoffers %}
       <!-- offer產品 第1項  -->
       <div class="col-md-3 top_brand_left-1">
@@ -90,6 +91,9 @@
       </div>
       <!-- offer產品 第1項  -->
       {% endfor %}
+      {% else %}
+      <h1>盡快為您上架</h1>
+      {% endif %}
       <div class="clearfix"> </div>
     </div>
   </div>
