@@ -11,15 +11,18 @@
 <div class="login">
   <div class="container">
     <h2>登入</h2>
-
     <div class="login-form-grids animated wow slideInUp" data-wow-delay=".5s">
-      <form>
-        <input type="email" placeholder="Email Address" required=" ">
-        <input type="password" placeholder="Password" required=" ">
+      <form action="" method="POST" name="form1">
+        {% csrf_token %}
+        <input type="text" placeholder="帳號：" name="username" id="username" required=" ">
+        <input type="password" placeholder="密碼：" name="password" id="password" required=" ">
         <div class="forgot">
           <a href="#">忘記密碼?</a>
         </div>
-        <input type="submit" value="Login">
+        <input type="submit" value="登入">
+        {% if message %}
+        <h3 style="color:red">{{ message }}</h3>
+        {% endif %}
       </form>
     </div>
     <h4>新手上路</h4>
