@@ -4,7 +4,7 @@
 {%block breadcrumb%}
 
 <!--使用者名稱-->
-<li class="active">{{username}}</li>
+<li class="active">{{ user.username }}</li>
 <!--使用者名稱-->
 
 {%endblock breadcrumb%}
@@ -18,7 +18,7 @@
   <img src="{% static 'base/images/綠茶.jpg' %}" alt="" class="userpanel-main_image" />
 
   <!--使用者名稱-->
-  <h3>使用者名稱:{{username}}</h3>
+  <h3>使用者名稱: {{ user.username }}</h3>
   <!--使用者名稱-->
 </div>
 
