@@ -1,0 +1,18 @@
+#自動創立local跟修改manage.py
+#使用方法python localSetup
+def createLocal():
+    path="./TTTS/settings/"
+    fileName="local.py"
+    f=open(path+fileName,"w")
+    f.write("from .base import *\n\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = ['*']\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static')")
+    f.close()
+def modifyManage():
+    fileName="./manage.py"
+    f=open(fileName,"r")
+    manageContent=f.read(-1)
+    f.close()
+    f=open(fileName,"w")
+    f.write( manageContent.replace("TTTS.settings.server","TTTS.settings.local"))
+    f.close()
+createLocal()
+modifyManage()
