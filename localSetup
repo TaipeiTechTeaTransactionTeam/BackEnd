@@ -1,5 +1,6 @@
 #自動創立local跟修改manage.py
 #使用方法python localSetup
+from pathlib import Path
 def createLocal():
     path="./TTTS/settings/"
     fileName="local.py"
@@ -14,5 +15,16 @@ def modifyManage():
     f=open(fileName,"w")
     f.write( manageContent.replace("TTTS.settings.server","TTTS.settings.local"))
     f.close()
+def chekcAndCreateMyCnf():
+    fileName="./my.cnf"
+    if(Path(fileName).is_file()):
+        return
+    f=open(fileName,"w")
+    username=input("輸入DB Username (按下Enter跳過使用root為預設):\n")
+    if(username==""):
+        username="root"
+    f.write("[client]\ndatabase = TTTS\nuser = "+username+"\npassword = "+input("輸入DB Password:\n")+"yourMySQLPassword""\ndefault-character-set = utf8")
+    f.close()
+chekcAndCreateMyCnf()
 createLocal()
 modifyManage()
