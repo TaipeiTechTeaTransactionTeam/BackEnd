@@ -12,45 +12,61 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 
 
-from .models import product
+from .models import product, teaType
 # Create your views here.
 
 teas_pageOne = 1  # first page
 
 
 def home(request):
+    types = teaType.objects.all()
     products = product.objects.all()
     newoffers = list(products)
     newoffers.reverse()
     newoffers = newoffers[:4]
     return render(request, 'storeApp/index.html', {
         'products': products,
-        'newoffers': newoffers
+        'newoffers': newoffers,
+        'types': types
     })
 
 
 def search(request):
-    return render(request, 'storeApp/search.html')
+    types = teaType.objects.all()
+    return render(request, 'storeApp/search.html', locals())
 
 
 def userPanel(request):
-    return render(request, 'storeApp/userPanel.html')
+    types = teaType.objects.all()
+    return render(request, 'storeApp/userPanel.html', locals())
 
 
 def userSetting(request):
-    return render(request, 'storeApp/userSetting.html')
+    types = teaType.objects.all()
+    return render(request, 'storeApp/userSetting.html', locals())
 
 
 def accountPanel(request):
-    return render(request, 'storeApp/accountPanel.html')
+    types = teaType.objects.all()
+    return render(request, 'storeApp/accountPanel.html', locals())
 
 
 def report(request):
-    return render(request, 'storeApp/report.html')
+    types = teaType.objects.all()
+    return render(request, 'storeApp/report.html', locals())
 
 
 def teas(request):
-    return render(request, 'storeApp/teas.html')
+    types = teaType.objects.all()
+    teas = product.objects.all()
+    return render(request, 'storeApp/teas.html', locals())
+
+
+def teas_type(request, fk):
+    types = teaType.objects.all()
+    products = product.objects.all()
+    teas = products.filter(teaType=types.get(name=fk))
+    return render(request, 'storeApp/teas.html', locals())
 
 
 @require_http_methods(['POST', 'GET'])
@@ -82,6 +98,7 @@ def logout(request):
 
 @require_http_methods(['POST', 'GET'])
 def regesiter(request):
+    types = teaType.objects.all()
     if request.method == 'POST':
         data = request.POST
         try:
@@ -90,7 +107,7 @@ def regesiter(request):
             user = None  # 若 username 不存在則設定為 None
         if user != None:
             message = user.username + " 帳號已經建立! "
-            return render(request, 'storeApp/regesiter.html', {'message': message})
+            return render(request, 'storeApp/regesiter.html', locals())
         else:  # 建立 username 帳號
             user = User.objects.create_user(
                 data['username'], data['email'], data['password'])
@@ -99,37 +116,44 @@ def regesiter(request):
             user.is_staff = "False"
             user.save()  # 將資料寫入資料庫
             # 若成功建立，重新導向至 index.html
-            return redirect('storeApp:home')
+            return redirect('storeApp:`home`')
     else:
-        return render(request, 'storeApp/regesiter.html')
+        return render(request, 'storeApp/regesiter.html', locals())
 
 
 def contact(request):
-    return render(request, 'storeApp/contact.html')
+    types = teaType.objects.all()
+    return render(request, 'storeApp/contact.html', locals())
 
 
 def checkout(request):
-    return render(request, 'storeApp/checkout.html')
+    types = teaType.objects.all()
+    return render(request, 'storeApp/checkout.html', locals())
 
 
 def detail(request, pk):
+    types = teaType.objects.all()
     product_ = get_object_or_404(product, pk=pk)
     newoffers = list(product.objects.all())
     newoffers.reverse()
     newoffers = newoffers[:4]
     return render(request, 'storeApp/detail.html', {
         'product': product_,
-        'newoffers': newoffers
+        'newoffers': newoffers,
+        'types': types
     })
 
 
 def editProduct(request):
-    return render(request, 'storeApp/editProduct.html')
+    types = teaType.objects.all()
+    return render(request, 'storeApp/editProduct.html', locals())
 
 
 def manageOrder(request):
-    return render(request, 'storeApp/manageOrder.html')
+    types = teaType.objects.all()
+    return render(request, 'storeApp/manageOrder.html', locals())
 
 
 def manageProductAndDiscount(request):
-    return render(request, 'storeApp/manageProductAndDiscount.html')
+    types = teaType.objects.all()
+    return render(request, 'storeApp/manageProductAndDiscount.html', locals())

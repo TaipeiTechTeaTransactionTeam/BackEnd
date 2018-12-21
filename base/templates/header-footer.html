@@ -6,6 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE html>
 <html>
+
 <head>
   {% load static %}
   <link rel="stylesheet" href="{% static 'base/css/bootstrap4.css' %}">
@@ -23,7 +24,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   <link href="{% static 'base/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
   <link href="{% static 'base/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
   <!-- font-awesome icons -->
-
   <link href="{% static 'base/css/font-awesome.css' %}" rel="stylesheet" />
   <!-- //font-awesome icons -->
   <!-- js -->
@@ -57,7 +57,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <ul>
           <!-- 登入登出區塊 預設為登入註冊 修改if condition 還有寫入使用者名稱-->
           {%if user.is_authenticated %}
-          <li><a href="{% url 'storeApp:userPanel' %}">使用者名稱</a></li>
+          <li><a href="{% url 'storeApp:userPanel' %}">{{ user.username }}</a></li>
           <li><a href="{% url 'storeApp:logout' %}">登出</a></li>
           {% else %}
           <li><a href="{% url 'storeApp:regesiter' %}"> 建立帳戶 </a></li>
@@ -79,7 +79,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
       <div class="clearfix"></div>
     </div>
   </div>
-
   <div class="logo_products">
     <div class="container">
       <div class="w3ls_logo_products_left1">
@@ -123,9 +122,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
           <ul class="nav navbar-nav">
             <li class="active"><a href="{% url 'storeApp:home' %}" class="act">首頁</a></li>
             <!-- Mega Menu -->
-            <li><a href="{% url 'storeApp:teas' %}">紅茶</a></li>
-            <li><a href="{% url 'storeApp:teas' %}">綠茶</a></li>
-            <li><a href="{% url 'storeApp:teas' %}">烏龍茶</a></li>
+            {% for type in types %}
+            <li><a href="{% url 'storeApp:teas_type' type.name %}">{{ type.name }}</a></li>
+            {% endfor %}
             <li><a href="{% url 'storeApp:contact' %}">聯絡我們</a></li>
           </ul>
         </div>
@@ -144,25 +143,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
           </a>
         </li>
         {%block breadcrumb%}
-
         {%endblock breadcrumb%}
       </ol>
     </div>
   </div>
   {%endblock bc%}
   <!-- //breadcrumbs -->
-
   <!-- //插入區-->
   {% block content %}
   {% endblock content %}
   <!-- //插入區-->
-
   <div class="footer">
     <div class="container">
       <div class="w3_footer_grids">
         <div class="col-md-3 w3_footer_grid">
           <h3>聯絡地址</h3>
-
           <ul class="address">
             <li><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i>台北市大安區忠孝東路三段1號</li>
             <li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="https://www.ntut.edu.tw">NTUT</a></li>
@@ -178,9 +173,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="col-md-3 w3_footer_grid">
           <h3>商品目錄</h3>
           <ul class="info">
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:teas' %}">紅茶</a></li>
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:teas' %}">綠茶</a></li>
-            <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="{% url 'storeApp:teas' %}">烏龍茶</a></li>
+            {% for type in types %}
+            <li>
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+              <a href="{% url 'storeApp:teas_type' type.name %}">{{ type.name }}</a>
+            </li>
+            {% endfor %}
           </ul>
         </div>
         <div class="col-md-3 w3_footer_grid">
@@ -200,7 +198,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="clearfix"> </div>
       </div>
     </div>
-
     <div class="footer-copy">
       <div class="container">
         <p>© 2018 Tapei Tech Tea Factory. All rights reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
@@ -228,7 +225,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
   <script src="{%static 'base/js/bootstrap.min.js'%}"></script>
-
   <!-- top-header and slider -->
   <!-- here stars scrolling icon -->
   <script type="text/javascript">
@@ -241,9 +237,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				easingType: 'linear' 
 				};
 			*/
-
       $().UItoTop({ easingType: 'easeOutQuart' });
-
     });
   </script>
   <!-- //here ends scrolling icon -->
@@ -253,7 +247,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     paypal.minicart.render({
       action: '#'
     });
-
     if (~window.location.search.indexOf('reset=true')) {
       paypal.minicart.reset();
     }
@@ -264,11 +257,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   <script type="text/javascript">
     jQuery(document).ready(function () {
       jQuery('#demo1').skdslider({ 'delay': 5000, 'animationSpeed': 2000, 'showNextPrev': true, 'showPlayButton': true, 'autoSlide': true, 'animationType': 'fading' });
-
       jQuery('#responsive').change(function () {
         $('#responsive_wrapper').width(jQuery(this).val());
       });
-
     });
   </script>
   <!-- //main slider-banner -->

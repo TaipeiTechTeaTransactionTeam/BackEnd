@@ -12,6 +12,7 @@ urlpatterns = [
     path('accountPanel/', views.accountPanel, name='accountPanel'),
     path('report/', views.report, name='report'),
     path('teas/', views.teas, name='teas'),
+    path('teas/<str:fk>/', views.teas_type, name='teas_type'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('regesiter/', views.regesiter, name='regesiter'),

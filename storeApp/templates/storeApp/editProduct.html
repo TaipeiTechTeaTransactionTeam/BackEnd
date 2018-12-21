@@ -1,17 +1,15 @@
-{% extends 'header-footer.html' %}
+{% extends 'storeApp/base.html' %}
 {% load static %}
 {%block breadcrumb%}
 <li class="active">編輯產品</li>
 {%endblock breadcrumb%}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
-
 {% block content %}
 <div class="about">
   <div class="container">
     <div class="w3_agileits_contact_grids">
       <div class="col-md-12 product_edit">
         <h2 class="w3_agile_header">編輯商品</h2>
-
         <form action="#" class="" method="post">
           <div class="d-flex justify-content-center">
             <figure class="imghvr-fade col-12 col-xs-12 col-md-12 col-sm-12  col-lg-8">
@@ -31,7 +29,6 @@
               </div>
             </figure>
           </div>
-
           <span class="input input--ichiro">
             <input class="input__field input__field--ichiro" type="text" id="productName" name="name" placeholder=" "
               required="" value="{%block productName%}商品名稱{%endblock productName%}" />
@@ -46,7 +43,6 @@
               <span class="input__label-content input__label-content--ichiro">數量</span>
             </label>
           </span>
-
           <!--在要選取的茶類區塊塞入selected-->
           <select name="type" class="input input--ichiro form-control custom-select" id="inputGroupSelect01">
             <option selected>種類</option>
