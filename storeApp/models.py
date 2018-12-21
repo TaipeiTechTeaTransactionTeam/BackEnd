@@ -52,7 +52,6 @@ class shoppingCartContainProduct(models.Model):
     product = models.ForeignKey(product, on_delete=models.CASCADE)
     purchase_quantity = models.PositiveIntegerField()
 
-
 class order(models.Model):
     ownUser = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=255, null=False)
@@ -62,6 +61,11 @@ class order(models.Model):
 
     def __str__(self):
         return self.ownUser.name
+
+class OrderContainProduct(models.Model):
+    order = models.ForeignKey(order, on_delete=models.CASCADE)
+    product = models.ForeignKey(product, on_delete=models.CASCADE)
+    purchase_quantity = models.PositiveIntegerField()
 
 
 class discount(models.Model):
