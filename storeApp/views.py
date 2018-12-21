@@ -34,7 +34,10 @@ def search(request):
 
 
 def userPanel(request):
-    return render(request, 'storeApp/userPanel.html')
+    if request.user.is_authenticated:
+        return render(request, 'storeApp/userPanel.html')
+    else:
+        return render(request, 'storeApp/login.html')
 
 
 def userSetting(request):
