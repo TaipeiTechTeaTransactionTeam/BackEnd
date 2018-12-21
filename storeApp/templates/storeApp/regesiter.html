@@ -14,8 +14,8 @@
 		<div class="login-form-grids">
 			<h5>個人資訊</h5>
 			<form action="#" method="post">
-				<input type="text" placeholder="First Name..." required=" ">
-				<input type="text" placeholder="Last Name..." required=" ">
+				<input type="text" placeholder="姓" required=" ">
+				<input type="text" placeholder="名" required=" ">
 			</form>
 			<div class="register-check-box">
 				<div class="check">
@@ -24,12 +24,12 @@
 			</div>
 			<h6>帳號資訊</h6>
 			<form action="#" method="post">
-				<input type="username" placeholder="使用者名稱" required=" ">
+				<input type="text" placeholder="使用者名稱" required=" ">
 				<input type="password" placeholder="密碼" required=" ">
 				<input type="password" placeholder="密碼確認" required=" ">
 				<div class="register-check-box">
 					<div class="check">
-						<label class="checkbox"><input type="checkbox" name="checkbox"><i> </i>我接受並同意上述條件</label>
+						<label class="checkbox"><input type="checkbox" name="checkbox" required><i> </i>我接受並同意上述條件</label>
 					</div>
 				</div>
 				<input type="submit" value="Register">
@@ -40,5 +40,6 @@
 		</div>
 	</div>
 </div>
+<script src="{% static 'storeApp/js/passwordValidate.js'%}"></script>
 <!-- //register -->
 {% endblock content %}
