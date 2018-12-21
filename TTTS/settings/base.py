@@ -129,3 +129,5 @@ MEDIA_URL = '/image/'
 LOGIN_REDIRECT_URL = reverse_lazy('storeApp:home')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+DEFAULT_CHARSET = 'utf-8'
