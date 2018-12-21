@@ -9,29 +9,33 @@
 
 <!-- register -->
 <div class="register">
-	<div class="container">
-		<h2>註冊</h2>
-		<div class="login-form-grids">
-			<form action="#" method="post">
-				<h5>個人資訊</h5>
-				<input type="text" placeholder="姓" name="lastName" required=" ">
-				<input type="text" placeholder="名" name="firstName" required=" ">
-				<h6>帳號資訊</h6>
-				<input type="text" placeholder="使用者名稱" name="userName" required=" ">
-				<input type="password" placeholder="密碼" name="password" required=" ">
-				<input type="password" placeholder="密碼確認" required=" ">
-				<div class="register-check-box">
-					<div class="check">
-						<label class="checkbox"><input type="checkbox" name="checkbox" required><i> </i>我接受並同意上述條件</label>
-					</div>
-				</div>
-				<input type="submit" value="Register">
-			</form>
-		</div>
-		<div class="register-home">
-			<a href="{% url 'storeApp:home'%}">首頁</a>
-		</div>
-	</div>
+<div class="container">
+  <h2>註冊</h2>
+  <div class="login-form-grids">
+    <form action="#" method="POST">
+      <h5>個人資訊</h5>
+      <input type="text" placeholder="姓" name="first_name" required=" ">
+      <input type="text" placeholder="名" name="last_name" required=" ">
+      <h6>帳號資訊</h6>
+      {% csrf_token %}
+      <input type="text" placeholder="使用者名稱" name="username" required=" ">
+      <input type="password" placeholder="密碼" name="password" required=" ">
+      <input type="password" placeholder="密碼確認" required=" ">
+      <div class="register-check-box">
+        <div class="check">
+          <label class="checkbox"><input type="checkbox" name="checkbox" required><i> </i>我接受並同意上述條件</label>
+        </div>
+      </div>
+      {% if message %}
+      <a style="color:red">{{ message }}!</a>
+      {% endif %}
+      <input type="submit" value="Register">
+    </form>
+  </div>
+  <div class="register-home">
+    <a href="{% url 'storeApp:home'%}">首頁</a>
+  </div>
+</div>
 </div>
 <script src="{% static 'storeApp/js/passwordValidate.js'%}"></script>
 <!-- //register -->

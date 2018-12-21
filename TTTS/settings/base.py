@@ -1,3 +1,4 @@
+from django.urls import reverse_lazy
 """
 Django settings for TTTS project.
 
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
     'pages',
     'base',
     'storeApp',
+    'crispy_forms',
     'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -121,4 +123,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'image/')
+
 MEDIA_URL = '/image/'
+
+LOGIN_REDIRECT_URL = reverse_lazy('storeApp:home')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+DEFAULT_CHARSET = 'utf-8'
