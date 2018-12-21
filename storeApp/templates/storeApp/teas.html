@@ -48,13 +48,14 @@
         </div>
       </div>
       <div class="agile_top_brands_grids">
+          {% block product %}
+          {% for tea in teas %}
         <div class="col-md-4 top_brand_left">
           <div class="hover14 column">
             <div class="agile_top_brand_left_grid">
               <div class="agile_top_brand_left_grid_pos">
               </div>
-              {% block product %}
-              {% for tea in teas %}
+              
               <div class="agile_top_brand_left_grid1">
                 +
                 <!--- 一筆商品 -->
@@ -98,11 +99,12 @@
                 </figure>
                 <!--- 一筆商品 -->
               </div>
-              {% endfor %}
-              {% endblock product %}
+              
             </div>
           </div>
         </div>
+        {% endfor %}
+        {% endblock product %}
         <div class="clearfix"> </div>
       </div>
       <!--- 換頁按鈕 -->
