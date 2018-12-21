@@ -1,26 +1,23 @@
-{% extends 'header-footer.html' %}
+{% extends 'storeApp/base.html' %}
 {% load static %}
 {%block breadcrumb%}
 <li class="active">購物車</li>
 {%endblock breadcrumb%}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
-
 {% block content %}
 <script src="{% static 'pages/js/checkOut.js'%}"></script>
 <!-- checkout -->
 <div class="checkout">
-	<div class="container">
-		<h2>您的購物車包含以下商品：</h2>
-		<div class="checkout-right">
-
-		</div>
-		<div class="checkout-left">
-			<div class="checkout-right-basket">
-				<a href="{% url 'storeApp:teas' %}"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>繼續購物</a>
-			</div>
-			<div class="clearfix"> </div>
-		</div>
-	</div>
+  <div class="container">
+    <h2>您的購物車包含以下商品：</h2>
+    <div class="checkout-right"></div>
+    <div class="checkout-left">
+      <div class="checkout-right-basket">
+        <a href="{% url 'storeApp:teas' %}"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>繼續購物</a>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
 </div>
 <!-- //checkout -->
 {% endblock content %}
