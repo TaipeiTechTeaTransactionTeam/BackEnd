@@ -30,7 +30,7 @@ class product(models.Model):
     teaType = models.ForeignKey(teaType, on_delete=models.CASCADE, default="")
     amount = models.DecimalField(max_digits=10, decimal_places=0, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=0, null=False)
-    description = models.TextField(max_length=255, null=False)
+    description = models.TextField(null=False)
     AddDate = models.DateField(default=timezone.now)
 
     def get_absolute_url(self):
