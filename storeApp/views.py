@@ -37,8 +37,11 @@ def search(request):
 
 
 def userPanel(request):
-    types = teaType.objects.all()
-    return render(request, 'storeApp/userPanel.html', locals())
+    if request.user.is_authenticated:
+        types = teaType.objects.all()
+        return render(request, 'storeApp/userPanel.html', locals())
+    else:
+        return render(request, 'storeApp/login.html')
 
 
 def userSetting(request):
@@ -114,7 +117,9 @@ def regesiter(request):
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.is_staff = "False"
+            shoppingCart = shoppingCart(ownUser = user)
             user.save()  # 將資料寫入資料庫
+            shoppingCart.save()
             # 若成功建立，重新導向至 index.html
             return redirect('storeApp:`home`')
     else:

@@ -30,7 +30,7 @@ class product(models.Model):
     teaType = models.ForeignKey(teaType, on_delete=models.CASCADE, default="")
     amount = models.DecimalField(max_digits=10, decimal_places=0, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=0, null=False)
-    description = models.TextField(max_length=255, null=False)
+    description = models.TextField(null=False)
     AddDate = models.DateField(default=timezone.now)
 
     def get_absolute_url(self):
@@ -52,7 +52,6 @@ class shoppingCartContainProduct(models.Model):
     product = models.ForeignKey(product, on_delete=models.CASCADE)
     purchase_quantity = models.PositiveIntegerField()
 
-
 class order(models.Model):
     ownUser = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=255, null=False)
@@ -63,18 +62,23 @@ class order(models.Model):
     def __str__(self):
         return self.ownUser.name
 
+class OrderContainProduct(models.Model):
+    order = models.ForeignKey(order, on_delete=models.CASCADE)
+    product = models.ForeignKey(product, on_delete=models.CASCADE)
+    purchase_quantity = models.PositiveIntegerField()
 
-class discount(models.Model):
+class SeasoningDiscount(models.Model):
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=False)
-    type = models.CharField(max_length=25, null=False)
     start_date = models.DateField(null=False)
     end_date = models.DateField(null=False)
 
     def __str__(self):
-        return self.type
+        return self.discount
 
+class ShippingDiscount(SeasoningDiscount):
+    condition = models.DecimalField(max_digits=10, decimal_places=0, null=False)
 
-class productDiscount(discount):
+class productDiscount(SeasoningDiscount):
     product = models.ForeignKey(product, on_delete=models.CASCADE)
 
     def __str__(self):
