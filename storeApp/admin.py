@@ -15,7 +15,7 @@ class ProductAdmin(admin.ModelAdmin):
     ordering = ('AddDate',)
 
 
-@admin.register(product)
+@admin.register(teaType)
 class TeaTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'image')
 
