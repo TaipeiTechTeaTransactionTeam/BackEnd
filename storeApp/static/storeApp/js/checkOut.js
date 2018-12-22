@@ -59,6 +59,8 @@ class CheckOut
         form.innerHTML+=`<input name="discounts" value='[id:0,id:1]' type="hidden" >`;//testing
         var value=document.querySelector(".modal-dialog #addressInput").value;
         form.innerHTML+=`<input name="address" value='${value}' type="hidden">`;
+        form.style.display="none";
+        document.body.append(form);
         form.submit();
     }
     onCheckout()
@@ -424,14 +426,6 @@ class ProductCartView
     {
         return parseFloat(this._amount);
     }
-    /*set number(val)
-    {
-        this.numField.innerText=val;
-    }*/
-    // get number()
-    // {
-    //     return parseInt(this.numField.innerText);
-    // }
     set name(val)
     {
         this.nameField.innerText=val;
@@ -521,9 +515,15 @@ $(
         }
         checkOut=new Nawa.Class.CheckOut(paypal.minicart.cart);
         $(".modal-dialog #modalConfirm").on("click",()=>{
-            if(document.querySelector(".modal-dialog #addressInput").value==="")
+            var addressInput=document.querySelector(".modal-dialog #addressInput");
+            if(addressInput.value==="")
             {
-                alert("地址不能為空");
+                alert("欄位不能為空");
+                return;
+            }
+            if(addressInput.value.length<=8)
+            {
+                alert("地址欄位不小於8");
                 return;
             }
             checkOut.postTo();
