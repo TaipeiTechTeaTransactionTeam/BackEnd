@@ -67,7 +67,6 @@ class OrderContainProduct(models.Model):
     product = models.ForeignKey(product, on_delete=models.CASCADE)
     purchase_quantity = models.PositiveIntegerField()
 
-
 class SeasoningDiscount(models.Model):
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=False)
     start_date = models.DateField(null=False)

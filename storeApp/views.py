@@ -100,7 +100,9 @@ def regesiter(request):
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.is_staff = "False"
+            shoppingCart = shoppingCart(ownUser = user)
             user.save()  # 將資料寫入資料庫
+            shoppingCart.save()
             # 若成功建立，重新導向至 index.html
             return redirect('storeApp:home')
     else:
