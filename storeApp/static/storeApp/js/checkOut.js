@@ -39,8 +39,31 @@ class CheckOut
             //this.number++;
         }
         this.cart.on("remove",this.onRemove,this);
+        this.cart.on("checkout",this.onCheckout,this);
         this.onViewsChange();
 
+    }
+    postTo(path=".")
+    {
+        var items=[];
+        var form=document.createElement("form");
+        
+        form.action=path;
+        form.method="post";
+        for(var item of this.items)
+        {
+            var newItem={uid:item.get("uid"),quantity:item.get("quantity")}
+            items.push(newItem);
+        }
+        form.innerHTML+=`<input name="items" value='${JSON.stringify(items)}' type="hidden" >`;
+        form.innerHTML+=`<input name="discounts" value='[id:0,id:1]' type="hidden" >`;//testing
+        var value=document.querySelector(".modal-dialog #addressInput").value;
+        form.innerHTML+=`<input name="address" value='${value}' type="hidden">`;
+        form.submit();
+    }
+    onCheckout()
+    {
+        this.postTo();
     }
     onRemove()
     {
@@ -497,5 +520,14 @@ $(
 
         }
         checkOut=new Nawa.Class.CheckOut(paypal.minicart.cart);
+        $(".modal-dialog #modalConfirm").on("click",()=>{
+            if(document.querySelector(".modal-dialog #addressInput").value==="")
+            {
+                alert("地址不能為空");
+                return;
+            }
+            checkOut.postTo();
+        })
     }
 );
+

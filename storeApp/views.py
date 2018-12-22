@@ -12,7 +12,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 
 
-from .models import product, teaType
+from .models import product, teaType, discount, productDiscount
 # Create your views here.
 
 teas_pageOne = 1  # first page
@@ -24,6 +24,10 @@ def home(request):
     newoffers = list(products)
     newoffers.reverse()
     newoffers = newoffers[:4]
+    ids=[x.id for x in newoffers]
+    p=productDiscount.objects.filter(id__in=ids)
+    for pp in p.all():
+        print(pp.discount)
     return render(request, 'storeApp/index.html', {
         'products': products,
         'newoffers': newoffers,
@@ -128,6 +132,20 @@ def contact(request):
 
 def checkout(request):
     types = teaType.objects.all()
+    eventDiscounts=discount.objects.filter(type="Event").all()
+    shippingDiscount=discount.objects.filter(type="Shipping").all()
+    if(shippingDiscount):
+        pass
+    shippingDiscount={"type":"Shipping","discount":"100"}
+    eventDiscounts=[
+        {
+            "discount":0.7
+        },
+        {
+            "discount":200
+        }
+    ]
+    shippingPrice=100
     return render(request, 'storeApp/checkout.html', locals())
 
 

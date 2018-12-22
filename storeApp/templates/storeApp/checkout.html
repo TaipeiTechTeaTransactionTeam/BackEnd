@@ -5,6 +5,25 @@
 {%endblock breadcrumb%}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
+<script>
+{% if eventDiscounts%}
+	window.eventDiscounts=
+	[
+		{%for discount in eventDiscounts%}
+			{
+			{%for key,value in discount.items%}
+				{{key}}:{{value}},
+			{%endfor%}
+			},
+		{%endfor%}
+	]
+	for (var items of eventDiscounts)
+			console.log(items);
+{%endif%}
+{%if shippingPrice%}
+
+{%endif%}
+</script>
 <script src="{% static 'storeApp/js/checkOut.js'%}"></script>
 <!-- checkout -->
 <div class="checkout">
@@ -21,7 +40,7 @@
 
 			<div class = "checkout-right-basket">
 				<!-- Button trigger modal -->
-				<button type="button" class="btn glyphicon glyphicon-menu-left" data-toggle="modal" data-target="#exampleModal" aria-hidden="true" >
+				<button type="button" class="checkout btn glyphicon glyphicon-menu-left" data-toggle="modal" data-target="#exampleModal" aria-hidden="true" >
 						結帳
 					  </button>
 			
@@ -41,11 +60,11 @@
 								<div class="input-group-prepend">
 								  <span class="input-group-text row " id="inputGroup-sizing-default" style="margin-left:1px">請輸入送貨地址</span>
 								</div>
-								<input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" style="margin-top:15px">
+								<input type="text" id="addressInput" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" style="margin-top:15px">
 							  </div>
 							<div class="modal-footer">
 							  <button type="button" class="btn btn-success" data-dismiss="modal">離開</button>
-							  <button type="button" class="btn btn-success">確認</button>
+							  <button id="modalConfirm" type="button" class="btn btn-success">確認</button>
 							</div>
 						  </div>
 						</div>
