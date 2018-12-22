@@ -1,37 +1,29 @@
-{% extends 'header-footer.html' %}
+{% extends 'storeApp/base.html' %}
 {% load static %}
 {%block breadcrumb%}
 <li class="active">茶種類</li>
 {%endblock breadcrumb%}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
-
 {% block content %}
-
 <div class="products">
   <div class="container">
     <div class="col-md-4 products-left">
-
       {% block categories %}
       <!--- 目錄列表 -->
       <div class="categories">
         <h2>目錄</h2>
         <ul class="cate">
-          <li><a href="{% url 'storeApp:teas' %}blacktea"><i class="fa fa-arrow-right" aria-hidden="true"></i>紅茶</a></li>
-
-          <li><a href="{% url 'storeApp:teas' %}greentea"><i class="fa fa-arrow-right" aria-hidden="true"></i>綠茶</a></li>
-
-          <li><a href="{% url 'storeApp:teas' %}oolong"><i class="fa fa-arrow-right" aria-hidden="true"></i>烏龍茶</a></li>
-   
+          {% for type in types %}
+          <li><a href="{% url 'storeApp:teas_type' type.name %}"><i class="fa fa-arrow-right" aria-hidden="true"></i>{{ type.name }}</a></li>
+          {% endfor %}
         </ul>
       </div>
       <!--- 目錄列表 -->
       {% endblock categories %}
-
     </div>
     <div class="col-md-8 products-right">
       <div class="products-right-grid">
         <div class="products-right-grids">
-
           {% block menu %}
           <!--- 下拉選單 -->
           <div class="sorting">
@@ -52,18 +44,18 @@
           </div>
           <!--- 下拉選單 -->
           {% endblock menu %}
-
           <div class="clearfix"> </div>
         </div>
       </div>
       <div class="agile_top_brands_grids">
+          {% block product %}
+          {% for tea in teas %}
         <div class="col-md-4 top_brand_left">
           <div class="hover14 column">
             <div class="agile_top_brand_left_grid">
               <div class="agile_top_brand_left_grid_pos">
-
               </div>
-              {% block product %}
+              
               <div class="agile_top_brand_left_grid1">
                 +
                 <!--- 一筆商品 -->
@@ -71,41 +63,33 @@
                   <div class="snipcart-item block">
                     <div class="snipcart-thumb">
                       <!--- 商品照片 -->
-                      <a href="single.html"><img title=" " alt=" " src="images/14.png"></a>
+                      <a href="{% url 'storeApp:detail' tea.id %}"><img title=" " alt=" " src="{{ tea.image.url }}"></a>
                       <!--- 商品照片 -->
-
                       <!--- 商品名稱 -->
-                      <p>Toor Dal</p>
+                      <p>{{ tea.name }}</p>
                       <!--- 商品名稱 -->
-
                       <!--- 商品價錢 -->
-                      <h4>$35.99 <span>$55.00</span></h4>
+                      <h4>{{ tea.price }} <span>{{ tea.price }}</span></h4>
                       <!--- 商品價錢 -->
                     </div>
-
                     <!--加入購物車的小視窗-->
                     <div class="snipcart-details top_brand_home_details">
                       <form action="#" method="post">
                         <fieldset>
                           <input type="hidden" name="cmd" value="_cart">
-
                           <!--使用者加入的數量-->
                           <input type="hidden" name="add" value="1">
                           <!--使用者加入的數量-->
-
                           <!--商品名稱-->
-                          <input type="hidden" name="item_name" value="test">
+                          <input type="hidden" name="item_name" value="{{ tea.name }}">
                           <!--商品名稱-->
-
                           <!--商品價格-->
-                          <input type="hidden" name="amount" value="35.99">
+                          <input type="hidden" name="amount" value="{{ tea.price }}">
                           <!--商品價格-->
-
                           <!--折扣價格-->
                           <input type="hidden" name="discount_amount" value="1.00">
                           <!--折扣價格-->
-
-
+                          <input type="hidden" name="imgSrc" value="{{ tea.image.url }}">
                           <input type="submit" name="submit" value="加入購物車" class="button">
                         </fieldset>
                       </form>
@@ -115,14 +99,14 @@
                 </figure>
                 <!--- 一筆商品 -->
               </div>
-              {% endblock product %}
-
+              
             </div>
           </div>
         </div>
+        {% endfor %}
+        {% endblock product %}
         <div class="clearfix"> </div>
       </div>
-
       <!--- 換頁按鈕 -->
       <nav class="numbering">
         <ul class="pagination paging">
@@ -149,7 +133,6 @@
   </div>
 </div>
 <!--- groceries --->
-
 </div>
 </div>
 {% endblock content %}

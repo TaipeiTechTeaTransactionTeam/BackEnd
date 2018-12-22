@@ -1,4 +1,4 @@
-{% extends 'header-footer.html' %}
+{% extends 'storeApp/base.html' %}
 {% load static %}
 {%block breadcrumb%}
 <li class="active">產品報表</li>
@@ -18,13 +18,11 @@
                       <!--reports -->
                   </select>
               </div>
-                
                   <div class="row ">
                     <img
                       {#report src#}
                       src="{% static 'base/images/no_images.png' %}"
                       {#report src#}
-
                       class="col-12 "
                       alt=""
                       onerror="this.src='./images/no_images.png'"

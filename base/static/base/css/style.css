@@ -1270,6 +1270,21 @@ td.invert-image a img {
     left: -.5em;
     top: 0.1em;
 }
+.checkout-right-basket button{
+    top: -12px;
+	padding:14px 30px;
+	color:#fff;
+	font-size:1em;
+	background:#212121;
+    text-decoration:none;
+    left: -.5em;
+    margin: 0;
+    font-weight: 700;
+    
+}
+.checkout-right-basket button:hover{
+	background:#03ad1d;
+}
 .checkout {
     padding: 5em 0;
 }
