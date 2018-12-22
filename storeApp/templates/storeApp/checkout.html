@@ -23,6 +23,7 @@
 {%if shippingPrice%}
 
 {%endif%}
+window.csrf='{% csrf_token %}';
 </script>
 <script src="{% static 'storeApp/js/checkOut.js'%}"></script>
 <!-- checkout -->

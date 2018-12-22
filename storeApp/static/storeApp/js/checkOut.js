@@ -60,6 +60,7 @@ class CheckOut
         var value=document.querySelector(".modal-dialog #addressInput").value;
         form.innerHTML+=`<input name="address" value='${value}' type="hidden">`;
         form.style.display="none";
+        form.innerHTML+=csrf;
         document.body.append(form);
         form.submit();
     }
