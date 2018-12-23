@@ -10,6 +10,7 @@ class store(models.Model):
     name = models.CharField(max_length=255, null=False)
     address = models.CharField(max_length=255, null=False)
     phone = models.CharField(max_length=10, null=False, unique=True)
+    freight = models.DecimalField(max_digits=10, decimal_places=0, null=False, default = 0)
 
     def __str__(self):
         return self.name
@@ -38,19 +39,6 @@ class product(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class shoppingCart(models.Model):
-    ownUser = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user.name
-
-
-class shoppingCartContainProduct(models.Model):
-    shoppingCart = models.ForeignKey(shoppingCart, on_delete=models.CASCADE)
-    product = models.ForeignKey(product, on_delete=models.CASCADE)
-    purchase_quantity = models.PositiveIntegerField()
 
 class order(models.Model):
     ownUser = models.ForeignKey(User, on_delete=models.CASCADE)
