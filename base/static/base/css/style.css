@@ -5,7 +5,19 @@
     height: 150px;
     object-fit: scale-down;
 }
-
+.couponSection
+{
+    margin:2em 0 0;
+}
+.couponSection h4
+{
+    margin-bottom: 1em;
+}
+/*修正 inputgroup select很小的問題*/
+.input-group > .custom-select
+{
+    width: unset;
+}
 html, body{
     font-size: 100%;
 	font-family: "Noto Sans CJK TC Regular", "微軟正黑體", sans-serif,'Open Sans', sans-serif;
