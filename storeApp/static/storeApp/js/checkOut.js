@@ -15,7 +15,39 @@ Nawa.Class=Nawa.Class||{};
   quantity = 數量
   total = 單項總價
  */
-
+Nawa.Class.DisplayObject=
+class DisplayObject
+{
+    constructor(para)
+    {
+        if(typeof para==="undefined")
+            return;
+        var cname=para.constructor.name
+        if(cname==="String")
+            this.fromQueryString(para);
+        else if(cname.contains("HTML")&&cname.contains("Element"))
+            this.fromHtmlElement(para);
+    }
+    fromHtmlElement(ele){this.display=ele;}
+    fromQueryString(str){this.display=document.querySelector(str);}
+    get innerHTML(){return this.html;}
+    set innerHTML(val){this.html=val;}
+    get html(){return this.display.innerHTML;}
+    set html(val){this.display.innerHTML=val;}
+    get innerText(){return this.text;}
+    set innerText(val){this.text=val;}
+    get text(){return this.display.innerText;}
+    set text(val){this.display.innerText=val;}
+    set visible(val){if(val!==this.visible){if(val){this.display.classList.remove("d-none");}else {this.display.classList.add("d-none"); }}}
+    get visible(){return !this.display.classList.contains("d-none");}
+    show(){this.visible=true;}
+    hide(){this.visible=false;}
+    remove(){this.display.remove();}
+    append(obj){this.display.append(obj.display||obj);}
+    appendTo(father){if(father.display){father.display.append(this.display);}else{father.append(this.display);}}
+    prepend(obj){this.display.prepend(obj.display||obj);}
+    prependTo(father){if(father.display){father.display.prepend(this.display);}else{father.prepend(this.display);}}
+}
 /**
  * 結算總管物件
  * @Class CheckOut
@@ -39,13 +71,11 @@ class CheckOut
         this.cart.on("remove",this.onRemove,this);
         this.cart.on("checkout",this.onCheckout,this);
         this.onViewsChange();
-
     }
     postTo(path=".")
     {
         var items=[];
         var form=document.createElement("form");
-        
         form.action=path;
         form.method="post";
         for(var item of this.items)
@@ -84,13 +114,15 @@ class CheckOut
     {
         if(this.items.length==0)
         {
-            this.checkoutList.title="快去逛逛吧....";
+            this.checkoutList.hide();
+            this.couponSection.hide();
             this.cartTable.hide();
         }
             
         if(this.items.length>=1)
         {
-            this.checkoutList.title="結算";
+            this.checkoutList.show();
+            this.couponSection.show();
             this.cartTable.show();
         }
             
@@ -110,9 +142,10 @@ class CheckOut
     }
     layoutSetup()
     {
-        this.rigthDisplay=document.querySelector(".checkout-right");
-        this.rigthDisplay.innerHTML="";
-        this.leftDisplay=document.querySelector(".checkout-left");
+        this.rigthDisplay=new Nawa.Class.DisplayObject(".checkout-right");
+        this.rigthDisplay.html="";
+        this.leftDisplay=new Nawa.Class.DisplayObject(".checkout-left");
+        this.couponSection=new Nawa.Class.DisplayObject(".couponSection");
         this.rigthDisplay.append(this.cartTable.display);
         this.rigthDisplay.append(this.cartTable.emptyDisplay);
         this.leftDisplay.prepend(this.checkoutList.display);
@@ -139,10 +172,11 @@ class CheckOut
  * 購物車表格
  */
 Nawa.Class.ShoppingCartTable=
-class ShoppingCartTable
+class ShoppingCartTable extends Nawa.Class.DisplayObject
 {
     constructor()
     {
+        super();
         this.createElements();
         this.display.classList.add("timetable_sub");
         this.emptyText=`
@@ -170,20 +204,8 @@ class ShoppingCartTable
         this.display.append(this.bodyDisplay=document.createElement("tbody"));
         this.emptyDisplay=document.createElement("div");
     }
-    show()
-    {this.visible=true;}
-    hide()
-    {
-        this.visible=false;
-    }
-    set emptyText(val)
-    {
-        this.emptyDisplay.innerHTML=val;
-    }
-    get emptyText()
-    {
-        return this.emptyDisplay.innerHTML;
-    }
+    set emptyText(val) {this.emptyDisplay.innerHTML=val;}
+    get emptyText() {return this.emptyDisplay.innerHTML;}
     set visible(val)
     {
         if(val!==this.visible)
@@ -200,23 +222,21 @@ class ShoppingCartTable
             }
         }
     }
-    get visible()
-    {
-        return !this.display.classList.contains("d-none");
-    }
-    
+    get visible(){return !this.display.classList.contains("d-none");}
 }
 /**
  * 結算清單的列表Html管理物件
  */
 Nawa.Class.CheckOutList=
-class CheckOutList
+class CheckOutList extends Nawa.Class.DisplayObject
 {
     constructor(cart)
     {
+        super();
         this.createObjects();
         this.createElements();
         this.display.classList.add("checkout-left-basket");
+        this.title="結算";
         this.cart=cart;
     }
     createObjects()
@@ -226,36 +246,24 @@ class CheckOutList
         this.shippingObject=new Nawa.Class.ProductCheckView({name:"運費",total:this.shippingPrice||0});
         this.totalObject=new Nawa.Class.ProductCheckView({name:"總額",total:0});
     }
-    get shippingPrice()
-    {return window.shippingPrice;}
-    set shippingPrice(val)
-    {this.shippingObject.amount=val;}
-    get subtotal()
-    {return this.cart.total();}
-    set subtotal(val)
-    {this.subtotalObject.total=val;}
-    set total(val)
-    {
-        this.totalObject.total=val;
-    }
+    get shippingPrice(){return window.shippingPrice;}
+    set shippingPrice(val){this.shippingObject.amount=val;}
+    get subtotal(){return this.cart.total();}
+    set subtotal(val){this.subtotalObject.total=val;}
+    set total(val){this.totalObject.total=val;}
     get total()
     {
         this.updateTotal();
         return this.totalObject.total;
     }
-    set title(val)
-    {this.titleDisplay.innerText=val;}
-    get title()
-    {return this.titleDisplay.innerText;}
+    set title(val){this.titleDisplay.innerText=val;}
+    get title(){return this.titleDisplay.innerText;}
     updateTotal()
     {
         this.subtotal=this.subtotal;
         this.total=this.subtotal+this.shippingPrice;
     }
-    append(display)
-    {
-        this.listDisplay.insertBefore(display,this.subtotalObject.display);
-    }
+    append(display){this.listDisplay.insertBefore(display,this.subtotalObject.display);}
     createElements()
     {
         this.display=document.createElement("div");
@@ -287,9 +295,7 @@ class CheckOutProduct
         this.cartView.minusOnclick=()=>{this.quantity>=1?this.quantity--:"nothing";}
     }
     closeOnclick(product){}
-    onChange()
-    {
-    }
+    onChange(){}
     removeViews()
     {
         this.cartView.remove();
@@ -300,14 +306,8 @@ class CheckOutProduct
         this.cartView.attrFromCartItem(this.cartItem);
         this.checkView.attrFromCartItem(this.cartItem);
     }
-    set quantity(val)
-    {
-        this.cartItem.set("quantity",val);
-    }
-    get quantity()
-    {
-        return this.cartItem.get("quantity");
-    }
+    set quantity(val){this.cartItem.set("quantity",val);}
+    get quantity(){return this.cartItem.get("quantity");}
 }
 /**
  * @class ProductCartView
@@ -408,61 +408,32 @@ class ProductCartView
         this.closeField.querySelector("div").classList.add("rem");
         this.closeButton.classList.add("closeBtn");
     }
-    set imgSrc(val)
-    {
-        this.image.src=val;
-    }
-    get imgSrc()
-    {
-        return this.image.src;
-    }
-    set imgLink(val)
-    {
-        this.imageLink.href=val;
-    }
-    get imgLink()
-    {
-        return this.imageLink.href;
-    }
-    set quantity(val)
-    {
-        this.quantityDisplay.innerText=val>0?val:this.quantityDisplay.innerText;
-    }
-    get quantity()
-    {
-        return parseInt(this.quantityDisplay.innerText);
-    }
+    set imgSrc(val) {this.image.src=val;}
+    get imgSrc(){return this.image.src;}
+    set imgLink(val){this.imageLink.href=val;}
+    get imgLink(){return this.imageLink.href;}
+    set quantity(val){this.quantityDisplay.innerText=val>0?val:this.quantityDisplay.innerText;}
+    get quantity(){return parseInt(this.quantityDisplay.innerText);}
     set amount(val)
     {
         this._amount=val;
         this.amoutField.innerText=this.moneySymbol+val;
     }
-    get amount()
-    {
-        return parseFloat(this._amount);
-    }
-    set name(val)
-    {
-        this.nameField.innerText=val;
-    }
-    get name()
-    {
-        return this.nameField.innerText;
-    }
-    remove()
-    {
-        this.display.remove();
-    }
+    get amount(){return parseFloat(this._amount);}
+    set name(val){ this.nameField.innerText=val;}
+    get name(){return this.nameField.innerText; }
+    remove() {this.display.remove();}
 }
 /**
  * @class ProductCheckView
  * 結算清單中每個項目的Html管理物件
  */
 Nawa.Class.ProductCheckView=
-class ProductCheckView
+class ProductCheckView extends Nawa.Class.DisplayObject
 {
     constructor(inputItem,moneySymbol="NT$")
     {
+        super();
         this.moneySymbol=moneySymbol;
         this.createElements();
         this.attrFromInputItem(inputItem);
@@ -499,26 +470,13 @@ class ProductCheckView
             this.totalDisplay=document.createElement("span")
         );
     }
-    get name()
-    {
-        return this.nameDisplay.data;
-    }
-    set name(val)
-    {
-        this.nameDisplay.data=val;
-    }
-    get total()
-    {
-        return this._amount;
-    }
+    get name(){return this.nameDisplay.data;}
+    set name(val){this.nameDisplay.data=val;}
+    get total(){return this._amount;}
     set total(val)
     {
         this._total=val;
         this.totalDisplay.innerText=this.moneySymbol+val;
-    }
-    remove()
-    {
-        this.display.remove();
     }
 }
 
