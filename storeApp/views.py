@@ -12,15 +12,15 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 import math
 
-from .models import product, teaType
+from .models import Product, TeaType
 # Create your views here.
 
 teas_pageOne = 1  # first page
 
 
 def home(request):
-    types = teaType.objects.all()
-    products = product.objects.all()
+    types = TeaType.objects.all()
+    products = Product.objects.all()
     newoffers = list(products)
     newoffers.reverse()
     newoffers = newoffers[:4]
@@ -32,37 +32,37 @@ def home(request):
 
 
 def search(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/search.html', locals())
 
 
 def userPanel(request):
     if request.user.is_authenticated:
-        types = teaType.objects.all()
+        types = TeaType.objects.all()
         return render(request, 'storeApp/userPanel.html', locals())
     else:
         return render(request, 'storeApp/login.html')
 
 
 def userSetting(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/userSetting.html', locals())
 
 
 def accountPanel(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/accountPanel.html', locals())
 
 
 def report(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/report.html', locals())
 
 
 def teas(request):
     # print(request.GET)
-    types = teaType.objects.all()
-    teas = product.objects.all()
+    types = TeaType.objects.all()
+    teas = Product.objects.all()
     if 'page' in request.GET:
         print(request.GET['page'])
         if request.GET['page'] == '':
@@ -84,8 +84,8 @@ def teas(request):
 
 
 def teas_type(request, fk):
-    types = teaType.objects.all()
-    products = product.objects.all()
+    types = TeaType.objects.all()
+    products = Product.objects.all()
     teas = products.filter(teaType=types.get(name=fk))
     if 'page' in request.GET:
         print(request.GET['page'])
@@ -136,7 +136,7 @@ def logout(request):
 
 @require_http_methods(['POST', 'GET'])
 def regesiter(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     if request.method == 'POST':
         data = request.POST
         try:
@@ -162,19 +162,19 @@ def regesiter(request):
 
 
 def contact(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/contact.html', locals())
 
 
 def checkout(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/checkout.html', locals())
 
 
 def detail(request, pk):
-    types = teaType.objects.all()
-    product_ = get_object_or_404(product, pk=pk)
-    newoffers = list(product.objects.all())
+    types = TeaType.objects.all()
+    product_ = get_object_or_404(Product, pk=pk)
+    newoffers = list(Product.objects.all())
     newoffers.reverse()
     newoffers = newoffers[:4]
     return render(request, 'storeApp/detail.html', {
@@ -185,15 +185,15 @@ def detail(request, pk):
 
 
 def editProduct(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/editProduct.html', locals())
 
 
 def manageOrder(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/manageOrder.html', locals())
 
 
 def manageProductAndDiscount(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/manageProductAndDiscount.html', locals())
