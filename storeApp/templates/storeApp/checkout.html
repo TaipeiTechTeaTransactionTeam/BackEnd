@@ -1,5 +1,6 @@
 {% extends 'storeApp/base.html' %}
 {% load static %}
+{% load storeApp_tags %}
 {%block breadcrumb%}
 <li class="active">購物車</li>
 {%endblock breadcrumb%}
@@ -37,9 +38,21 @@ window.csrf='{% csrf_token %}';
 		<section class="couponSection">
 			<h4>選擇折價券</h4>
 			<select class="custom-select" id="inputGroupCoupon">
-				<option value="1" selected>One</option>
-				<option value="2">Two</option>
-				<option value="3">Three</option>
+				{%for eventCoupon in eventDiscounts%}
+				<option value="{{eventCoupon.id}}" >[#{{eventCoupon.id}}] 
+					{% if eventCoupon.discount < 1 %}
+						購物車商品
+						{% if  eventCoupon.discount|isDivisibleAfterTenTimes%}
+							{% widthratio eventCoupon.discount 1 10 %}折
+						{% else %}
+							{% widthratio eventCoupon.discount 1 100 %}折
+						{% endif %}
+						(不包含運費)
+					{% else %}
+						折價{{eventCoupon.discount}}元
+					{% endif %}</option>
+				{%endfor%}
+				
 			</select>
 		</section>
 			

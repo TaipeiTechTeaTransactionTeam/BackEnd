@@ -139,15 +139,25 @@ def checkout(request):
     shippingDiscount=discount.objects.filter(type="Shipping").all()
     if(shippingDiscount):
         pass
-    shippingDiscount={"type":"Shipping","discount":"100"}
-    eventDiscounts=[
-        {
-            "discount":0.7
-        },
-        {
-            "discount":200
-        }
-    ]
+    else:
+        shippingDiscount={"type":"Shipping","discount":"100"}
+    if(eventDiscounts):
+        pass
+    else:
+        eventDiscounts=[
+            {
+                "id":2,
+                "discount":0.7
+            },
+            {
+                "id":4,
+                "discount":200
+            },
+            {
+                "id":6,
+                "discount":0.75
+            },
+        ]
     shippingPrice=100
     return render(request, 'storeApp/checkout.html', locals())
 
