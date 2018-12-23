@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-
+import json
 
 from .models import product, teaType, discount, productDiscount
 # Create your views here.
@@ -44,6 +44,9 @@ def userPanel(request):
     types = teaType.objects.all()
     return render(request, 'storeApp/userPanel.html', locals())
 
+def testJsonApi(request):
+
+    return HttpResponse(json.dumps({"type":"a","local":"b"}))
 
 def userSetting(request):
     types = teaType.objects.all()

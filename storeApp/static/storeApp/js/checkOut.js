@@ -32,11 +32,9 @@ class CheckOut
         this.checkoutList.updateTotal();
         this.layoutSetup();
         this.productItems=[];
-       // this.number=1;
         for(var cartItem of this.items)
         {
             this.append(cartItem);
-            //this.number++;
         }
         this.cart.on("remove",this.onRemove,this);
         this.cart.on("checkout",this.onCheckout,this);
@@ -97,6 +95,7 @@ class CheckOut
         }
             
     }
+
     append(cartItem)
     {
        // i=typeof i === "undefined"?this.number:i;
@@ -215,34 +214,47 @@ class CheckOutList
 {
     constructor(cart)
     {
-        this.totalObject=new Nawa.Class.ProductCheckView({name:"總額",total:0});
+        this.createObjects();
         this.createElements();
         this.display.classList.add("checkout-left-basket");
         this.cart=cart;
     }
-    get total()
+    createObjects()
     {
-        return this.cart.total();
+        this.subtotalObject=new Nawa.Class.ProductCheckView({name:"小結",total:0});
+        this.subtotalObject.display.classList.add("subtotal");
+        this.shippingObject=new Nawa.Class.ProductCheckView({name:"運費",total:this.shippingPrice||0});
+        this.totalObject=new Nawa.Class.ProductCheckView({name:"總額",total:0});
     }
+    get shippingPrice()
+    {return window.shippingPrice;}
+    set shippingPrice(val)
+    {this.shippingObject.amount=val;}
+    get subtotal()
+    {return this.cart.total();}
+    set subtotal(val)
+    {this.subtotalObject.total=val;}
     set total(val)
     {
         this.totalObject.total=val;
     }
+    get total()
+    {
+        this.updateTotal();
+        return this.totalObject.total;
+    }
     set title(val)
-    {
-        this.titleDisplay.innerText=val;
-    }
+    {this.titleDisplay.innerText=val;}
     get title()
-    {
-        return this.titleDisplay.innerText;
-    }
+    {return this.titleDisplay.innerText;}
     updateTotal()
     {
-        this.total=this.total;
+        this.subtotal=this.subtotal;
+        this.total=this.subtotal+this.shippingPrice;
     }
     append(display)
     {
-        this.listDisplay.insertBefore(display,this.totalObject.display);
+        this.listDisplay.insertBefore(display,this.subtotalObject.display);
     }
     createElements()
     {
@@ -252,6 +264,8 @@ class CheckOutList
             this.titleDisplay=document.createElement("h4"),
             this.listDisplay=document.createElement("ul")
         );
+        this.listDisplay.append(this.subtotalObject.display);
+        this.listDisplay.append(this.shippingObject.display);
         this.listDisplay.append(this.totalObject.display);
     }
     
@@ -507,8 +521,9 @@ class ProductCheckView
         this.display.remove();
     }
 }
+
 $(
-    function()
+    ()=>
     {
         if(isDebug())
         {
@@ -522,7 +537,7 @@ $(
                 alert("欄位不能為空");
                 return;
             }
-            if(addressInput.value.length<=8)
+            if(addressInput.value.length<8)
             {
                 alert("地址欄位不小於8");
                 return;

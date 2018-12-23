@@ -21,7 +21,7 @@
 			console.log(items);
 {%endif%}
 {%if shippingPrice%}
-
+window.shippingPrice={{shippingPrice}}
 {%endif%}
 window.csrf='{% csrf_token %}';
 </script>

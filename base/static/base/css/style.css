@@ -1248,6 +1248,16 @@ td.invert-image a img {
 .checkout-left-basket ul li span {
     float: right;
 }
+.checkout-left-basket ul li.subtotal
+{
+    font-size: 1em;
+    color: #3f3f3f;
+    font-weight: 550;
+    padding: 1em 0;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+    margin: 1em 0 ;
+}
 .checkout-left-basket ul li:last-child {
     font-size: 1em;
     color: #212121;
