@@ -30,11 +30,32 @@ def home(request):
         'types': types
     })
 
+# if 'page' in request.GET:
+#         print(request.GET['page'])
+#         if request.GET['page'] == '':
+#             page = 1
+#         else: 
+#             page = int(request.GET['page'])
+#     else:
+#         page = 1
+#     # 取出總頁數
+#     total_page = math.ceil(len(teas) / 9)
+#     # 計算上、下頁
+#     previous_page = page - 1
+#     next_page = page + 1 if total_page >= page + 1 else 0 
+#     # 變成可迭代物件
+#     total_page = range(1, total_page+1)
+#     # 取好 9 個商品
+#     teas = list(teas)[(page - 1 ) * 9:page * 9] 
 
 def search(request):
     types = TeaType.objects.all()
-    return render(request, 'storeApp/search.html', locals())
-
+    if request.method == 'POST':
+        search_text = request.POST['Search']
+        products = Product.objects.filter(name__contains=search_text)
+        return render(request, 'storeApp/search.html', locals())
+    elif  request.method == 'GET':
+        pass
 
 def userPanel(request):
     if request.user.is_authenticated:
