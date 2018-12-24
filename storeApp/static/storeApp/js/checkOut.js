@@ -89,7 +89,7 @@ class CheckOut
             items.push(newItem);
         }
         form.innerHTML+=`<input name="items" value='${JSON.stringify(items)}' type="hidden" >`;
-        form.innerHTML+=`<input name="discounts" value='[id:0,id:1]' type="hidden" >`;//testing
+        form.innerHTML+=`<input name="eventDiscount" value='${JSON.stringify(this.eventDiscountSrcObject)}' type="hidden" >`;//testing
         var value=document.querySelector(".modal-dialog #addressInput").value;
         form.innerHTML+=`<input name="address" value='${value}' type="hidden">`;
         form.style.display="none";
@@ -172,6 +172,7 @@ class CheckOut
     {
         return this.cart.items();
     }
+    get eventDiscountSrcObject(){return window.eventDiscount;}
 }
 /**
  * 購物車表格
