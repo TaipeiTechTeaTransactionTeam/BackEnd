@@ -22,4 +22,5 @@ urlpatterns = [
     path('editProduct/', views.editProduct, name='editProduct'),
     path('manageOrder/', views.manageOrder, name='manageOrder'),
     path('manageProductAndDiscount/', views.manageProductAndDiscount, name='manageProductAndDiscount'),
+    path('testJsonApi/',views.testJsonApi,name="testJsonApi"),
 ]

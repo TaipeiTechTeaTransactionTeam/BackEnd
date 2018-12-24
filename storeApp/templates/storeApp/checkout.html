@@ -1,10 +1,33 @@
 {% extends 'storeApp/base.html' %}
 {% load static %}
+{% load storeApp_tags %}
 {%block breadcrumb%}
 <li class="active">購物車</li>
 {%endblock breadcrumb%}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
+<script>
+	
+{% if eventDiscounts%}
+	window.eventDiscount={ {% for key,val in eventDiscounts.0.items %}{{key}}:{{val}},{% endfor %} };
+	window.eventDiscounts=
+	[
+		{%for discount in eventDiscounts%}
+			{
+			{%for key,value in discount.items%}
+				{{key}}:{{value}},
+			{%endfor%}
+			},
+		{%endfor%}
+	]
+	for (var items of eventDiscounts)
+			console.log(items);
+{%endif%}
+{%if shippingPrice%}
+window.shippingPrice={{shippingPrice}}
+{%endif%}
+window.csrf='{% csrf_token %}';
+</script>
 <script src="{% static 'storeApp/js/checkOut.js'%}"></script>
 <!-- checkout -->
 <div class="checkout">
@@ -13,6 +36,28 @@
 		<div class="checkout-right">
 			
 		</div>
+
+		<section class="couponSection">
+			<h4>選擇折價券</h4>
+			<select class="custom-select" id="inputGroupCoupon">
+				{%for eventCoupon in eventDiscounts%}
+				<option value="{{eventCoupon.id}}" >[#{{eventCoupon.id}}] 
+					{% if eventCoupon.discount < 1 %}
+						購物車商品
+						{% if  eventCoupon.discount|isDivisibleAfterTenTimes%}
+							{% widthratio eventCoupon.discount 1 10 %}折
+						{% else %}
+							{% widthratio eventCoupon.discount 1 100 %}折
+						{% endif %}
+						(不包含運費)
+					{% else %}
+						折價{{eventCoupon.discount}}元
+					{% endif %}</option>
+				{%endfor%}
+				
+			</select>
+		</section>
+			
 		<div class="checkout-left">
 			
 			<div class="checkout-right-basket">
@@ -21,7 +66,7 @@
 
 			<div class = "checkout-right-basket">
 				<!-- Button trigger modal -->
-				<button type="button" class="btn glyphicon glyphicon-menu-left" data-toggle="modal" data-target="#exampleModal" aria-hidden="true" >
+				<button type="button" class="checkout btn glyphicon glyphicon-menu-left" data-toggle="modal" data-target="#exampleModal" aria-hidden="true" >
 						結帳
 					  </button>
 			
@@ -41,16 +86,17 @@
 								<div class="input-group-prepend">
 								  <span class="input-group-text row " id="inputGroup-sizing-default" style="margin-left:1px">請輸入送貨地址</span>
 								</div>
-								<input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" style="margin-top:15px">
+								<input type="text" id="addressInput" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" style="margin-top:15px">
 							  </div>
 							<div class="modal-footer">
 							  <button type="button" class="btn btn-success" data-dismiss="modal">離開</button>
-							  <button type="button" class="btn btn-success">確認</button>
+							  <button id="modalConfirm" type="button" class="btn btn-success">確認</button>
 							</div>
 						  </div>
 						</div>
 					  </div>
-				  </div>
+					</div>
+
 			</div>
 			<div class="clearfix"> </div>
 		</div>

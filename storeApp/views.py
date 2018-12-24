@@ -10,9 +10,10 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-import math
+import json, math
 
-from .models import Product, TeaType
+from .models import Product, TeaType, productDiscount
+
 # Create your views here.
 
 teas_pageOne = 1  # first page
@@ -24,30 +25,15 @@ def home(request):
     newoffers = list(products)
     newoffers.reverse()
     newoffers = newoffers[:4]
+    ids=[x.id for x in newoffers]
+    p=productDiscount.objects.filter(id__in=ids)
+    for pp in p.all():
+        print(pp.discount)
     return render(request, 'storeApp/index.html', {
         'products': products,
         'newoffers': newoffers,
         'types': types
     })
-
-# if 'page' in request.GET:
-#         print(request.GET['page'])
-#         if request.GET['page'] == '':
-#             page = 1
-#         else:
-#             page = int(request.GET['page'])
-#     else:
-#         page = 1
-#     # 取出總頁數
-#     total_page = math.ceil(len(teas) / 9)
-#     # 計算上、下頁
-#     previous_page = page - 1
-#     next_page = page + 1 if total_page >= page + 1 else 0
-#     # 變成可迭代物件
-#     total_page = range(1, total_page+1)
-#     # 取好 9 個商品
-#     teas = list(teas)[(page - 1 ) * 9:page * 9]
-
 
 def search(request):
     types = TeaType.objects.all()
@@ -91,6 +77,9 @@ def userPanel(request):
     else:
         return render(request, 'storeApp/login.html')
 
+def testJsonApi(request):
+
+    return HttpResponse(json.dumps({"type":"a","local":"b"}))
 
 def userSetting(request):
     types = TeaType.objects.all()
@@ -215,7 +204,31 @@ def contact(request):
 
 
 def checkout(request):
-    types = TeaType.objects.all()
+    types = teaType.objects.all()
+    eventDiscounts=discount.objects.filter(type="Event").all()
+    shippingDiscount=discount.objects.filter(type="Shipping").all()
+    if(shippingDiscount):
+        pass
+    else:
+        shippingDiscount={"type":"Shipping","discount":"100"}
+    if(eventDiscounts):
+        pass
+    else:
+        eventDiscounts=[
+            {
+                "id":2,
+                "discount":0.7
+            },
+            {
+                "id":4,
+                "discount":200
+            },
+            {
+                "id":6,
+                "discount":0.75
+            },
+        ]
+    shippingPrice=100
     return render(request, 'storeApp/checkout.html', locals())
 
 
