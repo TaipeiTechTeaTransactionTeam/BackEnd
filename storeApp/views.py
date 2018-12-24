@@ -10,9 +10,10 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-import json, math
+import json
+import math
 
-from .models import Product, TeaType, productDiscount
+from .models import Product, TeaType, ProductDiscount
 
 # Create your views here.
 
@@ -25,8 +26,8 @@ def home(request):
     newoffers = list(products)
     newoffers.reverse()
     newoffers = newoffers[:4]
-    ids=[x.id for x in newoffers]
-    p=productDiscount.objects.filter(id__in=ids)
+    ids = [x.id for x in newoffers]
+    p = ProductDiscount.objects.filter(id__in=ids)
     for pp in p.all():
         print(pp.discount)
     return render(request, 'storeApp/index.html', {
@@ -34,6 +35,7 @@ def home(request):
         'newoffers': newoffers,
         'types': types
     })
+
 
 def search(request):
     types = TeaType.objects.all()
@@ -77,9 +79,11 @@ def userPanel(request):
     else:
         return render(request, 'storeApp/login.html')
 
+
 def testJsonApi(request):
 
-    return HttpResponse(json.dumps({"type":"a","local":"b"}))
+    return HttpResponse(json.dumps({"type": "a", "local": "b"}))
+
 
 def userSetting(request):
     types = TeaType.objects.all()
@@ -204,31 +208,33 @@ def contact(request):
 
 
 def checkout(request):
-    types = teaType.objects.all()
-    eventDiscounts=discount.objects.filter(type="Event").all()
-    shippingDiscount=discount.objects.filter(type="Shipping").all()
+    types = TeaType.objects.all()
+    # eventDiscounts=discount.objects.filter(type="Event").all()
+    # shippingDiscount=discount.objects.filter(type="Shipping").all()
+    shippingDiscount = ''
+    eventDiscounts = ''
     if(shippingDiscount):
         pass
     else:
-        shippingDiscount={"type":"Shipping","discount":"100"}
+        shippingDiscount = {"type": "Shipping", "discount": "100"}
     if(eventDiscounts):
         pass
     else:
-        eventDiscounts=[
+        eventDiscounts = [
             {
-                "id":2,
-                "discount":0.7
+                "id": 2,
+                "discount": 0.7
             },
             {
-                "id":4,
-                "discount":200
+                "id": 4,
+                "discount": 200
             },
             {
-                "id":6,
-                "discount":0.75
+                "id": 6,
+                "discount": 0.75
             },
         ]
-    shippingPrice=100
+    shippingPrice = 100
     return render(request, 'storeApp/checkout.html', locals())
 
 
