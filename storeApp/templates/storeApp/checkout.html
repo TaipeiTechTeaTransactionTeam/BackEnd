@@ -7,7 +7,9 @@
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
 <script>
+	
 {% if eventDiscounts%}
+	window.eventDiscount={ {% for key,val in eventDiscounts.0.items %}{{key}}:{{val}},{% endfor %} };
 	window.eventDiscounts=
 	[
 		{%for discount in eventDiscounts%}

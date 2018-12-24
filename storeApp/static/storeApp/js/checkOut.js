@@ -25,11 +25,12 @@ class DisplayObject
         var cname=para.constructor.name
         if(cname==="String")
             this.fromQueryString(para);
-        else if(cname.contains("HTML")&&cname.contains("Element"))
+        else if(cname.includes("HTML")&&cname.includes("Element"))
             this.fromHtmlElement(para);
     }
     fromHtmlElement(ele){this.display=ele;}
     fromQueryString(str){this.display=document.querySelector(str);}
+    get classList(){return this.display.classList;}
     get innerHTML(){return this.html;}
     set innerHTML(val){this.html=val;}
     get html(){return this.display.innerHTML;}
@@ -40,6 +41,9 @@ class DisplayObject
     set text(val){this.display.innerText=val;}
     set visible(val){if(val!==this.visible){if(val){this.display.classList.remove("d-none");}else {this.display.classList.add("d-none"); }}}
     get visible(){return !this.display.classList.contains("d-none");}
+    getObj(obj){return (obj.constructor.name.includes("HTML")&&obj.constructor.name.includes("Element"))?obj:(obj.display)?this.getObj(obj.display):undefined;}
+    insertBefore(ele,ref){this.display.insertBefore(this.getObj(ele),this.getObj(ref));}
+    insertAfter(ele,ref){this.display.insertAfter(this.getObj(ele),this.getObj(ref));}
     show(){this.visible=true;}
     hide(){this.visible=false;}
     remove(){this.display.remove();}
@@ -61,8 +65,9 @@ class CheckOut
         this.cart=cart;
         this.cartTable=new Nawa.Class.ShoppingCartTable();
         this.checkoutList=new Nawa.Class.CheckOutList(cart);
-        this.checkoutList.updateTotal();
         this.layoutSetup();
+        this.checkoutList.updateTotal();
+        this.checkoutList.updateDiscount();
         this.productItems=[];
         for(var cartItem of this.items)
         {
@@ -109,6 +114,7 @@ class CheckOut
     onChange()
     {
         this.checkoutList.updateTotal();
+        this.checkoutList.updateDiscount();
     }
     onViewsChange()
     {
@@ -133,7 +139,6 @@ class CheckOut
        // i=typeof i === "undefined"?this.number:i;
         var product=new Nawa.Class.CheckOutProduct(cartItem,new Nawa.Class.ProductCartView(cartItem/*,this.number*/),new Nawa.Class.ProductCheckView(cartItem));
         product.closeOnclick=(sender)=>{this.removeItem(sender);sender.cartView.remove();sender.checkView.remove();}
-        var that = this;
         product.onChange=()=>this.onChange();
         this.productItems.push(product);
         this.cartTable.display.append(product.cartView.display);
@@ -243,6 +248,8 @@ class CheckOutList extends Nawa.Class.DisplayObject
     {
         this.subtotalObject=new Nawa.Class.ProductCheckView({name:"小結",total:0});
         this.subtotalObject.display.classList.add("subtotal");
+        this.eventDiscountObject=new Nawa.Class.ProductCheckView({name:"活動折扣",total:0})
+        this.eventDiscountObject.classList.add("discount","eventDiscount");
         this.shippingObject=new Nawa.Class.ProductCheckView({name:"運費",total:this.shippingPrice||0});
         this.totalObject=new Nawa.Class.ProductCheckView({name:"總額",total:0});
     }
@@ -250,6 +257,12 @@ class CheckOutList extends Nawa.Class.DisplayObject
     set shippingPrice(val){this.shippingObject.amount=val;}
     get subtotal(){return this.cart.total();}
     set subtotal(val){this.subtotalObject.total=val;}
+    get eventDiscount(){return this.eventDiscountSrcObject.discount;}
+    get eventDiscountSrcObject(){return window.eventDiscount;}
+    set eventDiscount(val){this.eventDiscountObject.total=val;}
+    get eventDiscountValue(){return this.eventDiscount>=1?(this.eventDiscount>this.subtotal?this.subtotal:this.eventDiscount):this.subtotal*(1-this.eventDiscount);}
+    set eventDiscountValue(val){this.eventDiscountObject.total=val;}
+    get eventDiscountString(){return this.eventDiscount>=1?"折價"+this.eventDiscount+"元":(this.eventDiscount*100)%10===0?this.eventDiscount*10+"折":this.eventDiscount*100+"折";}
     set total(val){this.totalObject.total=val;}
     get total()
     {
@@ -258,10 +271,11 @@ class CheckOutList extends Nawa.Class.DisplayObject
     }
     set title(val){this.titleDisplay.innerText=val;}
     get title(){return this.titleDisplay.innerText;}
+    updateDiscount(){this.eventDiscount=this.eventDiscountValue;}
     updateTotal()
     {
         this.subtotal=this.subtotal;
-        this.total=this.subtotal+this.shippingPrice;
+        this.total=this.subtotal+this.shippingPrice-this.eventDiscountValue;
     }
     append(display){this.listDisplay.insertBefore(display,this.subtotalObject.display);}
     createElements()
@@ -269,11 +283,12 @@ class CheckOutList extends Nawa.Class.DisplayObject
         this.display=document.createElement("div");
         this.display.append
         (
-            this.titleDisplay=document.createElement("h4"),
-            this.listDisplay=document.createElement("ul")
+            (this.titleDisplay=new Nawa.Class.DisplayObject(document.createElement("h4"))).display,
+            (this.listDisplay=new Nawa.Class.DisplayObject(document.createElement("ul"))).display
         );
         this.listDisplay.append(this.subtotalObject.display);
         this.listDisplay.append(this.shippingObject.display);
+        this.listDisplay.append(this.eventDiscountObject);
         this.listDisplay.append(this.totalObject.display);
     }
     
@@ -472,7 +487,7 @@ class ProductCheckView extends Nawa.Class.DisplayObject
     }
     get name(){return this.nameDisplay.data;}
     set name(val){this.nameDisplay.data=val;}
-    get total(){return this._amount;}
+    get total(){return this._total;}
     set total(val)
     {
         this._total=val;
@@ -502,6 +517,12 @@ $(
             }
             checkOut.postTo();
         })
+        function updateEventDiscountToWindow()
+        {
+            window.eventDiscount=window.eventDiscounts[this.selectedIndex];
+            checkOut.onChange();
+        }
+        $("#inputGroupCoupon").on("change",updateEventDiscountToWindow);
     }
 );
 
