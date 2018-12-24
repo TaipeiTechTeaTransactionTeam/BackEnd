@@ -10,7 +10,8 @@ class Store(models.Model):
     name = models.CharField(max_length=255, null=False)
     address = models.CharField(max_length=255, null=False)
     phone = models.CharField(max_length=10, null=False, unique=True)
-    freight = models.DecimalField(max_digits=10, decimal_places=0, null=False, default = 0)
+    freight = models.DecimalField(
+        max_digits=10, decimal_places=0, null=False, default=0)
 
     def __str__(self):
         return self.name
@@ -40,6 +41,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
 class Order(models.Model):
     ownUser = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=255, null=False)
@@ -50,10 +52,12 @@ class Order(models.Model):
     def __str__(self):
         return self.ownUser.name
 
+
 class OrderContainProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     purchase_quantity = models.PositiveIntegerField()
+
 
 class SeasoningDiscount(models.Model):
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=False)
@@ -63,8 +67,11 @@ class SeasoningDiscount(models.Model):
     def __str__(self):
         return self.discount
 
+
 class ShippingDiscount(SeasoningDiscount):
-    condition = models.DecimalField(max_digits=10, decimal_places=0, null=False)
+    condition = models.DecimalField(
+        max_digits=10, decimal_places=0, null=False)
+
 
 class ProductDiscount(SeasoningDiscount):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
