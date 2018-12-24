@@ -34,7 +34,7 @@ def home(request):
 #         print(request.GET['page'])
 #         if request.GET['page'] == '':
 #             page = 1
-#         else: 
+#         else:
 #             page = int(request.GET['page'])
 #     else:
 #         page = 1
@@ -42,20 +42,47 @@ def home(request):
 #     total_page = math.ceil(len(teas) / 9)
 #     # 計算上、下頁
 #     previous_page = page - 1
-#     next_page = page + 1 if total_page >= page + 1 else 0 
+#     next_page = page + 1 if total_page >= page + 1 else 0
 #     # 變成可迭代物件
 #     total_page = range(1, total_page+1)
 #     # 取好 9 個商品
-#     teas = list(teas)[(page - 1 ) * 9:page * 9] 
+#     teas = list(teas)[(page - 1 ) * 9:page * 9]
+
 
 def search(request):
     types = TeaType.objects.all()
     if request.method == 'POST':
         search_text = request.POST['Search']
         products = Product.objects.filter(name__contains=search_text)
+        page = 1
+        total_page = math.ceil(len(products) / 9)
+        # 計算上、下頁
+        previous_page = page - 1
+        next_page = page + 1 if total_page >= page + 1 else 0
+        total_page = range(1, total_page+1)
+        products = list(products)[(page - 1) * 9:page * 9]
         return render(request, 'storeApp/search.html', locals())
-    elif  request.method == 'GET':
-        pass
+    elif request.method == 'GET':
+        if 'page' in request.GET and 'quireText' in request.GET:
+            search_text = request.GET['quireText']
+            if request.GET['page'] == '':
+                page = 1
+            else:
+                page = int(request.GET['page'])
+        else:
+            page = 1
+        # 取出總頁數
+        products = Product.objects.filter(name__contains=search_text)
+        total_page = math.ceil(len(products) / 9)
+        # 計算上、下頁
+        previous_page = page - 1
+        next_page = page + 1 if total_page >= page + 1 else 0
+        # 變成可迭代物件
+        total_page = range(1, total_page+1)
+        # 取好 9 個商品
+        products = list(products)[(page - 1) * 9:page * 9]
+        return render(request, 'storeApp/search.html', locals())
+
 
 def userPanel(request):
     if request.user.is_authenticated:
@@ -81,14 +108,13 @@ def report(request):
 
 
 def teas(request):
-    # print(request.GET)
     types = TeaType.objects.all()
     teas = Product.objects.all()
     if 'page' in request.GET:
         print(request.GET['page'])
         if request.GET['page'] == '':
             page = 1
-        else: 
+        else:
             page = int(request.GET['page'])
     else:
         page = 1
@@ -96,11 +122,11 @@ def teas(request):
     total_page = math.ceil(len(teas) / 9)
     # 計算上、下頁
     previous_page = page - 1
-    next_page = page + 1 if total_page >= page + 1 else 0 
+    next_page = page + 1 if total_page >= page + 1 else 0
     # 變成可迭代物件
     total_page = range(1, total_page+1)
     # 取好 9 個商品
-    teas = list(teas)[(page - 1 ) * 9:page * 9]
+    teas = list(teas)[(page - 1) * 9:page * 9]
     return render(request, 'storeApp/teas.html', locals())
 
 
@@ -113,7 +139,7 @@ def teas_type(request, fk):
         print(request.GET['page'])
         if request.GET['page'] == '':
             page = 1
-        else: 
+        else:
             page = int(request.GET['page'])
     else:
         page = 1
@@ -121,11 +147,11 @@ def teas_type(request, fk):
     total_page = math.ceil(len(teas) / 9)
     # 計算上、下頁
     previous_page = page - 1
-    next_page = page + 1 if total_page >= page + 1 else 0 
+    next_page = page + 1 if total_page >= page + 1 else 0
     # 變成可迭代物件
     total_page = range(1, total_page+1)
     # 取好 9 個商品
-    teas = list(teas)[(page - 1 ) * 9:page * 9]
+    teas = list(teas)[(page - 1) * 9:page * 9]
     return render(request, 'storeApp/teas.html', locals())
 
 
@@ -174,7 +200,7 @@ def regesiter(request):
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.is_staff = "False"
-            shoppingCart = shoppingCart(ownUser = user)
+            shoppingCart = shoppingCart(ownUser=user)
             user.save()  # 將資料寫入資料庫
             shoppingCart.save()
             # 若成功建立，重新導向至 index.html

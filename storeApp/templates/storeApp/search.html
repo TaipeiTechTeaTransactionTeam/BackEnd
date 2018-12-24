@@ -95,22 +95,22 @@
           <ul class="pagination paging">
             {% if previous_page != 0 %}
             <li>
-              <a href="?page={{ previous_page }}" aria-label="Previous">
+              <a href="?page={{ previous_page }}&quireText={{ search_text }}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
             {% endif %}
             {% for i in total_page %}
             {% if i == page%}
-            <li class="active"><a href="?page={{ i }}">{{ i }}<span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="?page={{ i }}&quireText={{ search_text }}">{{ i }}<span class="sr-only">(current)</span></a></li>
             {% else %}
-            <li><a href="?page={{ i }}">{{ i }}</a></li>
+            <li><a href="?page={{ i }}&quireText={{ search_text }}">{{ i }}</a></li>
             {% endif %}
             {% endfor %}
   
             {% if next_page != 0 %}
             <li>
-              <a href="?page={{ next_page }}" aria-label="Next">
+              <a href="?page={{ next_page }}&quireText={{ search_text }}" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
               </a>
             </li>
