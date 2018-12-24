@@ -1,13 +1,13 @@
 from django.contrib import admin
-from .models import product
-from .models import store
-from .models import teaType
+from .models import Product
+from .models import Store
+from .models import TeaType
 from .models import SeasoningDiscount
 from .models import ShippingDiscount
-from .models import productDiscount
+from .models import ProductDiscount
 
 
-@admin.register(product)
+@admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'teaType', 'image', 'amount',
                     'price', 'description', 'AddDate')
@@ -15,7 +15,7 @@ class ProductAdmin(admin.ModelAdmin):
     ordering = ('AddDate',)
 
 
-@admin.register(teaType)
+@admin.register(TeaType)
 class TeaTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'image')
 
@@ -30,9 +30,9 @@ class ShippingDiscountAdmin(admin.ModelAdmin):
     list_display = ('id', 'discount', 'condition', 'start_date', 'end_date')
 
 
-@admin.register(productDiscount)
+@admin.register(ProductDiscount)
 class ProductDiscountAdmin(admin.ModelAdmin):
     list_display = ('id', 'discount', 'product', 'start_date', 'end_date')
 
 
-admin.site.register(store)
+admin.site.register(Store)

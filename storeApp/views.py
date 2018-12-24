@@ -12,7 +12,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 import json, math
 
-from .models import product, teaType, discount, productDiscount
+from .models import Product, TeaType, productDiscount
 
 # Create your views here.
 
@@ -20,8 +20,8 @@ teas_pageOne = 1  # first page
 
 
 def home(request):
-    types = teaType.objects.all()
-    products = product.objects.all()
+    types = TeaType.objects.all()
+    products = Product.objects.all()
     newoffers = list(products)
     newoffers.reverse()
     newoffers = newoffers[:4]
@@ -35,15 +35,44 @@ def home(request):
         'types': types
     })
 
-
 def search(request):
-    types = teaType.objects.all()
-    return render(request, 'storeApp/search.html', locals())
+    types = TeaType.objects.all()
+    if request.method == 'POST':
+        search_text = request.POST['Search']
+        products = Product.objects.filter(name__contains=search_text)
+        page = 1
+        total_page = math.ceil(len(products) / 9)
+        # 計算上、下頁
+        previous_page = page - 1
+        next_page = page + 1 if total_page >= page + 1 else 0
+        total_page = range(1, total_page+1)
+        products = list(products)[(page - 1) * 9:page * 9]
+        return render(request, 'storeApp/search.html', locals())
+    elif request.method == 'GET':
+        if 'page' in request.GET and 'quireText' in request.GET:
+            search_text = request.GET['quireText']
+            if request.GET['page'] == '':
+                page = 1
+            else:
+                page = int(request.GET['page'])
+        else:
+            page = 1
+        # 取出總頁數
+        products = Product.objects.filter(name__contains=search_text)
+        total_page = math.ceil(len(products) / 9)
+        # 計算上、下頁
+        previous_page = page - 1
+        next_page = page + 1 if total_page >= page + 1 else 0
+        # 變成可迭代物件
+        total_page = range(1, total_page+1)
+        # 取好 9 個商品
+        products = list(products)[(page - 1) * 9:page * 9]
+        return render(request, 'storeApp/search.html', locals())
 
 
 def userPanel(request):
     if request.user.is_authenticated:
-        types = teaType.objects.all()
+        types = TeaType.objects.all()
         return render(request, 'storeApp/userPanel.html', locals())
     else:
         return render(request, 'storeApp/login.html')
@@ -53,29 +82,28 @@ def testJsonApi(request):
     return HttpResponse(json.dumps({"type":"a","local":"b"}))
 
 def userSetting(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/userSetting.html', locals())
 
 
 def accountPanel(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/accountPanel.html', locals())
 
 
 def report(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/report.html', locals())
 
 
 def teas(request):
-    # print(request.GET)
-    types = teaType.objects.all()
-    teas = product.objects.all()
+    types = TeaType.objects.all()
+    teas = Product.objects.all()
     if 'page' in request.GET:
         print(request.GET['page'])
         if request.GET['page'] == '':
             page = 1
-        else: 
+        else:
             page = int(request.GET['page'])
     else:
         page = 1
@@ -83,23 +111,24 @@ def teas(request):
     total_page = math.ceil(len(teas) / 9)
     # 計算上、下頁
     previous_page = page - 1
-    next_page = page + 1 if total_page >= page + 1 else 0 
+    next_page = page + 1 if total_page >= page + 1 else 0
     # 變成可迭代物件
     total_page = range(1, total_page+1)
     # 取好 9 個商品
-    teas = list(teas)[(page - 1 ) * 9:page * 9]
+    teas = list(teas)[(page - 1) * 9:page * 9]
     return render(request, 'storeApp/teas.html', locals())
 
 
 def teas_type(request, fk):
-    types = teaType.objects.all()
-    products = product.objects.all()
+    麵包屑 = fk
+    types = TeaType.objects.all()
+    products = Product.objects.all()
     teas = products.filter(teaType=types.get(name=fk))
     if 'page' in request.GET:
         print(request.GET['page'])
         if request.GET['page'] == '':
             page = 1
-        else: 
+        else:
             page = int(request.GET['page'])
     else:
         page = 1
@@ -107,11 +136,11 @@ def teas_type(request, fk):
     total_page = math.ceil(len(teas) / 9)
     # 計算上、下頁
     previous_page = page - 1
-    next_page = page + 1 if total_page >= page + 1 else 0 
+    next_page = page + 1 if total_page >= page + 1 else 0
     # 變成可迭代物件
     total_page = range(1, total_page+1)
     # 取好 9 個商品
-    teas = list(teas)[(page - 1 ) * 9:page * 9]
+    teas = list(teas)[(page - 1) * 9:page * 9]
     return render(request, 'storeApp/teas.html', locals())
 
 
@@ -144,7 +173,7 @@ def logout(request):
 
 @require_http_methods(['POST', 'GET'])
 def regesiter(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     if request.method == 'POST':
         data = request.POST
         try:
@@ -160,7 +189,7 @@ def regesiter(request):
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.is_staff = "False"
-            shoppingCart = shoppingCart(ownUser = user)
+            shoppingCart = shoppingCart(ownUser=user)
             user.save()  # 將資料寫入資料庫
             shoppingCart.save()
             # 若成功建立，重新導向至 index.html
@@ -170,7 +199,7 @@ def regesiter(request):
 
 
 def contact(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/contact.html', locals())
 
 
@@ -204,9 +233,9 @@ def checkout(request):
 
 
 def detail(request, pk):
-    types = teaType.objects.all()
-    product_ = get_object_or_404(product, pk=pk)
-    newoffers = list(product.objects.all())
+    types = TeaType.objects.all()
+    product_ = get_object_or_404(Product, pk=pk)
+    newoffers = list(Product.objects.all())
     newoffers.reverse()
     newoffers = newoffers[:4]
     return render(request, 'storeApp/detail.html', {
@@ -217,15 +246,15 @@ def detail(request, pk):
 
 
 def editProduct(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/editProduct.html', locals())
 
 
 def manageOrder(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/manageOrder.html', locals())
 
 
 def manageProductAndDiscount(request):
-    types = teaType.objects.all()
+    types = TeaType.objects.all()
     return render(request, 'storeApp/manageProductAndDiscount.html', locals())

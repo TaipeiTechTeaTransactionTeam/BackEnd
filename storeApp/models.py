@@ -5,7 +5,7 @@ from django.urls import reverse
 # Create your models here.
 
 
-class store(models.Model):
+class Store(models.Model):
 
     name = models.CharField(max_length=255, null=False)
     address = models.CharField(max_length=255, null=False)
@@ -16,7 +16,7 @@ class store(models.Model):
         return self.name
 
 
-class teaType(models.Model):
+class TeaType(models.Model):
     name = models.CharField(max_length=255, null=False)
     image = models.ImageField(upload_to='teaType')
 
@@ -24,11 +24,11 @@ class teaType(models.Model):
         return self.name
 
 
-class product(models.Model):
+class Product(models.Model):
 
     image = models.ImageField(upload_to='product')
     name = models.CharField(max_length=255, null=False, unique=True)
-    teaType = models.ForeignKey(teaType, on_delete=models.CASCADE, default="")
+    teaType = models.ForeignKey(TeaType, on_delete=models.CASCADE, default="")
     amount = models.DecimalField(max_digits=10, decimal_places=0, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=0, null=False)
     description = models.TextField(null=False)
@@ -40,7 +40,7 @@ class product(models.Model):
     def __str__(self):
         return self.name
 
-class order(models.Model):
+class Order(models.Model):
     ownUser = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=255, null=False)
     Date = models.DateField(default=timezone.now)
@@ -51,8 +51,8 @@ class order(models.Model):
         return self.ownUser.name
 
 class OrderContainProduct(models.Model):
-    order = models.ForeignKey(order, on_delete=models.CASCADE)
-    product = models.ForeignKey(product, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     purchase_quantity = models.PositiveIntegerField()
 
 class SeasoningDiscount(models.Model):
@@ -66,8 +66,8 @@ class SeasoningDiscount(models.Model):
 class ShippingDiscount(SeasoningDiscount):
     condition = models.DecimalField(max_digits=10, decimal_places=0, null=False)
 
-class productDiscount(SeasoningDiscount):
-    product = models.ForeignKey(product, on_delete=models.CASCADE)
+class ProductDiscount(SeasoningDiscount):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.product.name
