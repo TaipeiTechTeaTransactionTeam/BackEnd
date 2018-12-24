@@ -29,11 +29,11 @@ class Product(models.Model):
 
     image = models.ImageField(upload_to='product')
     name = models.CharField(max_length=255, null=False, unique=True)
-    teaType = models.ForeignKey(TeaType, on_delete=models.CASCADE, default="")
+    tea_type = models.ForeignKey(TeaType, on_delete=models.CASCADE, default="")
     amount = models.DecimalField(max_digits=10, decimal_places=0, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=0, null=False)
     description = models.TextField(null=False)
-    AddDate = models.DateField(default=timezone.now)
+    add_date = models.DateField(default=timezone.now)
 
     def get_absolute_url(self):
         return reverse('storeApp:detail', kwargs={'pk': self.pk})
@@ -43,14 +43,14 @@ class Product(models.Model):
 
 
 class Order(models.Model):
-    ownUser = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=255, null=False)
-    Date = models.DateField(default=timezone.now)
-    Total_price = models.DecimalField(
+    own_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=255, null=False, default='unpad')
+    date = models.DateField(default=timezone.now)
+    total_price = models.DecimalField(
         max_digits=10, decimal_places=2, null=False)
 
     def __str__(self):
-        return self.ownUser.name
+        return self.own_user.username
 
 
 class OrderContainProduct(models.Model):
