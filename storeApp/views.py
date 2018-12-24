@@ -10,9 +10,10 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-import json
+import json, math
 
 from .models import product, teaType, discount, productDiscount
+
 # Create your views here.
 
 teas_pageOne = 1  # first page
@@ -41,8 +42,11 @@ def search(request):
 
 
 def userPanel(request):
-    types = teaType.objects.all()
-    return render(request, 'storeApp/userPanel.html', locals())
+    if request.user.is_authenticated:
+        types = teaType.objects.all()
+        return render(request, 'storeApp/userPanel.html', locals())
+    else:
+        return render(request, 'storeApp/login.html')
 
 def testJsonApi(request):
 
@@ -64,8 +68,26 @@ def report(request):
 
 
 def teas(request):
+    # print(request.GET)
     types = teaType.objects.all()
     teas = product.objects.all()
+    if 'page' in request.GET:
+        print(request.GET['page'])
+        if request.GET['page'] == '':
+            page = 1
+        else: 
+            page = int(request.GET['page'])
+    else:
+        page = 1
+    # 取出總頁數
+    total_page = math.ceil(len(teas) / 9)
+    # 計算上、下頁
+    previous_page = page - 1
+    next_page = page + 1 if total_page >= page + 1 else 0 
+    # 變成可迭代物件
+    total_page = range(1, total_page+1)
+    # 取好 9 個商品
+    teas = list(teas)[(page - 1 ) * 9:page * 9]
     return render(request, 'storeApp/teas.html', locals())
 
 
@@ -73,6 +95,23 @@ def teas_type(request, fk):
     types = teaType.objects.all()
     products = product.objects.all()
     teas = products.filter(teaType=types.get(name=fk))
+    if 'page' in request.GET:
+        print(request.GET['page'])
+        if request.GET['page'] == '':
+            page = 1
+        else: 
+            page = int(request.GET['page'])
+    else:
+        page = 1
+    # 取出總頁數
+    total_page = math.ceil(len(teas) / 9)
+    # 計算上、下頁
+    previous_page = page - 1
+    next_page = page + 1 if total_page >= page + 1 else 0 
+    # 變成可迭代物件
+    total_page = range(1, total_page+1)
+    # 取好 9 個商品
+    teas = list(teas)[(page - 1 ) * 9:page * 9]
     return render(request, 'storeApp/teas.html', locals())
 
 
@@ -121,9 +160,11 @@ def regesiter(request):
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.is_staff = "False"
+            shoppingCart = shoppingCart(ownUser = user)
             user.save()  # 將資料寫入資料庫
+            shoppingCart.save()
             # 若成功建立，重新導向至 index.html
-            return redirect('storeApp:`home`')
+            return redirect("storeApp:home")
     else:
         return render(request, 'storeApp/regesiter.html', locals())
 

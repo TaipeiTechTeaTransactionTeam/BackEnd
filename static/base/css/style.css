@@ -1,21 +1,10 @@
-/*--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
---*/
-/* .mt-1{margin-top:1em}
-.mt-2{margin-top:2em}
-.mb-1{margin-bottom: 1em}
-.mb-2{margin-bottom: 2em} */
-/* .mx-auto{
-    margin-left:auto;
-    margin-right: auto;
+/*- 產品項目中圖片大小限制 -*/
+.snipcart-thumb img,td.invert-image img.img-responsive
+{
+    width:150px;
+    height: 150px;
 }
-.my-auto{
-    margin-top: auto;
-    margin-bottom: auto;
-} */
+
 html, body{
     font-size: 100%;
 	font-family: "Noto Sans CJK TC Regular", "微軟正黑體", sans-serif,'Open Sans', sans-serif;
@@ -1153,7 +1142,7 @@ td.invert-image a img {
 .rem{
 	position:relative;
 }
-.close1,.close2,.close3 {
+.closeBtn,.close1,.close2,.close3 {
     background: url('../images/close_1.png') no-repeat 0px 0px;
     cursor: pointer;
     width: 28px;
@@ -1258,7 +1247,7 @@ td.invert-image a img {
 .checkout-left-basket ul li span {
     float: right;
 }
-.checkout-left-basket ul li:nth-child(5) {
+.checkout-left-basket ul li:last-child {
     font-size: 1em;
     color: #212121;
     font-weight: 600;
@@ -1280,6 +1269,21 @@ td.invert-image a img {
 .checkout-right-basket a span {
     left: -.5em;
     top: 0.1em;
+}
+.checkout-right-basket button{
+    top: -12px;
+	padding:14px 30px;
+	color:#fff;
+	font-size:1em;
+	background:#212121;
+    text-decoration:none;
+    left: -.5em;
+    margin: 0;
+    font-weight: 700;
+    
+}
+.checkout-right-basket button:hover{
+	background:#03ad1d;
 }
 .checkout {
     padding: 5em 0;

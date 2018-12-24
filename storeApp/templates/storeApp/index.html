@@ -15,11 +15,11 @@
       <h3>國韻天香，金枝玉葉</h3>
     </div>
   </li>
-  {% for product in products %}
+  {% for type in types %}
   <li>
-    <img src="{{ product.image.url }}" alt="{{ product }}" />
+    <img src="{{ type.image.url }}" alt="{{ type }}" />
     <div class="slide-desc">
-      <h3>{{ product }}</h3>
+      <h3><a href="{% url 'storeApp:teas_type' type %}" style="color:white">{{ type }}</a></h3>
     </div>
   </li>
   {% endfor %}

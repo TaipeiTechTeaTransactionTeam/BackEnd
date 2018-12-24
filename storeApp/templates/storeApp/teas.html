@@ -14,7 +14,8 @@
         <h2>目錄</h2>
         <ul class="cate">
           {% for type in types %}
-          <li><a href="{% url 'storeApp:teas_type' type.name %}"><i class="fa fa-arrow-right" aria-hidden="true"></i>{{ type.name }}</a></li>
+          <li><a href="{% url 'storeApp:teas_type' type.name %}"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+              {{ type.name }}</a></li>
           {% endfor %}
         </ul>
       </div>
@@ -48,13 +49,14 @@
         </div>
       </div>
       <div class="agile_top_brands_grids">
+        {% block product %}
+        {% for tea in teas %}
         <div class="col-md-4 top_brand_left">
           <div class="hover14 column">
             <div class="agile_top_brand_left_grid">
               <div class="agile_top_brand_left_grid_pos">
               </div>
-              {% block product %}
-              {% for tea in teas %}
+
               <div class="agile_top_brand_left_grid1">
                 +
                 <!--- 一筆商品 -->
@@ -98,31 +100,39 @@
                 </figure>
                 <!--- 一筆商品 -->
               </div>
-              {% endfor %}
-              {% endblock product %}
+
             </div>
           </div>
         </div>
+        {% endfor %}
+        {% endblock product %}
         <div class="clearfix"> </div>
       </div>
       <!--- 換頁按鈕 -->
       <nav class="numbering">
         <ul class="pagination paging">
+          {% if previous_page != 0 %}
           <li>
-            <a href="#" aria-label="Previous">
+            <a href="?page={{ previous_page }}" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li class="active"><a href="#">1<span class="sr-only">(current)</span></a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
+          {% endif %}
+          {% for i in total_page %}
+          {% if i == page%}
+          <li class="active"><a href="?page={{ i }}">{{ i }}<span class="sr-only">(current)</span></a></li>
+          {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+          {% endfor %}
+
+          {% if next_page != 0 %}
           <li>
-            <a href="#" aria-label="Next">
+            <a href="?page={{ next_page }}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
+          {% endif %}
         </ul>
       </nav>
       <!--- 換頁按鈕 -->
