@@ -188,14 +188,13 @@ def regesiter(request):
             message = user.username + " 帳號已經建立! "
             return render(request, 'storeApp/regesiter.html', locals())
         else:  # 建立 username 帳號
-            user = User.objects.create_user(
-                data['username'], data['email'], data['password'])
+            user = User.objects.create_user(username=data['username'], password=data['password'])
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.is_staff = "False"
-            shoppingCart = shoppingCart(ownUser=user)
+            # shoppingCart = shoppingCart(ownUser=user)
             user.save()  # 將資料寫入資料庫
-            shoppingCart.save()
+            # shoppingCart.save()
             # 若成功建立，重新導向至 index.html
             return redirect("storeApp:home")
     else:
