@@ -32,14 +32,16 @@
         <div class="col-md-8 products-right">
           <!-- {{ products }} -->
           <div class="agile_top_brands_grids">
+              {%block oneProductSearch%}
+              {% if products %}
+              {% for product in products %}
             <div class="col-md-4 top_brand_left">
               <div class="hover14 column">
                 <div class="agile_top_brand_left_grid">
+                    <div class="agile_top_brand_left_grid_pos">
+                    </div>
                   <div class="agile_top_brand_left_grid1">
-                    <!--一筆搜尋結果區塊-->
-                    {%block oneProductSearch%}
-                    {% if products %}
-                    {% for product in products %}
+                    <!--一筆搜尋結果區塊-->    
                     <figure>
                       <div class="snipcart-item block">
                         <div class="snipcart-thumb">
@@ -75,18 +77,17 @@
                         <!--加入購物車的小視窗-->
                       </div>
                     </figure>
-                    {% endfor %}
-                    {% else %}
-                    <h3>找不到商品貨色原</h3>
-                    {% endif %}
-                    {%endblock oneProductSearch%}
                     <!--一筆搜尋結果區塊-->
                   </div>
                 </div>
               </div>
               <!--一筆搜尋結果顯示-->
             </div>
-            <div class="col-md-4 top_brand_left"></div>
+            {% endfor %}
+            {% else %}
+            <h3>找不到商品貨色原</h3>   
+            {% endif %}
+            {%endblock oneProductSearch%}
             <div class="clearfix"> </div>
           </div>
           <!--- 換頁按鈕 -->
