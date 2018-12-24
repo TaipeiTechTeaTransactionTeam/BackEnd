@@ -105,6 +105,7 @@ def teas(request):
 
 
 def teas_type(request, fk):
+    麵包屑 = fk
     types = TeaType.objects.all()
     products = Product.objects.all()
     teas = products.filter(teaType=types.get(name=fk))
