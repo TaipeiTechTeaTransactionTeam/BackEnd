@@ -1270,6 +1270,10 @@ td.invert-image a img {
     border-bottom: 1px solid #DDD;
     margin: 1em 0 ;
 }
+.checkout-left-basket ul li.discount
+{
+    color:#009216;
+}
 .checkout-left-basket ul li:last-child {
     font-size: 1em;
     color: #212121;
