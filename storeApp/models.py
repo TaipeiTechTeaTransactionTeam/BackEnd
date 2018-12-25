@@ -11,7 +11,7 @@ class Store(models.Model):
     address = models.CharField(verbose_name="地址", max_length=255, null=False)
     phone = models.CharField(
         verbose_name="手機", max_length=10, null=False, unique=True)
-    freight = models.DecimalField(verbose_name="貨物數量",
+    freight = models.DecimalField(verbose_name="運費",
                                   max_digits=10, decimal_places=0, null=False, default=0)
 
     def __str__(self):
@@ -39,7 +39,8 @@ class Product(models.Model):
     image = models.ImageField(verbose_name="圖片", upload_to='product')
     name = models.CharField(
         verbose_name="名稱", max_length=255, null=False, unique=True)
-    tea_type = models.ForeignKey(TeaType,verbose_name="茶類", on_delete=models.CASCADE, default="")
+    tea_type = models.ForeignKey(
+        TeaType, verbose_name="茶類", on_delete=models.CASCADE, default="")
     amount = models.DecimalField(
         verbose_name="數量", max_digits=10, decimal_places=0, null=False)
     price = models.DecimalField(
@@ -92,6 +93,8 @@ class SeasoningDiscount(models.Model):
         verbose_name="折扣", max_digits=10, decimal_places=2, null=False)
     start_date = models.DateField(verbose_name="開始日期", null=False)
     end_date = models.DateField(verbose_name="結束日期", null=False)
+    description = models.CharField(
+        verbose_name="描述", max_length=255, null=False)
 
     def __str__(self):
         return self.discount
