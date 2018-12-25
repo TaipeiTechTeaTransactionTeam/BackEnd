@@ -1,0 +1,55 @@
+import MySQLdb
+from pathlib import Path
+import shutil
+from subprocess import getoutput
+def readDBcnf():
+    fileName="./my.cnf"
+    if(Path(fileName).is_file()):
+        f= open(fileName,"r")
+        content=f.read(-1)
+        content=content.replace(" ","")
+        lines=content.split("\n")
+        def getVal(atrr):
+            return [x.split("=")[1] for x in lines if x.split("=")[0]==atrr] [0]
+        user=getVal("user")
+        password=getVal("password")
+        f.close()
+        return user,password
+    else:
+        pass
+def rmMigrations():
+    path="storeApp/migrations"
+    shutil.rmtree(path, ignore_errors=True)
+def createMigrations():
+    try:
+        print(getoutput("python manage.py makemigrations storeApp".split(" ")))
+    except:
+        pass
+    try:
+        print(getoutput("python manage.py migrate".split(" ")))
+    except:
+        pass
+def sql():
+    user,pwd=readDBcnf()
+    db  =  MySQLdb . connect ( 
+     host = "localhost" ,     #主機名
+     user = user ,          #用戶名
+     passwd = pwd,   #密碼
+    )         #數據庫名稱
+
+    #查詢前，必須先獲取游標
+    cur  =  db . cursor ()
+    try:
+        cur.execute("drop database TTTS")
+    except:
+        pass
+    try:
+        cur.execute("CREATE DATABASE TTTS CHARACTER SET utf8 COLLATE utf8_general_ci;")
+    except:
+        pass
+    db.commit()
+    db.close()
+rmMigrations()
+sql()
+createMigrations()
+
