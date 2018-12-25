@@ -12,8 +12,9 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 import json
 import math
+from pprint import pprint
 
-from .models import Product, TeaType, ProductDiscount
+from .models import Product, TeaType, ProductDiscount, Order, OrderContainProduct
 
 # Create your views here.
 
@@ -75,9 +76,12 @@ def search(request):
 def userPanel(request):
     if request.user.is_authenticated:
         types = TeaType.objects.all()
+        orders = Order.objects.filter(own_user=request.user)
+        # for order in orders:
+        # ois = OrderContainProduct.
         return render(request, 'storeApp/userPanel.html', locals())
     else:
-        return render(request, 'storeApp/login.html')
+        return redirect('storeApp:login')
 
 
 def testJsonApi(request):
@@ -104,7 +108,6 @@ def teas(request):
     types = TeaType.objects.all()
     teas = Product.objects.all()
     if 'page' in request.GET:
-        print(request.GET['page'])
         if request.GET['page'] == '':
             page = 1
         else:
@@ -127,9 +130,8 @@ def teas_type(request, fk):
     麵包屑 = fk
     types = TeaType.objects.all()
     products = Product.objects.all()
-    teas = products.filter(teaType=types.get(name=fk))
+    teas = products.filter(tea_type=types.get(name=fk))
     if 'page' in request.GET:
-        print(request.GET['page'])
         if request.GET['page'] == '':
             page = 1
         else:
@@ -189,13 +191,13 @@ def regesiter(request):
             return render(request, 'storeApp/regesiter.html', locals())
         else:  # 建立 username 帳號
             user = User.objects.create_user(
-                data['username'], data['email'], data['password'])
+                username=data['username'], password=data['password'])
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.is_staff = "False"
-            shoppingCart = shoppingCart(ownUser=user)
+            # shoppingCart = shoppingCart(ownUser=user)
             user.save()  # 將資料寫入資料庫
-            shoppingCart.save()
+            # shoppingCart.save()
             # 若成功建立，重新導向至 index.html
             return redirect("storeApp:home")
     else:
@@ -206,35 +208,52 @@ def contact(request):
     types = TeaType.objects.all()
     return render(request, 'storeApp/contact.html', locals())
 
+# {'uid': '13', 'quantity': 2}
+
 
 def checkout(request):
-    types = TeaType.objects.all()
-    # eventDiscounts=discount.objects.filter(type="Event").all()
-    # shippingDiscount=discount.objects.filter(type="Shipping").all()
-    shippingDiscount = ''
-    eventDiscounts = ''
-    if(shippingDiscount):
+    if request.method == 'GET':
+        types = TeaType.objects.all()
+        # eventDiscounts=discount.objects.filter(type="Event").all()
+        # shippingDiscount=discount.objects.filter(type="Shipping").all()
+        shippingDiscount = ''
+        eventDiscounts = ''
+        if(shippingDiscount):
+            pass
+        else:
+            shippingDiscount = {"type": "Shipping", "discount": "100"}
+        if(eventDiscounts):
+            pass
+        else:
+            eventDiscounts = [
+                {
+                    "id": 2,
+                    "discount": 0.7
+                },
+                {
+                    "id": 4,
+                    "discount": 200
+                },
+                {
+                    "id": 6,
+                    "discount": 0.75
+                },
+            ]
+        shippingPrice = 100
+    elif request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('storeApp:login')
+        total_price = 0
+        datas = json.loads(request.POST['items'])
+        for data in datas:
+            total_price += Product.objects.get(
+                id=data['uid']).price * data['quantity']
+        order = Order(own_user=request.user, total_price=total_price)
+        order.save()
+        for data in datas:
+            OrderContainProduct.objects.create(order=order, product=Product.objects.get(
+                id=data['uid']), purchase_quantity=data['quantity'])
         pass
-    else:
-        shippingDiscount = {"type": "Shipping", "discount": "100"}
-    if(eventDiscounts):
-        pass
-    else:
-        eventDiscounts = [
-            {
-                "id": 2,
-                "discount": 0.7
-            },
-            {
-                "id": 4,
-                "discount": 200
-            },
-            {
-                "id": 6,
-                "discount": 0.75
-            },
-        ]
-    shippingPrice = 100
     return render(request, 'storeApp/checkout.html', locals())
 
 
