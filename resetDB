@@ -1,6 +1,7 @@
 import MySQLdb
 from pathlib import Path
 import shutil
+import os
 from subprocess import getoutput
 def readDBcnf():
     fileName="./my.cnf"
@@ -16,7 +17,12 @@ def readDBcnf():
         f.close()
         return user,password
     else:
-        pass
+        print("沒有my.cnf無法使用資料庫")
+        if(input("使用locaSetup並繼續(y/n)\n> ")=="y"):
+            os.system("python localSetup")
+            return readDBcnf()
+        else:
+            exit()
 def rmMigrations():
     path="storeApp/migrations"
     shutil.rmtree(path, ignore_errors=True)
