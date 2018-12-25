@@ -26,6 +26,7 @@ def readDBcnf():
 def rmMigrations():
     path="storeApp/migrations"
     shutil.rmtree(path, ignore_errors=True)
+    print("刪除 "+path)
 def createMigrations():
     try:
         print(getoutput("python manage.py makemigrations storeApp".split(" ")))
@@ -47,15 +48,23 @@ def sql():
     cur  =  db . cursor ()
     try:
         cur.execute("drop database TTTS")
+        print("刪除DB TTTS")
     except:
         pass
     try:
         cur.execute("CREATE DATABASE TTTS CHARACTER SET utf8 COLLATE utf8_general_ci;")
+        print("建立utf8 DB TTTS")
     except:
         pass
     db.commit()
     db.close()
-rmMigrations()
-sql()
-createMigrations()
+funcs=[rmMigrations,sql,createMigrations]
+for key,val in enumerate(funcs):
+    print(key+1,end="")
+    print("/",end="")
+    print(len(funcs))
+    print()
+    val()
+    print("--------")
+
 
