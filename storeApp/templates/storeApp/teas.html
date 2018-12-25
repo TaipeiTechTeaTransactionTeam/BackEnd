@@ -1,7 +1,7 @@
 {% extends 'storeApp/base.html' %}
 {% load static %}
 {%block breadcrumb%}
-<li class="">茶種類</li>
+<li class=""><a href="{% url 'storeApp:teas' %}">茶種類</a></li>
 <li class="active">{{ 麵包屑 }}</li>
 {%endblock breadcrumb%}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
@@ -14,7 +14,7 @@
       <div class="categories">
         <h2>目錄</h2>
         <ul class="cate">
-          <li><a href=""><i class="fa fa-arrow-right" aria-hidden="true"></i>所有商品</a></li>
+          <li><a href="{% url 'storeApp:teas' %}"><i class="fa fa-arrow-right" aria-hidden="true"></i>所有商品</a></li>
           {% for type in types %}
           <ul>
             <li><a href="{% url 'storeApp:teas_type' type.name %}"><i class="fa fa-arrow-right" aria-hidden="true"></i>
