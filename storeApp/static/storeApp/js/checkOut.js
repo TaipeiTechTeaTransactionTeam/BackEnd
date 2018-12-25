@@ -504,7 +504,10 @@ $(
 
         }
         checkOut=new Nawa.Class.CheckOut(paypal.minicart.cart);
-        $(".modal-dialog #modalConfirm").on("click",()=>{
+        $(".modal-dialog #modalConfirm").on("click",function()
+        {
+            if(!isLogged)
+                location.replace("/login");
             var addressInput=document.querySelector(".modal-dialog #addressInput");
             if(addressInput.value==="")
             {
