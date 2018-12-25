@@ -9,6 +9,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <head>
   {% load static %}
+  <script>const isLogged='{{ user.is_authenticated }}'==="True";</script>
   <link rel="stylesheet" href="{% static 'base/css/bootstrap4.css' %}">
   <title>{% block headTitle%} TaipeiTech Tea Transaction {% endblock headTitle %}</title>
   <!-- for-mobile-apps -->
