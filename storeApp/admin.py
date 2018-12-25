@@ -15,15 +15,20 @@ class ProductAdmin(admin.ModelAdmin):
     fields = ('name', 'tea_type', 'image', 'amount', 'price', 'description')
     ordering = ('add_date',)
 
+def make_published(modeladmin, request, queryset):
+    queryset.update(status='p')
+make_published.short_description = "Mark selected stories as published"
+
 
 @admin.register(TeaType)
 class TeaTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'image')
-
+    actions = [make_published]
 
 @admin.register(SeasoningDiscount)
 class SeasoningDiscountAdmin(admin.ModelAdmin):
-    list_display = ('id', 'discount', 'start_date', 'end_date')
+    pass
+    # list_display = ('id', 'discount', 'start_date', 'end_date')
 
 
 @admin.register(ShippingDiscount)
@@ -38,11 +43,12 @@ class ProductDiscountAdmin(admin.ModelAdmin):
 
 class OrderContainProductInline(admin.TabularInline):
     model = OrderContainProduct
-    extra = 1
+    extra = 0
 
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id', 'own_user']
     inlines = [OrderContainProductInline]
 
 

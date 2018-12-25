@@ -76,9 +76,12 @@ def search(request):
 def userPanel(request):
     if request.user.is_authenticated:
         types = TeaType.objects.all()
+        orders = Order.objects.filter(own_user=request.user)
+        # for order in orders:
+        # ois = OrderContainProduct.
         return render(request, 'storeApp/userPanel.html', locals())
     else:
-        return render(request, 'storeApp/login.html')
+        return redirect('storeApp:login')
 
 
 def testJsonApi(request):
@@ -238,6 +241,8 @@ def checkout(request):
             ]
         shippingPrice = 100
     elif request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('storeApp:login')
         total_price = 0
         datas = json.loads(request.POST['items'])
         for data in datas:
