@@ -6,6 +6,7 @@ from .models import Order, OrderContainProduct
 from .models import SeasoningDiscount
 from .models import ShippingDiscount
 from .models import ProductDiscount
+from .models import Report
 
 
 @admin.register(Product)
@@ -50,6 +51,11 @@ class OrderContainProductInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'own_user']
     inlines = [OrderContainProductInline]
+
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+    date_hierarchy = 'date' # 通过日期过滤对象
+    list_display = ['id', 'own_user']
 
 
 admin.site.register(Store)
