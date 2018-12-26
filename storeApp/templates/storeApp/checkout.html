@@ -9,13 +9,24 @@
 <script>
 	
 {% if eventDiscounts%}
-	window.eventDiscount={ {% for key,val in eventDiscounts.0.items %}{{key}}:{{val}},{% endfor %} };
+	window.eventDiscount={ {% for key,value in eventDiscounts.0.items %}{{key}}:{% if key == "description" %}
+					"{{ value }}" 
+				{% else %}
+					{{ value }} 
+				{% endif %}
+				,{% endfor %} };
 	window.eventDiscounts=
 	[
 		{%for discount in eventDiscounts%}
 			{
 			{%for key,value in discount.items%}
-				{{key}}:{{value}},
+				{{key}}:
+				{% if key == "description" %}
+					"{{ value }}" 
+				{% else %}
+					{{ value }} 
+				{% endif %}
+				,
 			{%endfor%}
 			},
 		{%endfor%}
@@ -41,7 +52,10 @@ window.csrf='{% csrf_token %}';
 			<h4>選擇折價券</h4>
 			<select class="custom-select" id="inputGroupCoupon">
 				{%for eventCoupon in eventDiscounts%}
-				<option value="{{eventCoupon.id}}" >[#{{eventCoupon.id}}] 
+				<option value="{{eventCoupon.id}}" >[#{{eventCoupon.id}}] {{eventCoupon.description}}
+					{% if eventCoupon.condition > 0 %}
+					滿{{eventCoupon.condition}}
+					{% endif %}
 					{% if eventCoupon.discount < 1 %}
 						購物車商品
 						{% if  eventCoupon.discount|isDivisibleAfterTenTimes%}
