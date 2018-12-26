@@ -1,8 +1,12 @@
 {% extends 'storeApp/base.html' %}
 {% load static %}
 {%block breadcrumb%}
-<li class="">茶種類</li>
+{% if 麵包屑 %}
+<li class=""><a href="{% url 'storeApp:teas' %}">茶種類</a></li>
 <li class="active">{{ 麵包屑 }}</li>
+{% else %}
+<li class="active">茶種類</a></li>
+{% endif %}
 {%endblock breadcrumb%}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
@@ -14,11 +18,11 @@
       <div class="categories">
         <h2>目錄</h2>
         <ul class="cate">
-          <li><a href=""><i class="fa fa-arrow-right" aria-hidden="true"></i>所有商品</a></li>
+          <li><a href="{% url 'storeApp:teas' %}"><i class="fa fa-arrow-right" aria-hidden="true"></i>所有商品</a></li>
           {% for type in types %}
           <ul>
             <li><a href="{% url 'storeApp:teas_type' type.name %}"><i class="fa fa-arrow-right" aria-hidden="true"></i>
-              {{ type.name }}</a></li>
+                {{ type.name }}</a></li>
           </ul>
           {% endfor %}
         </ul>
@@ -38,9 +42,7 @@
         <div class="col-md-4 top_brand_left agile_top_brands_grids">
           <div class="hover14 column">
             <div class="agile_top_brand_left_grid">
-              <div class="agile_top_brand_left_grid_pos">
-              </div>
-
+              <div class="agile_top_brand_left_grid_pos"></div>
               <div class="agile_top_brand_left_grid1">
                 <!--- 一筆商品 -->
                 <figure>
@@ -67,6 +69,9 @@
                           <!--商品名稱-->
                           <input type="hidden" name="item_name" value="{{ tea.name }}">
                           <!--商品名稱-->
+                          <!-- 產品UID *必填 結帳時回傳給資料庫的資料-->
+                          <input type="hidden" name="uid" value="{{ tea.id }}">
+                          <!-- 產品UID -->
                           <!--商品價格-->
                           <input type="hidden" name="amount" value="{{ tea.price }}">
                           <!--商品價格-->
@@ -83,7 +88,6 @@
                 </figure>
                 <!--- 一筆商品 -->
               </div>
-
             </div>
           </div>
         </div>
@@ -108,7 +112,6 @@
           <li><a href="?page={{ i }}">{{ i }}</a></li>
           {% endif %}
           {% endfor %}
-
           {% if next_page != 0 %}
           <li>
             <a href="?page={{ next_page }}" aria-label="Next">

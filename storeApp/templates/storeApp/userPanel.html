@@ -22,7 +22,7 @@
           <div class="list-group">
             <a class="list-group-item list-group-item-action">
               <!-- 訂單消息數量 -->
-              <span class="badge">14</span>
+              <!-- <span class="badge">14</span> -->
               <!-- 訂單消息數量 -->
               購買清單
               <div class="d-flex justify-content-center orderButtons">
@@ -40,23 +40,11 @@
                 </div>
               </div>
             </a>
-            <a class="list-group-item  list-group-item-action">
-              <!-- 折價券數量 -->
-              <span class="badge">14</span> 折價券
-              <!-- 折價券數量 -->
-            </a>
-            <a class="list-group-item list-group-item-action" href="../accountPanel">帳戶設定</a>
+            <a class="list-group-item list-group-item-action" href="{% url 'storeApp:accountPanel' %}">帳戶設定</a>
+            <a class="list-group-item list-group-item-action" href="{% url 'storeApp:manageOrder' %}">訂單管理</a>
           </div>
         </div>
-    
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      {% for order in orders %}
-      <p>{{ order.id }}</p>
-      {% endfor %}
     </div>
   </div>
 </div>

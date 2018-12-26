@@ -71,9 +71,14 @@ def search(request):
 def userPanel(request):
     if request.user.is_authenticated:
         types = TeaType.objects.all()
+        # 取得目前使用者的訂單
         orders = Order.objects.filter(own_user=request.user)
-        # for order in orders:
-        # ois = OrderContainProduct.
+        #
+        order_contain_products = OrderContainProduct.objects.all()
+        order_list = []
+        for order in orders:
+            order_list.append(
+                {'order_id': order.id, 'items': order_contain_products.filter(order=order)})
         return render(request, 'storeApp/userPanel.html', locals())
     else:
         return redirect('storeApp:login')
@@ -207,8 +212,8 @@ def contact(request):
 
 
 def checkout(request):
+    types = TeaType.objects.all()
     if request.method == 'GET':
-        types = TeaType.objects.all()
         # eventDiscounts=discount.objects.filter(type="Event").all()
         # shippingDiscount=discount.objects.filter(type="Shipping").all()
         shippingDiscount = ''
@@ -248,9 +253,11 @@ def checkout(request):
         order = Order(own_user=request.user, total_price=total_price)
         order.save()
         for data in datas:
-            OrderContainProduct.objects.create(order=order, product=Product.objects.get(
-                id=data['uid']), purchase_quantity=data['quantity'])
-        pass
+            product = Product.objects.get(id=data['uid'])
+            OrderContainProduct.objects.create(
+                order=order, product=product, purchase_quantity=data['quantity'])
+            product.amount -= data['quantity']
+            product.save()
     return render(request, 'storeApp/checkout.html', locals())
 
 
