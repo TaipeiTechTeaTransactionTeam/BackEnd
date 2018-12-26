@@ -55,7 +55,14 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
     date_hierarchy = 'date' # 通过日期过滤对象
-    list_display = ['id', 'own_user']
+    list_display = ['id', 'own_user','getOrderCount']
 
+    #def get_queryset(self, request):
+    #    queryset = super().get_queryset(request)
+    #    print(queryset)
+    #    return queryset
+
+    def getOrderCount(queryset):
+        return queryset.count()
 
 admin.site.register(Store)
