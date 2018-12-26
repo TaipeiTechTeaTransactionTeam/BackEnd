@@ -15,30 +15,30 @@
         <h2 class="w3_agile_header">修改個人資訊</h2>
         <a class="glyphicon glyphicon-menu-left" href="{% url 'storeApp:accountPanel' %}"></a>
         <form action="#" class="" method="post">
-
-
                 <img id="demo" src="{%block imageSrc%}{% static 'base/images/no_images.png' %}{%endblock imageSrc%}" class="col-12 "
                   alt="" onerror="this.src=`{% static 'base/images/no_images.png' %}`" />
                  
                   <input class="input__field input__field--ichiro" type="text"    placeholder=" " required="" onchange="var img=document.querySelector('#demo');img.src=this.value||img.src;" />
        
-            
-
+          
           <span class="input input--ichiro">
             
             <input class="input__field input__field--ichiro" type="text" id="userName" name="name" placeholder=" "
               required="" value="{%block userName%}{{ user.username }}{%endblock userName%}" />
-            <label class="input__label input__label--ichiro" for="userName">
-              <span class="input__label-content input__label-content--ichiro">使用者名稱</span>
-            </label>
+              <label class="input__label input__label--ichiro" for="userName">
+                <span class="input__label-content input__label-content--ichiro">使用者名稱</span>
+             </label>
           </span>
+
+        <!--input part3-->
           <span class="input input--ichiro">
-            <input class="input__field input__field--ichiro" type="text" id="userEmail" name="email" placeholder=" "
-              required="" value="{%block userEmail%}{{ user.email }}{%endblock userEmail%}" />
-            <label class="input__label input__label--ichiro" for="userEmail">
-              <span class="input__label-content input__label-content--ichiro">信箱</span>
-            </label>
+              <input class="input__field input__field--ichiro" type="text" id="userEmail" name="email" placeholder=" "
+                required="" value="{%block userEmail%}{{ user.email }}{%endblock userEmail%}" />
+              <label class="input__label input__label--ichiro" for="userEmail">
+                <span class="input__label-content input__label-content--ichiro">信箱</span>
+              </label>
           </span>
+
           <div class="clearfix"></div>
           <!-- Button trigger modal -->
           <button type="button" class="btn btn-inverse" data-toggle="modal" data-target="#exampleModal" style="margin-top: 15px">
