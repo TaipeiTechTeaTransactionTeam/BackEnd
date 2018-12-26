@@ -216,7 +216,7 @@ def checkout(request):
         if(shippingDiscount):
             pass
         else:
-            shippingDiscount = {"type": "Shipping", "discount": "100"}
+            shippingDiscount = {"discount": "100","condition":499}
         if(eventDiscounts):
             pass
         else:
