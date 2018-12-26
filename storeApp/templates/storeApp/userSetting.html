@@ -25,7 +25,8 @@
               </div>
             </figure>
           </div>
-        
+
+        <!--input part1-->
           <span class="input input--ichiro">
               <input class="input__field input__field--ichiro" type="text" id="userImage" name="imageSrc"
                   placeholder=" " required="" onchange="var img=this.parentNode.parentNode.parentNode.querySelector('img');img.src=this.value||img.src;" />
@@ -34,7 +35,7 @@
               </label>
           </span>
 
-
+        <!--input part2-->
           <span class="input input--ichiro">
               <input class="input__field input__field--ichiro" type="text" id="userName" name="name" placeholder=" "
               required="" value="{%block userName%}{{ user.username }}{%endblock userName%}" />
@@ -43,6 +44,7 @@
              </label>
           </span>
 
+        <!--input part3-->
           <span class="input input--ichiro">
               <input class="input__field input__field--ichiro" type="text" id="userEmail" name="email" placeholder=" "
                 required="" value="{%block userEmail%}{{ user.email }}{%endblock userEmail%}" />
