@@ -51,6 +51,27 @@ window.csrf='{% csrf_token %}';
 				{%endfor%}
 				
 			</select>
+			{% if shippingDiscount %}
+			<h4 class="mt-4 md-2">
+				運費折扣
+			</h4>
+			<div>
+				{% if shippingDiscount.condition != 0 %}
+					訂單金額滿{{shippingDiscount.condition}}
+				{% endif %}
+				{% if shippingDiscount.discount == 0 %}
+					免運費
+				{% elif 1 > shippingDiscount.discount and shippingDiscount.discount > 0 %}
+					運費{% if  shippingDiscount.discount|isDivisibleAfterTenTimes%}
+						{% widthratio shippingDiscount.discount 1 10 %}折
+					{% else %}
+						{% widthratio shippingDiscount.discount 1 100 %}折
+					{% endif %}
+				{% elif shippingDiscount.discount >= 1 %}
+					減NT${{shippingDiscount.discount}}
+				{% endif %}
+			</div>
+			{% endif %}
 		</section>
 			
 		<div class="checkout-left">
