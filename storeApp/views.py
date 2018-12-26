@@ -82,7 +82,8 @@ def userPanel(request):
         order_contain_products = OrderContainProduct.objects.all()
         order_list = []
         for order in orders:
-            order_list.append({'order_id':order.id, 'items':order_contain_products.filter(order=order)})
+            order_list.append(
+                {'order_id': order.id, 'items': order_contain_products.filter(order=order)})
         return render(request, 'storeApp/userPanel.html', locals())
     else:
         return redirect('storeApp:login')
