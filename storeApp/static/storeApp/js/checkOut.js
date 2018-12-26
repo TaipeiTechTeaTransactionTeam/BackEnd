@@ -259,7 +259,22 @@ class CheckOutList extends Nawa.Class.DisplayObject
     get shippingDiscountSrcObject(){return shippingDiscount;}
     get shippingDiscount(){return this.shippingDiscountSrcObject.discount;}
     get shippingDiscountCondition(){return this.shippingDiscountSrcObject.condition;}
-    get shippingDiscountValue(){return this.totalWithoutShippingPrice>=this.shippingDiscountCondition?this.shippingDiscount:0;}
+    get shippingDiscountValue(){return Math.floor
+        (
+            this.totalWithoutShippingPrice>=this.shippingDiscountCondition?
+            (
+                this.shippingDiscount>=1?
+                (
+                    this.shippingDiscount>=shippingPrice?
+                        shippingPrice
+                    :
+                        this.shippingDiscount
+                ):
+                    shippingPrice*(1-this.shippingDiscount)
+            ):
+                0
+        );
+    }
 
     get totalWithoutShippingPrice(){return this.subtotal+this.eventDiscountValue;}
     
