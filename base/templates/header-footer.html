@@ -122,6 +122,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
           <ul class="nav navbar-nav">
             <li class="active"><a href="{% url 'storeApp:home' %}" class="act">首頁</a></li>
+            <li><a href="{% url 'storeApp:teas' %}">商品總覽</a></li>
             <!-- Mega Menu -->
             {% for type in types %}
             <li><a href="{% url 'storeApp:teas_type' type.name %}">{{ type.name }}</a></li>
@@ -230,14 +231,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   <!-- here stars scrolling icon -->
   <script type="text/javascript">
     $(document).ready(function () {
-			/*
-				var defaults = {
-				containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-				};
-			*/
       $().UItoTop({ easingType: 'easeOutQuart' });
     });
   </script>
