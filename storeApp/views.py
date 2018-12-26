@@ -255,9 +255,11 @@ def checkout(request):
         order = Order(own_user=request.user, total_price=total_price)
         order.save()
         for data in datas:
-            OrderContainProduct.objects.create(order=order, product=Product.objects.get(
-                id=data['uid']), purchase_quantity=data['quantity'])
-        pass
+            product = Product.objects.get(id=data['uid'])
+            OrderContainProduct.objects.create(
+                order=order, product=product, purchase_quantity=data['quantity'])
+            product.amount -= data['quantity']
+            product.save()
     return render(request, 'storeApp/checkout.html', locals())
 
 
