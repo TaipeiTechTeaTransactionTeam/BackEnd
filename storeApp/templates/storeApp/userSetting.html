@@ -15,27 +15,17 @@
         <h2 class="w3_agile_header">修改個人資訊</h2>
         <a class="glyphicon glyphicon-menu-left" href="{% url 'storeApp:accountPanel' %}"></a>
         <form action="#" class="" method="post">
-          <div class="d-flex justify-content-center">
-            <figure class="imghvr-fade col-6 col-xs-6 col-md-6 col-sm-6  col-lg-6 ">
-              <div class="row ">
-                <!--image src-->
-                <img src="{%block imageSrc%}{% static 'base/images/no_images.png' %}{%endblock imageSrc%}" class="col-12 "
-                  alt="" onerror="this.src='./images/no_images.png'" />
-                <figcaption style="background-color: #baa619">
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  ">
-                    <span class="input input--ichiro">
-                      <input class="input__field input__field--ichiro" type="text" id="userImage" name="imageSrc"
-                        placeholder=" " required="" onchange="var img=this.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('img');img.src=this.value||img.src;" />
-                      <label class="input__label input__label--ichiro" for="userImage">
-                        <span class="input__label-content input__label-content--ichiro">個人圖片連結</span>
-                      </label>
-                    </span>
-                  </div>
-                </figcaption>
-              </div>
-            </figure>
-          </div>
+
+
+                <img id="demo" src="{%block imageSrc%}{% static 'base/images/no_images.png' %}{%endblock imageSrc%}" class="col-12 "
+                  alt="" onerror="this.src=`{% static 'base/images/no_images.png' %}`" />
+                 
+                  <input class="input__field input__field--ichiro" type="text"    placeholder=" " required="" onchange="var img=document.querySelector('#demo');img.src=this.value||img.src;" />
+       
+            
+
           <span class="input input--ichiro">
+            
             <input class="input__field input__field--ichiro" type="text" id="userName" name="name" placeholder=" "
               required="" value="{%block userName%}{{ user.username }}{%endblock userName%}" />
             <label class="input__label input__label--ichiro" for="userName">
