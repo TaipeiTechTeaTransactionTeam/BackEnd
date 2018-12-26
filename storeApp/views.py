@@ -216,8 +216,8 @@ def contact(request):
 
 
 def checkout(request):
+    types = TeaType.objects.all()
     if request.method == 'GET':
-        types = TeaType.objects.all()
         # eventDiscounts=discount.objects.filter(type="Event").all()
         # shippingDiscount=discount.objects.filter(type="Shipping").all()
         shippingDiscount = ''
