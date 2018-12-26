@@ -9,33 +9,14 @@
 <script>
 	
 {% if eventDiscounts%}
-	window.eventDiscount={ {% for key,value in eventDiscounts.0.items %}{{key}}:{% if key == "description" %}
-					"{{ value }}" 
-				{% else %}
-					{{ value }} 
-				{% endif %}
-				,{% endfor %} };
-	window.eventDiscounts=
-	[
-		{%for discount in eventDiscounts%}
-			{
-			{%for key,value in discount.items%}
-				{{key}}:
-				{% if key == "description" %}
-					"{{ value }}" 
-				{% else %}
-					{{ value }} 
-				{% endif %}
-				,
-			{%endfor%}
-			},
-		{%endfor%}
-	]
-	for (var items of eventDiscounts)
-			console.log(items);
+	window.eventDiscount={ {% for key,value in eventDiscounts.0.items %}{{key}}:{% if key == "description" %}"{{ value }}"{% else %}{{ value }}{% endif %}, {% endfor %} };
+	window.eventDiscounts=[{%for discount in eventDiscounts%}{  {% for key , value in discount.items %}{{key}}:{% if key == "description" %}"{{ value }}"{% else %}{{ value }}{% endif %}, {%endfor%}}, {%endfor%} ];
+{%endif%}
+{%if shippingDiscount %}
+const shippingDiscount={ {% for key, value in shippingDiscount.items%}{{key}}:{{value}}, {%endfor%} };
 {%endif%}
 {%if shippingPrice%}
-window.shippingPrice={{shippingPrice}}
+const shippingPrice={{shippingPrice}}
 {%endif%}
 window.csrf='{% csrf_token %}';
 </script>
