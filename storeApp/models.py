@@ -109,8 +109,8 @@ class ShippingDiscount(SeasoningDiscount):
         max_digits=10, decimal_places=0, null=False)
 
     class Meta:
-        verbose_name = '購物折扣'
-        verbose_name_plural = '購物折扣'
+        verbose_name = '運費折扣'
+        verbose_name_plural = '運費折扣'
 
 
 class ProductDiscount(SeasoningDiscount):
