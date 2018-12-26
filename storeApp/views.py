@@ -27,16 +27,11 @@ def home(request):
     newoffers = list(products)
     newoffers.reverse()
     newoffers = newoffers[:4]
-    ids = [x.id for x in newoffers]
-    p = ProductDiscount.objects.filter(id__in=ids)
-    for pp in p.all():
-        print(pp.discount)
-    return render(request, 'storeApp/index.html', {
-        'products': products,
-        'newoffers': newoffers,
-        'types': types
-    })
+    pDiscounts = list(ProductDiscount.objects.filter(product__in=[x.id for x in newoffers]).all())
 
+
+    
+    return render(request, 'storeApp/index.html',locals())
 
 def search(request):
     types = TeaType.objects.all()
@@ -221,14 +216,16 @@ def checkout(request):
         if(shippingDiscount):
             pass
         else:
-            shippingDiscount = {"type": "Shipping", "discount": "100"}
+            shippingDiscount = {"discount": 0,"condition":499}
         if(eventDiscounts):
             pass
         else:
             eventDiscounts = [
                 {
                     "id": 2,
-                    "discount": 0.7
+                    "discount": 0.7,
+                    "condition":1000,
+                    "description":"大打折"
                 },
                 {
                     "id": 4,

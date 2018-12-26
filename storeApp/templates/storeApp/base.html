@@ -1,11 +1,10 @@
-{% extends 'header-footer.html' %}
-{% block new_offers %}
+{% extends 'header-footer.html' %} {% block new_offers %}
 <div class="newproducts-w3agile">
   <div class="container">
     <h3>New offers</h3>
     <div class="agile_top_brands_grids">
       {% if newoffers %}
-      {% for newoffer in newoffers %}
+       {% for newoffer in newoffers %}
       <!-- offer產品 第1項  -->
       <div class="col-md-3 top_brand_left-1">
         <div class="hover14 column">
@@ -16,13 +15,18 @@
                 <div class="snipcart-item block">
                   <div class="snipcart-thumb">
                     <!-- 產品link and image -->
-                    <a href="{% url 'storeApp:detail' newoffer.id %}"><img class="productItemImg" title=" " alt=" " src="{{ newoffer.image.url }}"></a>
+                    <a href="{% url 'storeApp:detail' newoffer.id %}"
+                      ><img
+                        class="productItemImg"
+                        title=" "
+                        alt=" "
+                        src="{{ newoffer.image.url }}"
+                    /></a>
                     <!-- 產品link and image -->
 
                     <!-- 產品名稱 *必填-->
                     <p>{{ newoffer }}</p>
                     <!-- 產品名稱 -->
-
                     <!-- 產品價格顯示 -->
                     <h4>
                       <!-- 現價 -->
@@ -39,33 +43,61 @@
                     <!-- 產品購買後傳送給購物車的資訊 *必填 請使用value 並設為hidden 任何想傳的都可以透過name及新增欄位傳送 -->
                     <form action="#" method="post">
                       <fieldset>
-                        <input type="hidden" name="cmd" value="_cart">
+                        <input type="hidden" name="cmd" value="_cart" />
                         <!-- 產品連結 -->
-                        <input type="hidden" name="link" value="{% url 'storeApp:teas' %}blackteas/UID_LIKE_THIS_1234">
+                        <input
+                          type="hidden"
+                          name="link"
+                          value="{% url 'storeApp:teas' %}blackteas/UID_LIKE_THIS_1234"
+                        />
 
                         <!-- 每次按下新增的數量 *必填-->
-                        <input type="hidden" name="add" value="1">
+                        <input type="hidden" name="add" value="1" />
 
                         <!-- 每次按下新增的數量 -->
 
                         <!-- 在購物車內顯示的圖片 *必填 若不填不影響運作、但會在結帳顯示不出圖片 -->
-                        <input type="hidden" name="imgSrc" value="{{ newoffer.image.url }}">
+                        <input
+                          type="hidden"
+                          name="imgSrc"
+                          value="{{ newoffer.image.url }}"
+                        />
                         <!-- 在購物車內顯示的圖片 -->
 
                         <!-- 產品名稱 *必填 -->
-                        <input type="hidden" name="item_name" value="{{ newoffer }}">
+                        <input
+                          type="hidden"
+                          name="item_name"
+                          value="{{ newoffer }}"
+                        />
                         <!-- 產品名稱 -->
 
                         <!-- 產品UID *必填 結帳時回傳給資料庫的資料-->
-                        <input type="hidden" name="uid" value="{{ newoffer.id }}">
+                        <input
+                          type="hidden"
+                          name="uid"
+                          value="{{ newoffer.id }}"
+                        />
                         <!-- 產品UID -->
 
                         <!-- 單項產品價格 *必填 -->
-                        <input type="hidden" name="amount" value="{{ newoffer.price }}">
+                        <input
+                          type="hidden"
+                          name="amount"
+                          value="{{ newoffer.price }}"
+                        />
                         <!-- 單項產品價格 -->
 
                         <!-- 本項產品折扣價格 選填 -->
-                        <!-- <input type="hidden" name="discount_amount" value="1"> -->
+                        {% for d in pDiscounts %}
+                          {% if d.product.id == newoffer.id %}
+                        <input
+                          type="hidden"
+                          name="discount_amount"
+                          value="{{d.discount}}"
+                        /> 
+                          {% endif %}
+                        {% endfor %}
                         <!-- 本項產品折扣價格 -->
 
                         <!-- 不知道幹嘛的兩欄 -->
@@ -77,7 +109,12 @@
                         <!-- 不知道幹嘛的兩欄 -->
 
                         <!-- 加入的按鈕 *必填-->
-                        <input type="submit" name="submit" value="加入購物車" class="button">
+                        <input
+                          type="submit"
+                          name="submit"
+                          value="加入購物車"
+                          class="button"
+                        />
                         <!-- 加入的按鈕 -->
                       </fieldset>
                     </form>
@@ -90,11 +127,11 @@
         </div>
       </div>
       <!-- offer產品 第1項  -->
-      {% endfor %}
+        {% endfor %} 
       {% else %}
       <h1>盡快為您上架</h1>
       {% endif %}
-      <div class="clearfix"> </div>
+      <div class="clearfix"></div>
     </div>
   </div>
 </div>

@@ -66,8 +66,7 @@ class CheckOut
         this.cartTable=new Nawa.Class.ShoppingCartTable();
         this.checkoutList=new Nawa.Class.CheckOutList(cart);
         this.layoutSetup();
-        this.checkoutList.updateTotal();
-        this.checkoutList.updateDiscount();
+        this.checkoutList.update();
         this.productItems=[];
         for(var cartItem of this.items)
         {
@@ -113,8 +112,7 @@ class CheckOut
     }
     onChange()
     {
-        this.checkoutList.updateTotal();
-        this.checkoutList.updateDiscount();
+        this.checkoutList.update();
     }
     onViewsChange()
     {
@@ -239,11 +237,12 @@ class CheckOutList extends Nawa.Class.DisplayObject
     constructor(cart)
     {
         super();
+        this.cart=cart;
         this.createObjects();
         this.createElements();
         this.display.classList.add("checkout-left-basket");
         this.title="結算";
-        this.cart=cart;
+
     }
     createObjects()
     {
@@ -254,14 +253,54 @@ class CheckOutList extends Nawa.Class.DisplayObject
         this.shippingObject=new Nawa.Class.ProductCheckView({name:"運費",total:this.shippingPrice||0});
         this.totalObject=new Nawa.Class.ProductCheckView({name:"總額",total:0});
     }
-    get shippingPrice(){return window.shippingPrice;}
-    set shippingPrice(val){this.shippingObject.amount=val;}
+    get shippingPrice(){return shippingPrice-this.shippingDiscountValue;}
+    set shippingPrice(val){this.shippingObject.total=val;}
+
+    get shippingDiscountSrcObject(){return shippingDiscount;}
+    get shippingDiscount(){return this.shippingDiscountSrcObject.discount;}
+    get shippingDiscountCondition(){return this.shippingDiscountSrcObject.condition;}
+    get shippingDiscountValue(){return Math.floor
+        (
+            this.totalWithoutShippingPrice>=this.shippingDiscountCondition?
+            (
+                this.shippingDiscount>=1?
+                (
+                    this.shippingDiscount>=shippingPrice?
+                        shippingPrice
+                    :
+                        this.shippingDiscount
+                ):
+                    shippingPrice*(1-this.shippingDiscount)
+            ):
+                0
+        );
+    }
+
+    get totalWithoutShippingPrice(){return this.subtotal+this.eventDiscountValue;}
+    
     get subtotal(){return this.cart.total();}
     set subtotal(val){this.subtotalObject.total=val;}
+
     get eventDiscount(){return this.eventDiscountSrcObject.discount;}
     get eventDiscountSrcObject(){return window.eventDiscount;}
     set eventDiscount(val){this.eventDiscountObject.total=val;}
-    get eventDiscountValue(){return Math.floor(this.eventDiscount>=1?(this.eventDiscount>this.subtotal?this.subtotal:this.eventDiscount):this.subtotal*(1-this.eventDiscount));}
+    get eventDiscountCondition(){return this.eventDiscountSrcObject.condition;}
+    get eventDiscountValue()
+    {
+        return Math.floor(
+                this.subtotal>=(this.eventDiscountCondition||0)?
+                (
+                    this.eventDiscount>=1?
+                    (
+                        this.eventDiscount>this.subtotal?
+                            this.subtotal:
+                            this.eventDiscount
+                    ):
+                        this.subtotal*(1-this.eventDiscount)
+                ):
+                0
+            );
+    }
     set eventDiscountValue(val){this.eventDiscountObject.total=val;}
     get eventDiscountString(){return this.eventDiscount>=1?"折價"+this.eventDiscount+"元":(this.eventDiscount*100)%10===0?this.eventDiscount*10+"折":this.eventDiscount*100+"折";}
     set total(val){this.totalObject.total=val;}
@@ -273,10 +312,17 @@ class CheckOutList extends Nawa.Class.DisplayObject
     set title(val){this.titleDisplay.innerText=val;}
     get title(){return this.titleDisplay.innerText;}
     updateDiscount(){this.eventDiscount=this.eventDiscountValue;}
+    updateShipping(){this.shippingPrice=this.shippingPrice;}
     updateTotal()
     {
         this.subtotal=this.subtotal;
         this.total=this.subtotal+this.shippingPrice-this.eventDiscountValue;
+    }
+    update()
+    {
+        this.updateDiscount();
+        this.updateShipping();
+        this.updateTotal();
     }
     append(display){this.listDisplay.insertBefore(display,this.subtotalObject.display);}
     createElements()

@@ -96,8 +96,6 @@ class SeasoningDiscount(models.Model):
     description = models.CharField(
         verbose_name="描述", max_length=255, null=False)
 
-    def __str__(self):
-        return self.discount
 
     class Meta:
         verbose_name = '季節折扣'
@@ -106,7 +104,7 @@ class SeasoningDiscount(models.Model):
 
 class ShippingDiscount(SeasoningDiscount):
     condition = models.DecimalField(
-        max_digits=10, decimal_places=0, null=False)
+        max_digits=10, decimal_places=0, null=False,default=0)
 
     class Meta:
         verbose_name = '購物折扣'
@@ -117,8 +115,8 @@ class ProductDiscount(SeasoningDiscount):
     product = models.ForeignKey(
         Product, verbose_name="產品", on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.product.name
+    # def __str__(self):
+    #     return self.product.name
 
     class Meta:
         verbose_name = '產品折扣'
