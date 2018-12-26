@@ -69,6 +69,9 @@
                           <!--商品名稱-->
                           <input type="hidden" name="item_name" value="{{ tea.name }}">
                           <!--商品名稱-->
+                          <!-- 產品UID *必填 結帳時回傳給資料庫的資料-->
+                          <input type="hidden" name="uid" value="{{ tea.id }}">
+                          <!-- 產品UID -->
                           <!--商品價格-->
                           <input type="hidden" name="amount" value="{{ tea.price }}">
                           <!--商品價格-->
