@@ -261,7 +261,23 @@ class CheckOutList extends Nawa.Class.DisplayObject
     get eventDiscount(){return this.eventDiscountSrcObject.discount;}
     get eventDiscountSrcObject(){return window.eventDiscount;}
     set eventDiscount(val){this.eventDiscountObject.total=val;}
-    get eventDiscountValue(){return Math.floor(this.eventDiscount>=1?(this.eventDiscount>this.subtotal?this.subtotal:this.eventDiscount):this.subtotal*(1-this.eventDiscount));}
+    get eventDiscountCondition(){return this.eventDiscountSrcObject.condition;}
+    get eventDiscountValue()
+    {
+        return Math.floor(
+                this.subtotal>=(this.eventDiscountCondition||0)?
+                (
+                    this.eventDiscount>=1?
+                    (
+                        this.eventDiscount>this.subtotal?
+                            this.subtotal:
+                            this.eventDiscount
+                    ):
+                        this.subtotal*(1-this.eventDiscount)
+                ):
+                0
+            );
+    }
     set eventDiscountValue(val){this.eventDiscountObject.total=val;}
     get eventDiscountString(){return this.eventDiscount>=1?"折價"+this.eventDiscount+"元":(this.eventDiscount*100)%10===0?this.eventDiscount*10+"折":this.eventDiscount*100+"折";}
     set total(val){this.totalObject.total=val;}
