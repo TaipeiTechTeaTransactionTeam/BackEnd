@@ -1,3 +1,4 @@
+import {Uti} from "./Nawauti.js";
 /**
  * @function isDebug
  * 在網址後方加入#debug 判斷為True
@@ -9,21 +10,6 @@ function isDebug()
 }
 var Nawa=Nawa||{};
 Nawa.Class=Nawa.Class||{};
-Nawa.Uti=Nawa.Uti||{};
-Nawa.Uti.productQuantity=
-function productQuantity(id)
-{
-    if($)
-        return val= new Promise((res,rej)=>
-        {
-            $.get("/productQuantity/"+JSON.stringify(id),(data)=>
-            {
-                res(JSON.parse(data));
-            });
-        });
-    console.warn("JQuery are needed");
-    return val;
-};
 /*
   採用miniCart標準
   amount = 價格
@@ -367,7 +353,6 @@ class CheckOutProduct
         this.cartView=cartView;
         this.checkView=checkView;
         this.updateStock();
-        var that=this;
         this.cartItem.on("change",()=>{this.onChange();this.updateViews();});
         this.cartView.closeOnclick=()=>{this.closeOnclick(this);}
         this.cartView.plusOnclick=()=>
@@ -408,7 +393,7 @@ class CheckOutProduct
             this.cartView.minusButton.classList.remove("disabled");
     }
     async updateStock(){
-        this.stockQuantity=await Nawa.Uti.productQuantity(this.uid);
+        this.stockQuantity=await Uti.productQuantity(this.uid);
     }
     closeOnclick(product){}
     onChange(){}
@@ -607,7 +592,7 @@ $(
         {
 
         }
-        checkOut=new Nawa.Class.CheckOut(paypal.minicart.cart);
+        var checkOut=new Nawa.Class.CheckOut(paypal.minicart.cart);
         $(".checkout.btn").on("click",function()
         {
             if(!isLogged)
