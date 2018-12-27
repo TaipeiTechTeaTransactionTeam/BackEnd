@@ -103,6 +103,19 @@ def report(request):
     types = TeaType.objects.all()
     return render(request, 'storeApp/report.html', locals())
 
+def productQuantity(request,ids):
+    ans=[]
+    try:
+        if ids[0]!="[" :
+            id=int(ids)
+            ans=float(Product.objects.get(pk=id).amount)
+        else:
+            ids=json.loads(ids)
+            ans=[float(x.amount) for x in list(Product.objects.filter(id__in=ids).all())]
+        return HttpResponse(json.dumps(ans))
+    except:
+        return HttpResponse(-1)
+    
 
 def teas(request):
     types = TeaType.objects.all()
