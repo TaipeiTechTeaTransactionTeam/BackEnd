@@ -9,6 +9,21 @@ function isDebug()
 }
 var Nawa=Nawa||{};
 Nawa.Class=Nawa.Class||{};
+Nawa.Uti=Nawa.Uti||{};
+Nawa.Uti.productQuantity=
+function productQuantity(id)
+{
+    if($)
+        return val= new Promise((res,rej)=>
+        {
+            $.get("/productQuantity/"+JSON.stringify(id),(data)=>
+            {
+                res(JSON.parse(data));
+            });
+        });
+    console.warn("JQuery are needed");
+    return val;
+};
 /*
   採用miniCart標準
   amount = 價格
@@ -351,10 +366,23 @@ class CheckOutProduct
         this.cartItem=cartItem;
         this.cartView=cartView;
         this.checkView=checkView;
+        this.updateStock();
+        var that=this;
         this.cartItem.on("change",()=>{this.onChange();this.updateViews();});
         this.cartView.closeOnclick=()=>{this.closeOnclick(this);}
-        this.cartView.plusOnclick=()=>{this.quantity++;};
+        this.cartView.plusOnclick=()=>
+        {
+            //console.log(this);
+            if(this.quantity<this.stockQuantity);
+            {
+                this.quantity++;
+            }
+                
+        };
         this.cartView.minusOnclick=()=>{this.quantity>=1?this.quantity--:"nothing";}
+    }
+    async updateStock(){
+        this.stockQuantity=await Nawa.Uti.productQuantity(this.uid);
     }
     closeOnclick(product){}
     onChange(){}
@@ -368,6 +396,9 @@ class CheckOutProduct
         this.cartView.attrFromCartItem(this.cartItem);
         this.checkView.attrFromCartItem(this.cartItem);
     }
+    set stockQuantity(val){this._stock=val;}
+    get stockQuantity(){this.updateStock();return this._stock;}
+    get uid(){return parseInt(this.cartItem.get("uid"));}
     set quantity(val){this.cartItem.set("quantity",val);}
     get quantity(){return this.cartItem.get("quantity");}
 }
