@@ -372,14 +372,40 @@ class CheckOutProduct
         this.cartView.closeOnclick=()=>{this.closeOnclick(this);}
         this.cartView.plusOnclick=()=>
         {
-            //console.log(this);
-            if(this.quantity<this.stockQuantity);
+
+            if(this.quantity<this.stockQuantity)
             {
                 this.quantity++;
             }
-                
+            else if(this.quantity>this.stockQuantity)
+            {
+                this.quantity=this.stockQuantity;
+            }
+            this.updateButtonStates();
+            this.updateStock();
         };
-        this.cartView.minusOnclick=()=>{this.quantity>=1?this.quantity--:"nothing";}
+        this.cartView.minusOnclick=()=>
+        {
+            if(this.quantity>1)
+                this.quantity--;
+            else
+            {
+                this.quantity=1;
+            }
+            this.updateButtonStates();
+            this.updateStock();
+        }
+    }
+    updateButtonStates()
+    {
+        if(this.quantity>=this.stockQuantity)
+            this.cartView.plusButton.classList.add("disabled");
+        else 
+            this.cartView.plusButton.classList.remove("disabled");
+        if(this.quantity<=1)
+            this.cartView.minusButton.classList.add("disabled");
+        else 
+            this.cartView.minusButton.classList.remove("disabled");
     }
     async updateStock(){
         this.stockQuantity=await Nawa.Uti.productQuantity(this.uid);
@@ -397,9 +423,10 @@ class CheckOutProduct
         this.checkView.attrFromCartItem(this.cartItem);
     }
     set stockQuantity(val){this._stock=val;}
-    get stockQuantity(){this.updateStock();return this._stock;}
+    get stockQuantity(){return this._stock;}
     get uid(){return parseInt(this.cartItem.get("uid"));}
-    set quantity(val){this.cartItem.set("quantity",val);}
+    set quantity(val)
+    {this.cartItem.set("quantity",val);}
     get quantity(){return this.cartItem.get("quantity");}
 }
 /**
@@ -471,8 +498,8 @@ class ProductCartView
     addQuantityClass()
     {
         this.quantityField.querySelector("div").classList.add("quantity-select");
-        this.minusButton.classList.add("entry","value-minus");
-        this.plusButton.classList.add("entry","value-plus");
+        this.minusButton.classList.add("entry","value-minus","btn");
+        this.plusButton.classList.add("entry","value-plus","btn");
         this.quantityDisplay.classList.add("entry","value");
     }
     createImageField()
