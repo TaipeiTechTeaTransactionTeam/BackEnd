@@ -51,6 +51,19 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('storeApp:detail', kwargs={'pk': self.pk})
 
+    def get_discount_price(self):
+        try:
+            product_discount = ProductDiscount.objects.get(product=self.id)
+            if product_discount:
+                if product_discount.discount > 1:
+                    return {'price': int(self.price - product_discount.discount),
+                            'discount': int(product_discount.discount)}
+                else:
+                    return {'price': int(self.price * product_discount.discount),
+                            'discount': int(self.price - self.price * product_discount.discount)}
+        except:
+            return {'price': self.price, 'discount': 0}
+
     def __str__(self):
         return self.name
 
@@ -96,7 +109,6 @@ class SeasoningDiscount(models.Model):
     description = models.CharField(
         verbose_name="描述", max_length=255, null=False)
 
-
     class Meta:
         verbose_name = '季節折扣'
         verbose_name_plural = '季節折扣'
@@ -104,7 +116,7 @@ class SeasoningDiscount(models.Model):
 
 class ShippingDiscount(SeasoningDiscount):
     condition = models.DecimalField(
-        max_digits=10, decimal_places=0, null=False,default=0)
+        max_digits=10, decimal_places=0, null=False, default=0)
 
     class Meta:
         verbose_name = '購物折扣'
