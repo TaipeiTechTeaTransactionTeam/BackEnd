@@ -54,15 +54,34 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
+    change_list_template = 'storeApp/adminReport.html'
     date_hierarchy = 'date' # 通过日期过滤对象
-    list_display = ['id', 'own_user','getOrderCount']
+    list_display = ['id', 'own_user']
 
     #def get_queryset(self, request):
     #    queryset = super().get_queryset(request)
     #    print(queryset)
     #    return queryset
 
-    def getOrderCount(queryset):
-        return queryset.count()
+    #def getOrderCount(self,request):
+    #    qs = super().get_queryset(request)
+    #    return len(qs)
+    def get_total(self,request):
+        #functions to calculate whatever you want...
+        total = len(super().get_queryset(request))
+        return total
+
+    def get_totalPrice(self):
+        #functions to calculate whatever you want...
+        report = Report.objects.all()
+        for r in report:
+            price = r.total_price
+        return price
+
+    def changelist_view(self, request, extra_context={}):
+        extra_context['total'] = self.get_total(request)
+        extra_context['price'] = self.get_totalPrice()
+        return super(ReportAdmin, self).changelist_view(request,
+            extra_context)
 
 admin.site.register(Store)
