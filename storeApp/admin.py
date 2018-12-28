@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.urls import path
+from django.http import HttpResponseRedirect
 from .models import Product
 from .models import Store
 from .models import TeaType
@@ -56,16 +58,8 @@ class OrderAdmin(admin.ModelAdmin):
 class ReportAdmin(admin.ModelAdmin):
     change_list_template = 'storeApp/adminReport.html'
     date_hierarchy = 'date' # 通过日期过滤对象
-    list_display = ['id', 'own_user']
+    # list_display = ['id', 'own_user']
 
-    #def get_queryset(self, request):
-    #    queryset = super().get_queryset(request)
-    #    print(queryset)
-    #    return queryset
-
-    #def getOrderCount(self,request):
-    #    qs = super().get_queryset(request)
-    #    return len(qs)
     def get_total(self,request):
         #functions to calculate whatever you want...
         total = len(super().get_queryset(request))
