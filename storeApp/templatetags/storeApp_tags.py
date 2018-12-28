@@ -9,3 +9,7 @@ def number_of_ranks(number):
 @register.filter
 def isDivisibleAfterTenTimes(something):
     return (something*100)%10==0
+
+@register.filter
+def sub(a,b):
+    return a-b
