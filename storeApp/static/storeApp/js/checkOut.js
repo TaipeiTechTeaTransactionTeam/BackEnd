@@ -251,7 +251,7 @@ class CheckOutList extends Nawa.Class.DisplayObject
         this.shippingObject=new Nawa.Class.ProductCheckView({name:"運費",total:this.shippingPrice||0});
         this.totalObject=new Nawa.Class.ProductCheckView({name:"總額",total:0});
     }
-    get shippingPrice(){return shippingPrice||0-this.shippingDiscountValue;}
+    get shippingPrice(){return shippingPrice-this.shippingDiscountValue;}
     set shippingPrice(val){this.shippingObject.total=val;}
 
     get shippingDiscountSrcObject(){return shippingDiscount;}
