@@ -8,3 +8,7 @@ function productQuantity(id)
     console.warn("JQuery are needed");
     return val;
 };
+Uti.isDebug=function isDebug()
+{
+    return location.hash.search("debug")!==-1;
+}
