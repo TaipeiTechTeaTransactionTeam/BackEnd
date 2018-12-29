@@ -52,7 +52,7 @@
                       <a href="{% url 'storeApp:detail' product.id %}"><img title=" " alt=" " src="{{ product.image.url }}"></a>
                       <!--- 商品照片 -->
                       <!--- 商品名稱 -->
-                      <p>{{ product.name }}</p>
+                      <p class="productItemTitle">{{ product.name }}</p>
                       <!--- 商品名稱 -->
                       <!--- 商品價錢 -->
                       <h4>{{ product.price }} {%if product.isDiscount%}<span>{{ product.originPrice }}</span>{%endif%}</h4>
