@@ -27,8 +27,7 @@ class TeaTypeAdmin(admin.ModelAdmin):
 
 @admin.register(SeasoningDiscount)
 class SeasoningDiscountAdmin(admin.ModelAdmin):
-    pass
-    # list_display = ('id', 'discount', 'start_date', 'end_date')
+    list_display = ('id', 'discount', 'start_date', 'end_date')
 
 
 @admin.register(ShippingDiscount)
