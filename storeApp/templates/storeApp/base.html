@@ -5,7 +5,7 @@
     <div class="agile_top_brands_grids">
       {% if products %} {% for product in products%}
       <!-- offer產品 第1項  -->
-      <div class="col-md-3 top_brand_left-1">
+      <div class="col-md-3 top_brand_left-1 {%if product.isSoldout %}soldout{%endif%}">
         <div class="hover14 column">
           <div class="agile_top_brand_left_grid">
             <div class="agile_top_brand_left_grid_pos"></div>
@@ -40,7 +40,7 @@
                     <!-- 產品價格顯示 -->
                   </div>
 
-                  <div class="snipcart-details top_brand_home_details">
+                  <div class="snipcart-details top_brand_home_details {% if product.isSoldout %}soldout{%endif%}">
                     <!-- 產品購買後傳送給購物車的資訊 *必填 請使用value 並設為hidden 任何想傳的都可以透過name及新增欄位傳送 -->
                     <form action="#" method="post">
                       <fieldset>
@@ -85,7 +85,7 @@
                         <input
                           type="hidden"
                           name="amount"
-                          value="{{ product.price }}"
+                          value="{{ product.originPrice }}"
                         />
                         <!-- 單項產品價格 -->
 
@@ -111,9 +111,15 @@
                         <input
                           type="submit"
                           name="submit"
-                          value="加入購物車"
+                          
                           class="button"
-                        />
+                          {%if not product.isSoldout %}
+                          value="加入購物車"
+                          {%else%}
+                          value="已售完"
+                          disabled
+                          {%endif%}
+                          />
                         <!-- 加入的按鈕 -->
                       </fieldset>
                     </form>

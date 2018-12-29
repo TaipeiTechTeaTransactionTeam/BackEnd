@@ -33,10 +33,10 @@
 <div class="ban-bottom-w3l">
   <div class="container">
     <div class="col-md-6 ban-bottom3">
-      <div class="ban-top" onclick="location.href='teas';">
+      <div class="ban-top" onclick="location.href=`{% url 'storeApp:teas_type' '紅茶' %}`;">
         <img src="{% static 'base/images/紅茶.jpg'%}" class="img-responsive" alt="" />
       </div>
-      <div class="ban-img" onclick="location.href='teas';">
+      <div class="ban-img" onclick="location.href=`{% url 'storeApp:teas_type' '綠茶' %}`;">
         <div class=" ban-bottom1">
           <div class="ban-top">
             <img src="{% static 'base/images/烏龍茶.jpg'%}" class="img-responsive" alt="" />
@@ -45,7 +45,7 @@
         <div class="clearfix"></div>
       </div>
     </div>
-    <div class="col-md-6 ban-bottom" onclick="location.href='teas';">
+    <div class="col-md-6 ban-bottom" onclick="location.href=`{% url 'storeApp:teas_type' '烏龍茶' %}`;">
       <div class="ban-top">
         <img src="{% static 'base/images/綠茶.jpg'%}" class="img-responsive" alt="" />
       </div>

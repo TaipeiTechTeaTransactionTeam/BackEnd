@@ -18,6 +18,12 @@ class ProductDiscountItem:
             return self.product.id
         if name=="name":
             return self.product.name
+        if name=="amount":
+            return self.product.amount
+        if name=="isSoldout":
+            return self.product.amount==0
+        if name=="description":
+            return self.product.description
     def __str__(self):
         return self.product.name
 def getProductDiscountList(productList):

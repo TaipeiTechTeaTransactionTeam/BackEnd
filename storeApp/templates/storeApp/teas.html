@@ -39,7 +39,7 @@
       <div>
         {% block product %}
         {% for product in teas %}
-        <div class="col-md-4 top_brand_left agile_top_brands_grids">
+        <div class="col-md-4 top_brand_left agile_top_brands_grids {%if product.isSoldout %}soldout{%endif%}">
           <div class="hover14 column">
             <div class="agile_top_brand_left_grid">
               <div class="agile_top_brand_left_grid_pos"></div>
@@ -55,7 +55,7 @@
                       <p class="productItemTitle">{{ product.name }}</p>
                       <!--- 商品名稱 -->
                       <!--- 商品價錢 -->
-                      <h4>{{ product.price }} {%if product.isDiscount%}<span>{{ product.originPrice }}</span>{%endif%}</h4>
+                      <h4>NT${{ product.price }} {%if product.isDiscount%}<span>NT${{ product.originPrice }}</span>{%endif%}</h4>
                       <!--- 商品價錢 -->
                     </div>
                     <!--加入購物車的小視窗-->
@@ -73,7 +73,7 @@
                           <input type="hidden" name="uid" value="{{ product.id }}">
                           <!-- 產品UID -->
                           <!--商品價格-->
-                          <input type="hidden" name="amount" value="{{ product.price }}">
+                          <input type="hidden" name="amount" value="{{ product.originPrice }}">
                           <!--商品價格-->
                           {%if product.isDiscount%}
                           <!--折扣價格-->
@@ -81,7 +81,7 @@
                           <!--折扣價格-->
                           {%endif%}
                           <input type="hidden" name="imgSrc" value="{{ product.image.url }}">
-                          <input type="submit" name="submit" value="加入購物車" class="button">
+                          <input type="submit" name="submit" {%if not product.isSoldout %} value="加入購物車" {%else%} value="已售完" disabled {%endif%} class="button">
                         </fieldset>
                       </form>
                     </div>

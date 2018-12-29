@@ -3606,3 +3606,15 @@ td.invert-image a img {
     width: 100%;
     white-space: pre-wrap;
 }
+.soldout
+{
+    opacity: 0.7;
+}
+.soldout input[value="已售完"][type="submit"]
+{
+    background-color: darkgray;
+}
+.soldout input[value="已售完"][type="submit"]:hover
+{
+    background-color: gray;
+}
