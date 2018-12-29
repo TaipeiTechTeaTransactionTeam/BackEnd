@@ -15,24 +15,24 @@
                   <div class="snipcart-item block">
                     <div class="snipcart-thumb">
                       <!-- 產品link and image -->
-                      <a href="{% url 'storeApp:detail' product.offer.id %}"
+                      <a href="{% url 'storeApp:detail' product.id %}"
                         ><img
                           class="productItemImg"
                           title=" "
                           alt=" "
-                          src="{{ product.offer.image.url }}"
+                          src="{{ product.imgurl }}"
                       /></a>
                       <!-- 產品link and image -->
   
                       <!-- 產品名稱 *必填-->
-                      <p>{{ product.offer }}</p>
+                      <p>{{ product }}</p>
                       <!-- 產品名稱 -->
                       <!-- 產品價格顯示 -->
                       <h4>
                         <!-- 現價 -->
-                        NT${{ product.finalPrice }}
+                        NT${{ product.price }}
                         <!-- 現價 -->
-                        {% if product.discount != 0%}
+                        {% if product.isDiscount%}
                         <!-- 原價 *必填-->
                         <span>NT${{ product.originPrice }}</span>
                         <!-- 原價 -->
@@ -62,7 +62,7 @@
                           <input
                             type="hidden"
                             name="imgSrc"
-                            value="{{ product.offer.image.url }}"
+                            value="{{ product.imgurl }}"
                           />
                           <!-- 在購物車內顯示的圖片 -->
   
@@ -70,7 +70,7 @@
                           <input
                             type="hidden"
                             name="item_name"
-                            value="{{ product.offer }}"
+                            value="{{ product.name }}"
                           />
                           <!-- 產品名稱 -->
   
@@ -78,7 +78,7 @@
                           <input
                             type="hidden"
                             name="uid"
-                            value="{{ product.offer.id }}"
+                            value="{{ product.id }}"
                           />
                           <!-- 產品UID -->
   
@@ -86,12 +86,12 @@
                           <input
                             type="hidden"
                             name="amount"
-                            value="{{ product.offer.price }}"
+                            value="{{ product.price }}"
                           />
                           <!-- 單項產品價格 -->
   
                           <!-- 本項產品折扣價格 選填 -->
-                          {% if product.discount != 0%}
+                          {% if product.isDiscount%}
                           <input
                             type="hidden"
                             name="discount_amount"

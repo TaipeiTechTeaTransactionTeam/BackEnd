@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 import json
 import math
 from pprint import pprint
-from .offerItem import OfferItem
+from .productDiscountItem import ProductDiscountItem
 from .models import Product, TeaType, ProductDiscount, Order, OrderContainProduct
 
 # Create your views here.
@@ -29,7 +29,8 @@ def home(request):
     pDiscounts = list(ProductDiscount.objects.filter(product__in=[x.id for x in newoffers]).all())
     products=[]
     for o in newoffers:
-        products.append(OfferItem(o,next((x.discount for x in pDiscounts if o.id==x.product.id),0)))
+        products.append(ProductDiscountItem(o,next((x.discount for x in pDiscounts if o.id==x.product.id),0)))
+        print(products[-1].isDiscount)
         #print(products[-1].offer,products[-1].originPrice,products[-1].finalPrice,products[-1].discount)
 
     return render(request, 'storeApp/index.html',locals())
