@@ -25,11 +25,13 @@
             <!--product price-->
             <h4 class="m-sing">
               {%block productPrice%}$NT{{ product.price }}
-              <span>$NT{{ product.price }}</span>
+              {%if product.isDiscount%}
+              <span>$NT{{ product.originPrice }}</span>
+              {%endif%}
               {%endblock productPrice%}
             </h4>
           </div>
-          <div class="snipcart-details agileinfo_single_right_details">
+          <div class="snipcart-details agileinfo_single_right_details {%if product.isSoldout%}soldout{%endif%}">
             <form action="#" method="post">
               <fieldset>
                 <input type="hidden" name="cmd" value="_cart">
@@ -40,7 +42,7 @@
                 <input type="hidden" name="discount_amount" value="1.00">
                 <input type="hidden" name="return" value=" ">
                 <input type="hidden" name="cancel_return" value=" ">
-                <input type="submit" name="submit" value="加入購物車" class="button">
+                <input type="submit" name="submit" {%if not product.isSoldout %}value="加入購物車"{%else%}value="已售完" disabled{%endif%} class="button">
               </fieldset>
             </form>
           </div>
