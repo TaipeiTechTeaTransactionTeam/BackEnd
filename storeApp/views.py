@@ -300,3 +300,16 @@ def editProduct(request):
 def manageProductAndDiscount(request):
     types = TeaType.objects.all()
     return render(request, 'storeApp/manageProductAndDiscount.html', locals())
+
+def product_record(request):
+    orders = Order.objects.filter(own_user=request.user)
+    a = []
+    for i in orders:
+        print('=====================')
+        print(i)
+        for j in  OrderContainProduct.objects.filter(order=i):
+            a.append(j.product.id)
+            print(j)
+        print('=====================')
+    products = Product.objects.filter(id__in=a)
+    return render(request, 'storeApp/product_record.html', locals())

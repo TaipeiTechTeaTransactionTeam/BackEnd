@@ -23,5 +23,6 @@ urlpatterns = [
     path('manageOrder/', views.manageOrder, name='manageOrder'),
     path('manageProductAndDiscount/', views.manageProductAndDiscount, name='manageProductAndDiscount'),
     path('productQuantity/<str:ids>',views.productQuantity,name="productQuantity"),
-    #path('testJsonApi/',views.testJsonApi,name="testJsonApi"),
+    path('product_record',views.product_record,name="product_record"),
+    #path('testJsonApi/',views.testJsonApi,name="testJsonApi"),product_record
 ]
