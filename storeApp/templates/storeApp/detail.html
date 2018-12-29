@@ -24,9 +24,9 @@
           <div class="snipcart-thumb agileinfo_single_right_snipcart">
             <!--product price-->
             <h4 class="m-sing">
-              {%block productPrice%}$NT{{ product.price }}
+              {%block productPrice%}NT${{ product.price }}
               {%if product.isDiscount%}
-              <span>$NT{{ product.originPrice }}</span>
+              <span>NT${{ product.originPrice }}</span>
               {%endif%}
               {%endblock productPrice%}
             </h4>
