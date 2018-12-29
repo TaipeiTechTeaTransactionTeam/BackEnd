@@ -56,13 +56,15 @@ class Product(models.Model):
     def get_discount_price(self):
         try:
             product_discount = ProductDiscount.objects.get(product=self.id)
-            if product_discount:
+            if product_discount and product_discount.isValidNow:
                 if product_discount.discount > 1:
                     return {'price': int(self.price - product_discount.discount),
                             'discount': int(product_discount.discount)}
                 else:
                     return {'price': int(self.price * product_discount.discount),
                             'discount': int(self.price - self.price * product_discount.discount)}
+            else:
+                return {'price': self.price, 'discount': 0}
         except:
             return {'price': self.price, 'discount': 0}
 
@@ -75,10 +77,12 @@ class Product(models.Model):
 
 
 class Order(models.Model):
+    ORDER_STATUS = [('1', '新訂單'), ('2', '已確認'), ('3', '待出貨'),
+                    ('4', '出貨中'), ('5', '己出貨')]
     own_user = models.ForeignKey(
         User, verbose_name="持有者", on_delete=models.CASCADE)
     status = models.CharField(
-        verbose_name="狀態", max_length=255, null=False, default='unpad')
+        verbose_name="狀態", choices=ORDER_STATUS, max_length=255, null=False, default='1')
     date = models.DateField(verbose_name="日期", default=timezone.now)
     total_price = models.DecimalField(verbose_name="總金額",
                                       max_digits=10, decimal_places=2, null=False)
@@ -123,8 +127,11 @@ class SeasoningDiscount(models.Model):
             else:
                 return floor(self.discount)
 
-    # def calculatePrice(self, price):
-    #     return price - self.discountValue(price)
+    def calculatePrice(self, price):
+        return price - self.discountValue(price)
+
+    def __str__(self):
+        return self.description
 
     class Meta:
         verbose_name = '季節折扣'
@@ -132,11 +139,14 @@ class SeasoningDiscount(models.Model):
 
 
 class ShippingDiscount(SeasoningDiscount):
-    condition = models.DecimalField(
-        max_digits=10, decimal_places=0, null=False, default=0)
+    condition = models.DecimalField(verbose_name="條件",
+                                    max_digits=10, decimal_places=0, null=False, default=0)
 
     def calculate_price(self, price, shipping_price):
         return price + (shipping_price - self.discount) if price >= self.condition else price + shipping_price
+
+    def __str__(self):
+        return self.description
 
     class Meta:
         verbose_name = '運費折扣'
@@ -148,7 +158,7 @@ class ProductDiscount(SeasoningDiscount):
         Product, verbose_name="產品", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.product.name
+        return self.description
 
     class Meta:
         verbose_name = '產品折扣'
