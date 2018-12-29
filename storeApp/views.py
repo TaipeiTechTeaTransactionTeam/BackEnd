@@ -289,14 +289,11 @@ def checkout(request):
 def detail(request, pk):
     types = TeaType.objects.all()
     product_ = get_object_or_404(Product, pk=pk)
+    product = getProductDiscountList([product_])[0]
     newoffers = list(Product.objects.all())
     newoffers.reverse()
-    newoffers = newoffers[:4]
-    return render(request, 'storeApp/detail.html', {
-        'product': product_,
-        'newoffers': newoffers,
-        'types': types
-    })
+    products = getProductDiscountList(newoffers[:4])
+    return render(request, 'storeApp/detail.html',locals())
 
 
 def editProduct(request):
