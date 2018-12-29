@@ -13,8 +13,8 @@ from django.contrib.auth.decorators import login_required
 import json
 import math
 from pprint import pprint
+from .models import *
 from .productDiscountItem import ProductDiscountItem,getProductDiscountList
-from .models import Product, TeaType, ProductDiscount, Order, OrderContainProduct
 
 # Create your views here.
 
@@ -231,27 +231,26 @@ def contact(request):
 
 def checkout(request):
     types = TeaType.objects.all()
+    shippingDiscount = [x for x in list(ShippingDiscount.objects.all()) if x.isValidNow()][-1]
     if request.method == 'GET':
         # eventDiscounts=discount.objects.filter(type="Event").all()
         # shippingDiscount=discount.objects.filter(type="Shipping").all()
-        shippingDiscount = ''
-        eventDiscounts = ''
-        if(shippingDiscount):
-            pass
-        else:
+       
+        eventDiscounts = [x for x in list(SeasoningDiscount.objects.all()) if x.isValidNow()]
+        if(not shippingDiscount):
             shippingDiscount = {"discount": 0,"condition":499}
         if(eventDiscounts):
             pass
         else:
             eventDiscounts = [
                 {
-                    "id": 2,
+                    "id": 8,
                     "discount": 0.7,
                     "condition":1000,
                     "description":"大打折"
                 },
                 {
-                    "id": 4,
+                    "id": 3,
                     "discount": 200
                 },
                 {
@@ -266,10 +265,17 @@ def checkout(request):
         total_price = 0
         datas = json.loads(request.POST['items'])
         for data in datas:
-            total_price += Product.objects.get(
-                id=data['uid']).price * data['quantity']
+            total_price += Product.objects.get(id=data['uid']).price * data['quantity']
         order = Order(own_user=request.user, total_price=total_price)
         order.save()
+        eventDiscountsId=json.loads(request.POST.get("eventDiscount",-1))["id"]
+        eventDiscount=SeasoningDiscount.objects.get(id=eventDiscountsId)
+        if eventDiscount and eventDiscount.isValidNow():
+            total_price -= eventDiscount.discountValue(total_price) #折價券折扣計算後的值
+        if shippingDiscount and shippingDiscount.isValidNow():
+            total_price += shippingDiscount.calculatePrice(shippingPrice) #運費折扣後
+        else:
+            total_price += shippingPrice
         for data in datas:
             product = Product.objects.get(id=data['uid'])
             OrderContainProduct.objects.create(

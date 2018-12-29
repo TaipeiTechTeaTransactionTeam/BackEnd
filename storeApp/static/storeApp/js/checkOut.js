@@ -86,7 +86,8 @@ class CheckOut
             items.push(newItem);
         }
         form.innerHTML+=`<input name="items" value='${JSON.stringify(items)}' type="hidden" >`;
-        form.innerHTML+=`<input name="eventDiscount" value='${JSON.stringify(this.eventDiscountSrcObject)}' type="hidden" >`;//testing
+        if(typeof this.eventDiscountSrcObject !=="undefined")
+            form.innerHTML+=`<input name="eventDiscount" value='${JSON.stringify(this.eventDiscountSrcObject)}' type="hidden" >`;//testing
         var value=document.querySelector(".modal-dialog #addressInput").value;
         form.innerHTML+=`<input name="address" value='${value}' type="hidden">`;
         form.style.display="none";
@@ -261,7 +262,7 @@ class CheckOutList extends Nawa.Class.DisplayObject
         (
             typeof this.shippingDiscountSrcObject!=="undefined"?
             (
-                this.totalWithoutShippingPrice>=this.shippingDiscountCondition?
+                this.totalWithoutShippingPrice>=(this.shippingDiscountCondition||0)?
                 (
                     this.shippingDiscount>=1?
                     (
@@ -278,7 +279,7 @@ class CheckOutList extends Nawa.Class.DisplayObject
         );
     }
 
-    get totalWithoutShippingPrice(){return this.subtotal+this.eventDiscountValue;}
+    get totalWithoutShippingPrice(){return this.subtotal-this.eventDiscountValue;}
     
     get subtotal(){return this.cart.total();}
     set subtotal(val){this.subtotalObject.total=val;}

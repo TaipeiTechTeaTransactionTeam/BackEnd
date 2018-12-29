@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import django.utils.timezone as timezone
 from django.urls import reverse
+from datetime import date
+from math import floor
 # Create your models here.
 
 
@@ -108,7 +110,19 @@ class SeasoningDiscount(models.Model):
     end_date = models.DateField(verbose_name="結束日期", null=False)
     description = models.CharField(
         verbose_name="描述", max_length=255, null=False)
-
+    def isValidNow(self):
+        return self.start_date<=date.today() and date.today()<=self.end_date
+    def discountValue(self,price=-1):
+        if 0<=self.discount and self.discount<1:
+            return floor(price*(1-discount))
+        elif 1<=self.discount:
+            if price<floor(self.discount):
+                return price
+            else:
+                return floor(self.discount)
+                
+    def calculatePrice(self,price):
+        return price-self.discountValue(price)
     class Meta:
         verbose_name = '季節折扣'
         verbose_name_plural = '季節折扣'
@@ -119,8 +133,8 @@ class ShippingDiscount(SeasoningDiscount):
         max_digits=10, decimal_places=0, null=False, default=0)
 
     class Meta:
-        verbose_name = '購物折扣'
-        verbose_name_plural = '購物折扣'
+        verbose_name = '運費折扣'
+        verbose_name_plural = '運費折扣'
 
 
 class ProductDiscount(SeasoningDiscount):
