@@ -226,14 +226,13 @@ def contact(request):
 
 def checkout(request):
     types = TeaType.objects.all()
+    shippingDiscount = [x for x in list(ShippingDiscount.objects.all()) if x.isValidNow()][-1]
     if request.method == 'GET':
         # eventDiscounts=discount.objects.filter(type="Event").all()
         # shippingDiscount=discount.objects.filter(type="Shipping").all()
-        shippingDiscount = [x for x in list(ShippingDiscount.objects.all()) if x.isValidNow()][-1]
+       
         eventDiscounts = [x for x in list(SeasoningDiscount.objects.all()) if x.isValidNow()]
-        if(shippingDiscount):
-            pass
-        else:
+        if(not shippingDiscount):
             shippingDiscount = {"discount": 0,"condition":499}
         if(eventDiscounts):
             pass
@@ -261,14 +260,17 @@ def checkout(request):
         total_price = 0
         datas = json.loads(request.POST['items'])
         for data in datas:
-            total_price += Product.objects.get(
-                id=data['uid']).price * data['quantity']
+            total_price += Product.objects.get(id=data['uid']).price * data['quantity']
         order = Order(own_user=request.user, total_price=total_price)
         order.save()
         eventDiscountsId=json.loads(request.POST.get("eventDiscount",-1))["id"]
-        eventDiscount=SeasoningDiscount.objects.get(pk=eventDiscountsId)
-        if eventDiscount.isValidNow():
-            total_price -= eventDiscount.discountValue(total_price)
+        eventDiscount=SeasoningDiscount.objects.get(id=eventDiscountsId)
+        if eventDiscount and eventDiscount.isValidNow():
+            total_price -= eventDiscount.discountValue(total_price) #折價券折扣計算後的值
+        if shippingDiscount and shippingDiscount.isValidNow():
+            total_price += shippingDiscount.calculatePrice(shippingPrice) #運費折扣後
+        else:
+            total_price += shippingPrice
         for data in datas:
             product = Product.objects.get(id=data['uid'])
             OrderContainProduct.objects.create(
