@@ -134,7 +134,7 @@ class SeasoningDiscount(models.Model):
 
 
 class ShippingDiscount(SeasoningDiscount):
-    condition = models.DecimalField(
+    condition = models.DecimalField(verbose_name="條件",
         max_digits=10, decimal_places=0, null=False, default=0)
 
     def calculate_price(self, price, shipping_price):

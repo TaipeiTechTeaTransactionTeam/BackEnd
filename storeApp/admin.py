@@ -10,34 +10,32 @@ from .models import ProductDiscount
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'tea_type', 'image', 'amount',
-                    'price', 'description', 'add_date')
-    fields = ('name', 'tea_type', 'image', 'amount', 'price', 'description')
-    ordering = ('add_date',)
-
-def make_published(modeladmin, request, queryset):
-    queryset.update(status='p')
-make_published.short_description = "Mark selected stories as published"
+    list_display = ['name', 'tea_type', 'amount',
+                    'price', 'description', 'image', 'add_date']
+    fields = ['name', 'tea_type', 'image', 'amount', 'price', 'description']
+    ordering = ['add_date', ]
 
 
 @admin.register(TeaType)
 class TeaTypeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'image')
-    actions = [make_published]
+    list_display = ['name', 'image']
+
 
 @admin.register(SeasoningDiscount)
 class SeasoningDiscountAdmin(admin.ModelAdmin):
-    list_display = ('id', 'discount', 'start_date', 'end_date')
+    list_display = ['description', 'discount', 'id', 'start_date', 'end_date']
 
 
 @admin.register(ShippingDiscount)
 class ShippingDiscountAdmin(admin.ModelAdmin):
-    list_display = ('id', 'discount', 'condition', 'start_date', 'end_date')
+    list_display = ['description', 'id', 'discount',
+                    'condition', 'start_date', 'end_date']
 
 
 @admin.register(ProductDiscount)
 class ProductDiscountAdmin(admin.ModelAdmin):
-    list_display = ('id', 'discount', 'product', 'start_date', 'end_date')
+    list_display = ['description', 'id', 'discount',
+                    'product', 'start_date', 'end_date']
 
 
 class OrderContainProductInline(admin.TabularInline):
@@ -47,8 +45,10 @@ class OrderContainProductInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'own_user']
+    list_display = ['id', 'own_user', 'status', 'date', 'total_price']
     inlines = [OrderContainProductInline]
 
 
-admin.site.register(Store)
+@admin.register(Store)
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ['name', 'phone', 'address', 'freight']
