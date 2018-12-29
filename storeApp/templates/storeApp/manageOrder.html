@@ -17,12 +17,13 @@
         <div class="item-header">
           <h4>
             {%block buyer%}
-            {{ order.order.own_user }}
+            <h4>買家:{{ order.order.own_user }}</h4> 
             {%endblock buyer%}
           </h4>
         </div>
         <!--標頭-->
         <!--標頭與商品清單分隔線-->
+        <br>
         <div class="border-solid"></div>
         <!--訂單中的商品清單-->
         <div class="item-detail-list">
@@ -39,11 +40,8 @@
                 <div class="item-describe col-md-10">
                   <p>
                     {%block orderDescribe%}
-                    
-
-                    名稱 {{i.product.name}}<br>數量{{i.product.amount}}
-
-                    
+                      <h4>名稱 {{i.product.name}}</h4><br>
+                      <h4>數量{{i.product.amount}}</h4>
                     {%endblock orderDescribe%}
                   </p>
                 </div>
@@ -87,10 +85,12 @@
     </div>
     <!--一筆訂單-->
   </div>
-  {% endfor %}
+</div>
+{% endfor %}
   {%endblock order%}
 </div>
 {% endblock content %}
+
 
 <table class="table table-striped">
   <thead>
