@@ -162,6 +162,26 @@ def teas_type(request, fk):
     teas = list(teas)[(page - 1) * 9:page * 9]
     return render(request, 'storeApp/teas.html', locals())
 
+def manageOrder(request):
+    types = TeaType.objects.all()
+    orders = Order.objects.filter(own_user = request.user)
+    oneOrder = []
+
+    for i in orders:
+        oneOrder.append({'order' : i, 'products' : OrderContainProduct.objects.filter(order = i)})
+
+    for i in oneOrder:
+        print(i['order'].own_user)
+        for j in i['products']:
+            print(j.product.name)
+        print("==")
+
+    #products = []
+    #for i in orders:
+    #    products = OrderContainProduct.objects.get(order = i)
+    #    print(products.product.name)
+    return render(request, 'storeApp/manageOrder.html', locals())
+
 
 @require_http_methods(['POST', 'GET'])
 def login(request):
@@ -292,9 +312,7 @@ def editProduct(request):
     return render(request, 'storeApp/editProduct.html', locals())
 
 
-def manageOrder(request):
-    types = TeaType.objects.all()
-    return render(request, 'storeApp/manageOrder.html', locals())
+
 
 
 def manageProductAndDiscount(request):
