@@ -3590,3 +3590,19 @@ td.invert-image a img {
     font-size: 32px;
     color: #03ad1d;
 }
+.productItemTitle{
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.productDetail{
+    padding-left: 0px;
+    padding-right: 0px;
+    border: none;
+    background: none;
+    font-size: 16px;
+    word-break: break-all;
+    word-wrap: break-word;
+    width: 100%;
+    white-space: pre-wrap;
+}

@@ -13,8 +13,8 @@ from django.contrib.auth.decorators import login_required
 import json
 import math
 from pprint import pprint
-
 from .models import *
+from .productDiscountItem import ProductDiscountItem,getProductDiscountList
 
 # Create your views here.
 
@@ -23,14 +23,10 @@ teas_pageOne = 1  # first page
 
 def home(request):
     types = TeaType.objects.all()
-    products = Product.objects.all()
-    newoffers = list(products)
+    newoffers = list(Product.objects.all())
     newoffers.reverse()
     newoffers = newoffers[:4]
-    pDiscounts = list(ProductDiscount.objects.filter(product__in=[x.id for x in newoffers]).all())
-
-
-    
+    products=getProductDiscountList(newoffers)
     return render(request, 'storeApp/index.html',locals())
 
 def search(request):
@@ -135,7 +131,8 @@ def teas(request):
     # 變成可迭代物件
     total_page = range(1, total_page+1)
     # 取好 9 個商品
-    teas = list(teas)[(page - 1) * 9:page * 9]
+    teas=getProductDiscountList(list(teas)[(page - 1) * 9:page * 9])
+
     return render(request, 'storeApp/teas.html', locals())
 
 
@@ -159,8 +156,16 @@ def teas_type(request, fk):
     # 變成可迭代物件
     total_page = range(1, total_page+1)
     # 取好 9 個商品
-    teas = list(teas)[(page - 1) * 9:page * 9]
+    teas = getProductDiscountList(list(teas)[(page - 1) * 9:page * 9])
     return render(request, 'storeApp/teas.html', locals())
+
+def manageOrder(request):
+    types = TeaType.objects.all()
+    orders = Order.objects.filter(own_user = request.user)
+    oneOrder = []
+    for i in orders:
+        oneOrder.append({'order' : i, 'products' : OrderContainProduct.objects.filter(order = i)})
+    return render(request, 'storeApp/manageOrder.html', locals())
 
 
 @require_http_methods(['POST', 'GET'])
@@ -298,9 +303,7 @@ def editProduct(request):
     return render(request, 'storeApp/editProduct.html', locals())
 
 
-def manageOrder(request):
-    types = TeaType.objects.all()
-    return render(request, 'storeApp/manageOrder.html', locals())
+
 
 
 def manageProductAndDiscount(request):
