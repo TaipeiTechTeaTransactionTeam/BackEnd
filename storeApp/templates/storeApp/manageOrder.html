@@ -7,16 +7,17 @@
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
 <div class="container">
+  <!--一筆訂單-->
+  {%block order%}
+  {% for order in oneOrder %}
   <div class="item-list">
-    <!--一筆訂單-->
-    {%block order%}
     <div class="order-item">
       <div class="item-card">
         <!--標頭-->
         <div class="item-header">
           <h4>
             {%block buyer%}
-            買家
+            {{ order.order.own_user }}
             {%endblock buyer%}
           </h4>
         </div>
@@ -27,17 +28,22 @@
         <div class="item-detail-list">
           <!--訂單中其中一項商品-->
           {%block oneProductOfOrder%}
+          {% for i in order.products %}
           <div class="row">
             <div class="col-md-9">
               <div class="row">
                 <div class=" col-md-2">
                   <!--need to change image-->
-                  <img src="{% static 'images/1.png'%}" class="item-detail-image" alt="無法顯示">
+                  <img src="{{i.product.image.url}}" class="item-detail-image" alt="無法顯示">
                 </div>
                 <div class="item-describe col-md-10">
                   <p>
                     {%block orderDescribe%}
-                    名稱 <br>規格<br>數量
+                    
+
+                    名稱 {{i.product.name}}<br>數量{{i.product.amount}}
+
+                    
                     {%endblock orderDescribe%}
                   </p>
                 </div>
@@ -46,11 +52,12 @@
             <div class="col-md-3 price-block">
               <h4 class="price">
                 {%block orderPrice%}
-                $1000
+                <h4>${{i.product.price}}</h4>
                 {%endblock orderPrice%}
               </h4>
             </div>
           </div>
+          {% endfor %}
           {%endblock oneProductOfOrder%}
           <!--訂單中其中一項商品-->
           <!--一筆訂單中每樣商品的分隔線-->
@@ -66,7 +73,7 @@
             <span class="form-total">訂單金額 : </span>
             <span class="form-price">
               {%block totalPrice%}
-              $2000
+              {{ order.order.total_price }}
               {%endblock totalPrice%}
             </span>
           </div>
@@ -79,8 +86,9 @@
       <!--單筆訂單總價與按鈕-->
     </div>
     <!--一筆訂單-->
-    {%endblock order%}
   </div>
+  {% endfor %}
+  {%endblock order%}
 </div>
 {% endblock content %}
 
