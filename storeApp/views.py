@@ -175,7 +175,6 @@ def manageOrder(request):
 
 @require_http_methods(['POST', 'GET'])
 def login(request):
-    # LoginForm = modelform_factory(User, fields=('username', 'password'))
     if request.method == 'POST':
         name = request.POST['username']  # 取得表單傳送的帳號、密碼
         password = request.POST['password']
@@ -218,9 +217,7 @@ def regesiter(request):
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.is_staff = "False"
-            # shoppingCart = shoppingCart(ownUser=user)
             user.save()  # 將資料寫入資料庫
-            # shoppingCart.save()
             # 若成功建立，重新導向至 index.html
             return redirect("storeApp:home")
     else:
@@ -245,12 +242,12 @@ def checkout(request):
         # 事件折扣
         eventDiscounts = [x for x in list(
             SeasoningDiscount.objects.all()) if x.isValidNow()]
+        return render(request, 'storeApp/checkout.html', locals())
 
     elif request.method == 'POST':
         # 登入驗證
         if not request.user.is_authenticated:
             return redirect('storeApp:login')
-
         # 初始化總價
         total_price = 0
         # 解析收到的資料
@@ -258,8 +255,7 @@ def checkout(request):
         # 計算原總價
         for data in datas:
             total_price += Product.objects.get(
-                id=data['uid']).price * data['quantity']
-
+                id=data['uid']).get_discount_price()['price'] * data['quantity']
         # 拿出所選的折扣
         eventDiscount = SeasoningDiscount.objects.get(
             id=json.loads(request.POST.get("eventDiscount", -1))["id"])
@@ -270,7 +266,8 @@ def checkout(request):
 
         if shippingDiscount and shippingDiscount.isValidNow():
             # 運費折扣後
-            total_price = shippingDiscount.calculate_price(total_price, shippingPrice)
+            total_price = shippingDiscount.calculate_price(
+                total_price, shippingPrice)
 
         order = Order(own_user=request.user, total_price=total_price)
         order.save()
@@ -292,7 +289,7 @@ def detail(request, pk):
     newoffers = list(Product.objects.all())
     newoffers.reverse()
     products = getProductDiscountList(newoffers[:4])
-    return render(request, 'storeApp/detail.html',locals())
+    return render(request, 'storeApp/detail.html', locals())
 
 
 def editProduct(request):
