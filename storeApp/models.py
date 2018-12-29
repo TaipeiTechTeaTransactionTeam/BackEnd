@@ -114,7 +114,7 @@ class SeasoningDiscount(models.Model):
         return self.start_date<=date.today() and date.today()<=self.end_date
     def discountValue(self,price=-1):
         if 0<=self.discount and self.discount<1:
-            return floor(price*(1-discount))
+            return floor(price*(1-self.discount))
         elif 1<=self.discount:
             if price<floor(self.discount):
                 return price
