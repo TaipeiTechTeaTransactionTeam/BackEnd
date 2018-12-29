@@ -38,8 +38,10 @@
                 <input type="hidden" name="add" value="1">
                 <input type="hidden" name="business" value=" ">
                 <input type="hidden" name="item_name" value="{{ product.name }}">
-                <input type="hidden" name="amount" value="{{ product.price }}">
-                <input type="hidden" name="discount_amount" value="1.00">
+                <input type="hidden" name="amount" value="{{ product.originPrice }}">
+                {%if product.isDiscount%}
+                <input type="hidden" name="discount_amount" value="{{product.discount}}">
+                {%endif %}
                 <input type="hidden" name="return" value=" ">
                 <input type="hidden" name="cancel_return" value=" ">
                 <input type="submit" name="submit" {%if not product.isSoldout %}value="加入購物車"{%else%}value="已售完" disabled{%endif%} class="button">
