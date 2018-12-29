@@ -231,7 +231,7 @@ def contact(request):
 
 def checkout(request):
     types = TeaType.objects.all()
-    shippingPrice = 100
+    shippingPrice = list(Store.objects.all())[0].freight
     shippingDiscount = [x for x in list(ShippingDiscount.objects.all()) if x.isValidNow()][-1]
     if request.method == 'GET':
         # eventDiscounts=discount.objects.filter(type="Event").all()
