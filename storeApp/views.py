@@ -166,20 +166,8 @@ def manageOrder(request):
     types = TeaType.objects.all()
     orders = Order.objects.filter(own_user = request.user)
     oneOrder = []
-
     for i in orders:
         oneOrder.append({'order' : i, 'products' : OrderContainProduct.objects.filter(order = i)})
-
-    for i in oneOrder:
-        print(i['order'].own_user)
-        for j in i['products']:
-            print(j.product.name)
-        print("==")
-
-    #products = []
-    #for i in orders:
-    #    products = OrderContainProduct.objects.get(order = i)
-    #    print(products.product.name)
     return render(request, 'storeApp/manageOrder.html', locals())
 
 
