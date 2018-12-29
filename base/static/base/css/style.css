@@ -3595,3 +3595,14 @@ td.invert-image a img {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.productDetail{
+    padding-left: 0px;
+    padding-right: 0px;
+    border: none;
+    background: none;
+    font-size: 16px;
+    word-break: break-all;
+    word-wrap: break-word;
+    width: 100%;
+    white-space: pre-wrap;
+}
