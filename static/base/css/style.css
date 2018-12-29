@@ -3,8 +3,21 @@
 {
     width:150px;
     height: 150px;
+    object-fit: scale-down;
 }
-
+.couponSection
+{
+    margin:2em 0 0;
+}
+.couponSection h4
+{
+    margin-bottom: 1em;
+}
+/*修正 inputgroup select很小的問題*/
+.input-group > .custom-select
+{
+    width: unset;
+}
 html, body{
     font-size: 100%;
 	font-family: "Noto Sans CJK TC Regular", "微軟正黑體", sans-serif,'Open Sans', sans-serif;
@@ -478,8 +491,8 @@ ul.multi-column-dropdown h6 {
     color: #999;
 }
 #PPMiniCart .minicart-remove {
-    background: #3399cc !important;
-    border: 1px solid #3399cc !important;
+    background: #03ad1d !important;
+    border: 1px solid #03ad1d !important;
 	opacity: 1 !important;
 	outline:none;
 }
@@ -1196,7 +1209,7 @@ td.invert-image a img {
     margin-top: -6.2px;
 	position: absolute;
 }
-.value  {
+.value {
     cursor: default;
     width: 40px;
 	height:40px;
@@ -1246,6 +1259,20 @@ td.invert-image a img {
 }
 .checkout-left-basket ul li span {
     float: right;
+}
+.checkout-left-basket ul li.subtotal
+{
+    font-size: 1em;
+    color: #3f3f3f;
+    font-weight: 550;
+    padding: 1em 0;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+    margin: 1em 0 ;
+}
+.checkout-left-basket ul li.discount
+{
+    color:#009216;
 }
 .checkout-left-basket ul li:last-child {
     font-size: 1em;

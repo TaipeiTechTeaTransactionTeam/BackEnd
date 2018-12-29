@@ -7,17 +7,22 @@
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
 <script>
-	
 {% if eventDiscounts%}
 	window.eventDiscount={ {% for key,value in eventDiscounts.0.items %}{{key}}:{% if key == "description" %}"{{ value }}"{% else %}{{ value }}{% endif %}, {% endfor %} };
 	window.eventDiscounts=[{%for discount in eventDiscounts%}{  {% for key , value in discount.items %}{{key}}:{% if key == "description" %}"{{ value }}"{% else %}{{ value }}{% endif %}, {%endfor%}}, {%endfor%} ];
 {%endif%}
+const shippingDiscount=
 {%if shippingDiscount %}
-const shippingDiscount={ {% for key, value in shippingDiscount.items%}{{key}}:{{value}}, {%endfor%} };
-{%endif%}
+{ {% for key, value in shippingDiscount.items%}{{key}}:{{value}}, {%endfor%} }
+{% else %}
+undefined
+{%endif%};
+const shippingPrice=
 {%if shippingPrice%}
-const shippingPrice={{shippingPrice}}
-{%endif%}
+{{shippingPrice}}
+{% else %}
+undefined
+{%endif%};
 window.csrf='{% csrf_token %}';
 </script>
 <script src="{% static 'storeApp/js/checkOut.js'%}" type="module"></script>

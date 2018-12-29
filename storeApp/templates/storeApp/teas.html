@@ -38,7 +38,7 @@
       </div>
       <div>
         {% block product %}
-        {% for tea in teas %}
+        {% for product in teas %}
         <div class="col-md-4 top_brand_left agile_top_brands_grids">
           <div class="hover14 column">
             <div class="agile_top_brand_left_grid">
@@ -49,13 +49,13 @@
                   <div class="snipcart-item block">
                     <div class="snipcart-thumb">
                       <!--- 商品照片 -->
-                      <a href="{% url 'storeApp:detail' tea.id %}"><img title=" " alt=" " src="{{ tea.image.url }}"></a>
+                      <a href="{% url 'storeApp:detail' product.id %}"><img title=" " alt=" " src="{{ product.image.url }}"></a>
                       <!--- 商品照片 -->
                       <!--- 商品名稱 -->
-                      <p class="productItemTitle">{{ tea.name }}</p>
+                      <p class="productItemTitle">{{ product.name }}</p>
                       <!--- 商品名稱 -->
                       <!--- 商品價錢 -->
-                      <h4>{{ tea.price }} <span>{{ tea.price }}</span></h4>
+                      <h4>{{ product.price }} {%if product.isDiscount%}<span>{{ product.originPrice }}</span>{%endif%}</h4>
                       <!--- 商品價錢 -->
                     </div>
                     <!--加入購物車的小視窗-->
@@ -67,18 +67,20 @@
                           <input type="hidden" name="add" value="1">
                           <!--使用者加入的數量-->
                           <!--商品名稱-->
-                          <input type="hidden" name="item_name" value="{{ tea.name }}">
+                          <input type="hidden" name="item_name" value="{{ product.name }}">
                           <!--商品名稱-->
                           <!-- 產品UID *必填 結帳時回傳給資料庫的資料-->
-                          <input type="hidden" name="uid" value="{{ tea.id }}">
+                          <input type="hidden" name="uid" value="{{ product.id }}">
                           <!-- 產品UID -->
                           <!--商品價格-->
-                          <input type="hidden" name="amount" value="{{ tea.price }}">
+                          <input type="hidden" name="amount" value="{{ product.price }}">
                           <!--商品價格-->
+                          {%if product.isDiscount%}
                           <!--折扣價格-->
-                          <input type="hidden" name="discount_amount" value="1.00">
+                          <input type="hidden" name="discount_amount" value="{{ product.discount }}">
                           <!--折扣價格-->
-                          <input type="hidden" name="imgSrc" value="{{ tea.image.url }}">
+                          {%endif%}
+                          <input type="hidden" name="imgSrc" value="{{ product.image.url }}">
                           <input type="submit" name="submit" value="加入購物車" class="button">
                         </fieldset>
                       </form>

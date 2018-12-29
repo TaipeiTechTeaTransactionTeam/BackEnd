@@ -4,10 +4,7 @@ import {Uti} from "./Nawauti.js";
  * 在網址後方加入#debug 判斷為True
  * 
  */
-function isDebug()
-{
-    return location.hash.search("debug")!==-1;
-}
+
 var Nawa=Nawa||{};
 Nawa.Class=Nawa.Class||{};
 /*
@@ -262,18 +259,22 @@ class CheckOutList extends Nawa.Class.DisplayObject
     get shippingDiscountCondition(){return this.shippingDiscountSrcObject.condition;}
     get shippingDiscountValue(){return Math.floor
         (
-            this.totalWithoutShippingPrice>=this.shippingDiscountCondition?
+            typeof this.shippingDiscountSrcObject!=="undefined"?
             (
-                this.shippingDiscount>=1?
+                this.totalWithoutShippingPrice>=this.shippingDiscountCondition?
                 (
-                    this.shippingDiscount>=shippingPrice?
-                        shippingPrice
-                    :
-                        this.shippingDiscount
+                    this.shippingDiscount>=1?
+                    (
+                        this.shippingDiscount>=shippingPrice?
+                            shippingPrice
+                        :
+                            this.shippingDiscount
+                    ):
+                        shippingPrice*(1-this.shippingDiscount)
                 ):
-                    shippingPrice*(1-this.shippingDiscount)
+                    0
             ):
-                0
+           0
         );
     }
 
@@ -289,7 +290,7 @@ class CheckOutList extends Nawa.Class.DisplayObject
     get eventDiscountValue()
     {
         return Math.floor(
-                this.subtotal>=(this.eventDiscountCondition||0)?
+                typeof this.eventDiscountSrcObject!=="undefined"&&this.subtotal>=(this.eventDiscountCondition||0)?
                 (
                     this.eventDiscount>=1?
                     (
@@ -303,7 +304,7 @@ class CheckOutList extends Nawa.Class.DisplayObject
             );
     }
     set eventDiscountValue(val){this.eventDiscountObject.total=val;}
-    get eventDiscountString(){return this.eventDiscount>=1?"折價"+this.eventDiscount+"元":(this.eventDiscount*100)%10===0?this.eventDiscount*10+"折":this.eventDiscount*100+"折";}
+    get eventDiscountString(){return (this.eventDiscount>=1?"折價"+this.eventDiscount+"元":(this.eventDiscount*100)%10===0?this.eventDiscount*10+"折":this.eventDiscount*100+"折");}
     set total(val){this.totalObject.total=val;}
     get total()
     {
@@ -588,10 +589,6 @@ class ProductCheckView extends Nawa.Class.DisplayObject
 $(
     ()=>
     {
-        if(isDebug())
-        {
-
-        }
         var checkOut=new Nawa.Class.CheckOut(paypal.minicart.cart);
         $(".checkout.btn").on("click",function()
         {
@@ -612,7 +609,13 @@ $(
                 alert("地址欄位不小於8");
                 return;
             }
+            if(!Uti.isDebug())
+            {
+                checkOut.cart.destroy();
+            }
+                
             checkOut.postTo();
+
         })
         function updateEventDiscountToWindow()
         {

@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 import json
 import math
 from pprint import pprint
-
+from .productDiscountItem import ProductDiscountItem,getProductDiscountList
 from .models import Product, TeaType, ProductDiscount, Order, OrderContainProduct
 
 # Create your views here.
@@ -23,14 +23,10 @@ teas_pageOne = 1  # first page
 
 def home(request):
     types = TeaType.objects.all()
-    products = Product.objects.all()
-    newoffers = list(products)
+    newoffers = list(Product.objects.all())
     newoffers.reverse()
     newoffers = newoffers[:4]
-    pDiscounts = list(ProductDiscount.objects.filter(product__in=[x.id for x in newoffers]).all())
-
-
-    
+    products=getProductDiscountList(newoffers)
     return render(request, 'storeApp/index.html',locals())
 
 def search(request):
@@ -135,7 +131,8 @@ def teas(request):
     # 變成可迭代物件
     total_page = range(1, total_page+1)
     # 取好 9 個商品
-    teas = list(teas)[(page - 1) * 9:page * 9]
+    teas=getProductDiscountList(list(teas)[(page - 1) * 9:page * 9])
+
     return render(request, 'storeApp/teas.html', locals())
 
 
@@ -159,7 +156,7 @@ def teas_type(request, fk):
     # 變成可迭代物件
     total_page = range(1, total_page+1)
     # 取好 9 個商品
-    teas = list(teas)[(page - 1) * 9:page * 9]
+    teas = getProductDiscountList(list(teas)[(page - 1) * 9:page * 9])
     return render(request, 'storeApp/teas.html', locals())
 
 
