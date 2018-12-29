@@ -7,13 +7,20 @@
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
 <script>
+
 {% if eventDiscounts%}
-	window.eventDiscount={ {% for key,value in eventDiscounts.0.items %}{{key}}:{% if key == "description" %}"{{ value }}"{% else %}{{ value }}{% endif %}, {% endfor %} };
-	window.eventDiscounts=[{%for discount in eventDiscounts%}{  {% for key , value in discount.items %}{{key}}:{% if key == "description" %}"{{ value }}"{% else %}{{ value }}{% endif %}, {%endfor%}}, {%endfor%} ];
+	window.eventDiscount={ 
+		id : {{eventDiscounts.0.id}},
+		discount : {{eventDiscounts.0.discount}}
+		{%if discount.description%},description:"{{discount.description}}"{%endif%}
+		{%if discount.condition%},condition:"{{discount.condition}}"{%endif%}
+	 };
+	window.eventDiscounts=[{%for discount in eventDiscounts%} {id : {{discount.id}},discount:{{discount.discount}}{%if discount.description%},description:"{{discount.description}}"{%endif%} {%if discount.condition%},condition:"{{discount.condition}}"{%endif%} },
+		 {%endfor%} ];
 {%endif%}
 const shippingDiscount=
 {%if shippingDiscount %}
-{ {% for key, value in shippingDiscount.items%}{{key}}:{{value}}, {%endfor%} }
+{ discount:{{shippingDiscount.discount}}{%if shippingDiscount.condition%},condition:{{shippingDiscount.condition}}{%endif%}{%if shippingDiscount.description%},description:"{{shippingDiscount.description}}"{%endif%} };
 {% else %}
 undefined
 {%endif%};
@@ -35,6 +42,7 @@ window.csrf='{% csrf_token %}';
 		</div>
 
 		<section class="couponSection">
+			{% if eventDiscounts %}
 			<h4>選擇折價券</h4>
 			<select class="custom-select" id="inputGroupCoupon">
 				{%for eventCoupon in eventDiscounts%}
@@ -56,6 +64,7 @@ window.csrf='{% csrf_token %}';
 				{%endfor%}
 				
 			</select>
+			{%endif%}
 			{% if shippingDiscount %}
 			<h4 class="mt-4 md-2">
 				運費折扣

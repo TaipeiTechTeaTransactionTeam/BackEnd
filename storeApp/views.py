@@ -14,7 +14,7 @@ import json
 import math
 from pprint import pprint
 
-from .models import Product, TeaType, ProductDiscount, Order, OrderContainProduct
+from .models import *
 
 # Create your views here.
 
@@ -229,8 +229,8 @@ def checkout(request):
     if request.method == 'GET':
         # eventDiscounts=discount.objects.filter(type="Event").all()
         # shippingDiscount=discount.objects.filter(type="Shipping").all()
-        shippingDiscount = ''
-        eventDiscounts = ''
+        shippingDiscount = [x for x in list(ShippingDiscount.objects.all()) if x.isValidNow()][-1]
+        eventDiscounts = [x for x in list(SeasoningDiscount.objects.all()) if x.isValidNow()]
         if(shippingDiscount):
             pass
         else:
@@ -240,13 +240,13 @@ def checkout(request):
         else:
             eventDiscounts = [
                 {
-                    "id": 2,
+                    "id": 8,
                     "discount": 0.7,
                     "condition":1000,
                     "description":"大打折"
                 },
                 {
-                    "id": 4,
+                    "id": 3,
                     "discount": 200
                 },
                 {
@@ -265,6 +265,10 @@ def checkout(request):
                 id=data['uid']).price * data['quantity']
         order = Order(own_user=request.user, total_price=total_price)
         order.save()
+        eventDiscountsId=json.loads(request.POST.get("eventDiscount",-1))["id"]
+        eventDiscount=SeasoningDiscount.objects.get(pk=eventDiscountsId)
+        if eventDiscount.isValidNow():
+            total_price -= eventDiscount.discountValue(total_price)
         for data in datas:
             product = Product.objects.get(id=data['uid'])
             OrderContainProduct.objects.create(
