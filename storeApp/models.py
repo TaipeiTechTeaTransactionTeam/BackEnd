@@ -56,13 +56,15 @@ class Product(models.Model):
     def get_discount_price(self):
         try:
             product_discount = ProductDiscount.objects.get(product=self.id)
-            if product_discount:
+            if product_discount and product_discount.isValidNow:
                 if product_discount.discount > 1:
                     return {'price': int(self.price - product_discount.discount),
                             'discount': int(product_discount.discount)}
                 else:
                     return {'price': int(self.price * product_discount.discount),
                             'discount': int(self.price - self.price * product_discount.discount)}
+            else:
+                return {'price': self.price, 'discount': 0}
         except:
             return {'price': self.price, 'discount': 0}
 
@@ -123,8 +125,8 @@ class SeasoningDiscount(models.Model):
             else:
                 return floor(self.discount)
 
-    # def calculatePrice(self, price):
-    #     return price - self.discountValue(price)
+    def calculatePrice(self, price):
+        return price - self.discountValue(price)
 
     class Meta:
         verbose_name = '季節折扣'
