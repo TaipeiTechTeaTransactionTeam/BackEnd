@@ -231,6 +231,7 @@ def contact(request):
 
 def checkout(request):
     types = TeaType.objects.all()
+    shippingPrice = list(Store.objects.all())[0].freight
     shippingDiscount = [x for x in list(ShippingDiscount.objects.all()) if x.isValidNow()][-1]
     if request.method == 'GET':
         # eventDiscounts=discount.objects.filter(type="Event").all()
@@ -258,7 +259,7 @@ def checkout(request):
                     "discount": 0.75
                 },
             ]
-        shippingPrice = 100
+        
     elif request.method == 'POST':
         if not request.user.is_authenticated:
             return redirect('storeApp:login')
