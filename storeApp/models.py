@@ -110,19 +110,22 @@ class SeasoningDiscount(models.Model):
     end_date = models.DateField(verbose_name="結束日期", null=False)
     description = models.CharField(
         verbose_name="描述", max_length=255, null=False)
+
     def isValidNow(self):
-        return self.start_date<=date.today() and date.today()<=self.end_date
-    def discountValue(self,price=-1):
-        if 0<=self.discount and self.discount<1:
-            return floor(price*(1-discount))
-        elif 1<=self.discount:
-            if price<floor(self.discount):
+        return self.start_date <= date.today() and date.today() <= self.end_date
+
+    def discountValue(self, price):
+        if 0 <= self.discount and self.discount < 1:
+            return floor(price * (1 - self.discount))
+        elif 1 <= self.discount:
+            if price < floor(self.discount):
                 return price
             else:
                 return floor(self.discount)
-                
-    def calculatePrice(self,price):
-        return price-self.discountValue(price)
+
+    # def calculatePrice(self, price):
+    #     return price - self.discountValue(price)
+
     class Meta:
         verbose_name = '季節折扣'
         verbose_name_plural = '季節折扣'
@@ -131,6 +134,9 @@ class SeasoningDiscount(models.Model):
 class ShippingDiscount(SeasoningDiscount):
     condition = models.DecimalField(
         max_digits=10, decimal_places=0, null=False, default=0)
+
+    def calculate_price(self, price, shipping_price):
+        return price + (shipping_price - self.discount) if price >= self.condition else price + shipping_price
 
     class Meta:
         verbose_name = '運費折扣'
@@ -141,8 +147,8 @@ class ProductDiscount(SeasoningDiscount):
     product = models.ForeignKey(
         Product, verbose_name="產品", on_delete=models.CASCADE)
 
-    # def __str__(self):
-    #     return self.product.name
+    def __str__(self):
+        return self.product.name
 
     class Meta:
         verbose_name = '產品折扣'
