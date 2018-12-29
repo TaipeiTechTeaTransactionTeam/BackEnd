@@ -14,7 +14,7 @@ import json
 import math
 from pprint import pprint
 from .models import *
-from .productDiscountItem import ProductDiscountItem,getProductDiscountList
+from .productDiscountItem import ProductDiscountItem, getProductDiscountList
 
 # Create your views here.
 
@@ -26,8 +26,9 @@ def home(request):
     newoffers = list(Product.objects.all())
     newoffers.reverse()
     newoffers = newoffers[:4]
-    products=getProductDiscountList(newoffers)
-    return render(request, 'storeApp/index.html',locals())
+    products = getProductDiscountList(newoffers)
+    return render(request, 'storeApp/index.html', locals())
+
 
 def search(request):
     types = TeaType.objects.all()
@@ -99,19 +100,21 @@ def report(request):
     types = TeaType.objects.all()
     return render(request, 'storeApp/report.html', locals())
 
-def productQuantity(request,ids):
-    ans=[]
+
+def productQuantity(request, ids):
+    ans = []
     try:
-        if ids[0]!="[" :
-            id=int(ids)
-            ans=float(Product.objects.get(pk=id).amount)
+        if ids[0] != "[":
+            id = int(ids)
+            ans = float(Product.objects.get(pk=id).amount)
         else:
-            ids=json.loads(ids)
-            ans=[float(x.amount) for x in list(Product.objects.filter(id__in=ids).all())]
+            ids = json.loads(ids)
+            ans = [float(x.amount)
+                   for x in list(Product.objects.filter(id__in=ids).all())]
         return HttpResponse(json.dumps(ans))
     except:
         return HttpResponse(-1)
-    
+
 
 def teas(request):
     types = TeaType.objects.all()
@@ -131,7 +134,7 @@ def teas(request):
     # 變成可迭代物件
     total_page = range(1, total_page+1)
     # 取好 9 個商品
-    teas=getProductDiscountList(list(teas)[(page - 1) * 9:page * 9])
+    teas = getProductDiscountList(list(teas)[(page - 1) * 9:page * 9])
 
     return render(request, 'storeApp/teas.html', locals())
 
@@ -159,12 +162,14 @@ def teas_type(request, fk):
     teas = getProductDiscountList(list(teas)[(page - 1) * 9:page * 9])
     return render(request, 'storeApp/teas.html', locals())
 
+
 def manageOrder(request):
     types = TeaType.objects.all()
-    orders = Order.objects.filter(own_user = request.user)
+    orders = Order.objects.filter(own_user=request.user)
     oneOrder = []
     for i in orders:
-        oneOrder.append({'order' : i, 'products' : OrderContainProduct.objects.filter(order = i)})
+        oneOrder.append(
+            {'order': i, 'products': OrderContainProduct.objects.filter(order=i)})
     return render(request, 'storeApp/manageOrder.html', locals())
 
 
@@ -226,63 +231,57 @@ def contact(request):
     types = TeaType.objects.all()
     return render(request, 'storeApp/contact.html', locals())
 
-# {'uid': '13', 'quantity': 2}
-
 
 def checkout(request):
+    # 茶類型
     types = TeaType.objects.all()
+    # 運費
     shippingPrice = list(Store.objects.all())[0].freight
-    shippingDiscount = [x for x in list(ShippingDiscount.objects.all()) if x.isValidNow()][-1]
+    # 運費折扣
+    shippingDiscount = [x for x in list(
+        ShippingDiscount.objects.all()) if x.isValidNow()][-1]
+
     if request.method == 'GET':
-        # eventDiscounts=discount.objects.filter(type="Event").all()
-        # shippingDiscount=discount.objects.filter(type="Shipping").all()
-       
-        eventDiscounts = [x for x in list(SeasoningDiscount.objects.all()) if x.isValidNow()]
-        if(not shippingDiscount):
-            shippingDiscount = {"discount": 0,"condition":499}
-        if(eventDiscounts):
-            pass
-        else:
-            eventDiscounts = [
-                {
-                    "id": 8,
-                    "discount": 0.7,
-                    "condition":1000,
-                    "description":"大打折"
-                },
-                {
-                    "id": 3,
-                    "discount": 200
-                },
-                {
-                    "id": 6,
-                    "discount": 0.75
-                },
-            ]
-        
+        # 事件折扣
+        eventDiscounts = [x for x in list(
+            SeasoningDiscount.objects.all()) if x.isValidNow()]
+
     elif request.method == 'POST':
+        # 登入驗證
         if not request.user.is_authenticated:
             return redirect('storeApp:login')
+
+        # 初始化總價
         total_price = 0
+        # 解析收到的資料
         datas = json.loads(request.POST['items'])
+        # 計算原總價
         for data in datas:
-            total_price += Product.objects.get(id=data['uid']).price * data['quantity']
+            total_price += Product.objects.get(
+                id=data['uid']).price * data['quantity']
+
+        # 拿出所選的折扣
+        eventDiscount = SeasoningDiscount.objects.get(
+            id=json.loads(request.POST.get("eventDiscount", -1))["id"])
+
+        if eventDiscount and eventDiscount.isValidNow():
+            # 折價券折扣計算後的值
+            total_price -= eventDiscount.discountValue(total_price)
+
+        if shippingDiscount and shippingDiscount.isValidNow():
+            # 運費折扣後
+            total_price = shippingDiscount.calculate_price(total_price, shippingPrice)
+
         order = Order(own_user=request.user, total_price=total_price)
         order.save()
-        eventDiscountsId=json.loads(request.POST.get("eventDiscount",-1))["id"]
-        eventDiscount=SeasoningDiscount.objects.get(id=eventDiscountsId)
-        if eventDiscount and eventDiscount.isValidNow():
-            total_price -= eventDiscount.discountValue(total_price) #折價券折扣計算後的值
-        if shippingDiscount and shippingDiscount.isValidNow():
-            total_price += shippingDiscount.calculatePrice(shippingPrice) #運費折扣後
-        else:
-            total_price += shippingPrice
+
         for data in datas:
             product = Product.objects.get(id=data['uid'])
             OrderContainProduct.objects.create(
                 order=order, product=product, purchase_quantity=data['quantity'])
             product.amount -= data['quantity']
             product.save()
+
     return render(request, 'storeApp/checkout.html', locals())
 
 
@@ -302,9 +301,6 @@ def detail(request, pk):
 def editProduct(request):
     types = TeaType.objects.all()
     return render(request, 'storeApp/editProduct.html', locals())
-
-
-
 
 
 def manageProductAndDiscount(request):
