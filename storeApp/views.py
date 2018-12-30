@@ -153,15 +153,27 @@ def teas_type(request, fk):
     return render(request, 'storeApp/teas.html', locals())
 
 
-def manageOrder(request):
+def manageOrder(request, pk=None):
+    types = TeaType.objects.all()
+    orders = Order.objects.filter(own_user=request.user)
+    order = get_object_or_404(Order,id=pk)
+    OrderContainProduct.objects.filter(order=order)
+    oneOrder = {'order':order, 'products':list(OrderContainProduct.objects.filter(order=order))}
+    print(oneOrder)
+    return render(request, 'storeApp/manageOrder.html', locals())
+
+
+
+
+
+def manageOrderList(request):
     types = TeaType.objects.all()
     orders = Order.objects.filter(own_user=request.user)
     oneOrder = []
     for i in orders:
         oneOrder.append(
             {'order': i, 'products': OrderContainProduct.objects.filter(order=i)})
-    return render(request, 'storeApp/manageOrder.html', locals())
-
+    return render(request, 'storeApp/manageOrderList.html', locals())
 
 @require_http_methods(['POST', 'GET'])
 def login(request):
