@@ -78,4 +78,10 @@ class ReportAdmin(admin.ModelAdmin):
         return super(ReportAdmin, self).changelist_view(request,
             extra_context)
 
+    def response_change(self, request, obj):
+        if "day" in request.POST:
+            self.message_user(request, "day")
+            return HttpResponseRedirect(".")
+        return super().response_change(request, obj)
+
 admin.site.register(Store)
