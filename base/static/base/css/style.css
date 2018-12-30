@@ -1039,13 +1039,11 @@ a.w3_agile_vimeo:hover{
 	text-transform:uppercase;
 	margin:0 0 2em;
 }
-.login-form-grids input[type="text"]{
-	background:url(../images/img-sp.png) no-repeat 5px -259px #fff;
+.login-form-grids input[type="text"],.login-form-grids input[type="email"]{
+    background:url(../images/img-sp.png) no-repeat 5px -259px #fff;
+    margin-bottom:1em;
 }
-.login-form-grids input[type="text"]:nth-child(2){
-	background:url(../images/img-sp.png) no-repeat 0px -298px #fff;
-	margin:1em 0;
-}
+
 .register-check-box label{
 	font-size:14px;
 	font-weight:500;
