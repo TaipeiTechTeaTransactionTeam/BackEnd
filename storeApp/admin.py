@@ -67,6 +67,7 @@ class ReportAdmin(admin.ModelAdmin):
 
     def get_totalPrice(self):
         #functions to calculate whatever you want...
+        price = 0
         report = Report.objects.all()
         for r in report:
             price = r.total_price

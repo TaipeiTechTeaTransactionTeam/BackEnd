@@ -3,8 +3,11 @@
 
     {% block object-tools %}
         <div class="submit-row">
+        <form action="immortal/" method="POST">
+            {% csrf_token %}
             <input type="submit" value="每日報表" name="day">
             <input type="submit" value="每周報表" name="week">
             <input type="submit" value="每月報表" name="month">
+        </form>
         </div>
     {% endblock %}
