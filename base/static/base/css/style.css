@@ -3518,8 +3518,7 @@ td.invert-image a img {
     padding-bottom: 10px;
 }
 .order-item{
-    padding-left: 20px;
-    padding-top: 20px;
+    padding: 20px;
     border:#BEBEBE;
     border-style: solid;
     border-width: 1px;
@@ -3642,6 +3641,7 @@ td.invert-image a img {
 }
 .imgStyle{
     text-align: center;
+    height: 140px;
 }
 .productLink{
     color: #000000;

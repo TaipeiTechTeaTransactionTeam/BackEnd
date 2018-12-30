@@ -30,24 +30,23 @@
           {% for i in order.products %}
           <!--標頭與商品清單分隔線-->
           <div class="border-solid"></div>
-          <div class="row">
+          <div class="row  d-flex">
             <div class="col-md-9">
               <div class="row">
                 <div class=" col-md-3 imgStyle">
                   <!--need to change image-->
                   <img src="{{i.product.image.url}}" class="item-detail-image" alt="無法顯示">
                 </div>
-                <div class="item-describe col-md-9">
+                <div class="item-describe col-md-9 d-flex">
                     {%block orderDescribe%}
-                    <pre class="order-describe">名稱 {{i.product.name}}
+                    <pre class="order-describe my-auto">名稱 {{i.product.name}}
 
-數量 {{i.purchase_quantity}}
-                    </pre>
+數量 {{i.purchase_quantity}}</pre>
                     {%endblock orderDescribe%}
                 </div>
               </div>
             </div>
-            <div class="col-md-3 price-block">
+            <div class="col-md-3 price-block my-auto">
               <h4 class="price">
                 NT $
                 {%block orderPrice%}
