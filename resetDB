@@ -92,4 +92,4 @@ def main():
         print()
         val()
         print("--------")
-#main()
+main()
