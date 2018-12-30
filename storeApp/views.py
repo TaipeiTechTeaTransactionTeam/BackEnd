@@ -292,6 +292,7 @@ def detail(request, pk):
 
 
 def product_record(request):
+    types = TeaType.objects.all()
     orders = Order.objects.filter(own_user=request.user)
     a = []
     for i in orders:
