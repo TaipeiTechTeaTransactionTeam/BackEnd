@@ -7,42 +7,14 @@
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
 <div class="container">
-  <!--一筆訂單-->
-  {%block order%}
-  <div class="item-list">
-    <div class="order-item">
-      <div class="item-card">
-        <!--訂單中的商品清單-->
-        <div class="item-detail-list">
-          <!--訂單中其中一項商品-->
-          {%block oneProductOfOrder%}
-          {% for product in products %}
-          <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-              <div class="row">
-                <div class="col-md-4">
-                  <!--need to change image-->
-                  <img src="{{product.image.url}}" class="item-detail-image" alt="{{product.name}}">
-                </div>
-                <div class="item-describe col-md-8">
-                  <p>
-                    {%block orderDescribe%}
-                    <h4><a href="{% url 'storeApp:detail' product.id %}">名稱：{{product.name}}</a></h4><br>
-                    {%endblock orderDescribe%}
-                  </p>
-                </div>
-              </div>
-              <div class="border-solid"></div>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
-          {% endfor %}
-          {%endblock oneProductOfOrder%}
-        </div>
-      </div>
-    </div>
-  </div>
-  {%endblock order%}
+  <h4 class="productRecord">產品購買紀錄</h4>
+    <table class="tableStyle">
+      {% for product in products %}  
+      <tr class="trStyle">
+        <td class="tdImgStyle"><img src="{{product.image.url}}" class="item-detail-image" alt="{{product.name}}"></td>
+        <td><a class="productLink" href="{% url 'storeApp:detail' product.id %}">名稱：{{product.name}}</a></td>
+      </tr>
+      {% endfor %}
+    </table>
 </div>
 {% endblock content %}

@@ -3536,6 +3536,7 @@ td.invert-image a img {
 .item-detail-image{
     height: 120px;
     width: 120px;
+    margin: 10px;
 }
 .item-button{
     width: 100%
@@ -3626,4 +3627,28 @@ td.invert-image a img {
     font-size: 18px;
     background: none;
     border-style: none;
+}
+.tableStyle{
+    /* border-style: solid; */
+    border-width: 1px;
+    width: 100%;
+    margin:20px 0px;
+    font-size: 18px;
+}
+.trStyle{
+    border-block-start-style: solid;
+    border-width: 1px;
+}
+.tdImgStyle{
+    text-align: center;
+}
+.productLink{
+    color: #000000;
+    font-weight: normal;
+}
+.productLink:hover{
+    color: #03ad1d;
+}
+.productRecord{
+    margin-top: 20px;
 }
