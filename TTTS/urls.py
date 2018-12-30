@@ -25,6 +25,4 @@ admin.site.site_title = '北科老茶'
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('accounts/', include('django.contrib.auth.urls')), 
-    path('polls/', include('polls.urls')),
-    path('', include('storeApp.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
