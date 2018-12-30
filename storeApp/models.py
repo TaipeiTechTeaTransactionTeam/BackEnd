@@ -166,3 +166,9 @@ class ProductDiscount(Discount):
     class Meta:
         verbose_name = '產品折扣'
         verbose_name_plural = '產品折扣'
+
+class Report(OrderContainProduct):
+    class Meta:
+        proxy = True # 不會額外建表 直接使用Order
+        verbose_name = '財務報表'
+        verbose_name_plural = '財務報表'
