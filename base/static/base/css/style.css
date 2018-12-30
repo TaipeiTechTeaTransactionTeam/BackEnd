@@ -3553,6 +3553,7 @@ td.invert-image a img {
 .price{
     text-align: right;
     padding-right: 10px;
+    font-weight: normal;
 }
 .price-block{
     margin-top: 50px;
@@ -3563,7 +3564,8 @@ td.invert-image a img {
 .total-price{
     margin-top: 40px;
     text-align: right;
-    padding-right: 25px;
+    padding-right: 10px;
+    width: 100%;
 }
 .button-container{
     text-align: right;
@@ -3571,23 +3573,22 @@ td.invert-image a img {
 }
 .button-container button{
     margin-left: 10px;
-    font-size: 14px;
+    font-size: 18px;
     color: #fff;
     background: #03ad1d;
     text-decoration: none;
     position: relative;
     border: none;
     border-radius: 0;
-    width: 10%;
     text-transform: uppercase;
-    padding: .5em 0;
+    padding: .5em;
     outline: none;
 }
 .form-total{
-    font-size: 20px;
+    font-size: 18px;
 }
 .form-price{
-    font-size: 32px;
+    font-size: 24px;
     color: #03ad1d;
 }
 .productItemTitle{
@@ -3620,4 +3621,9 @@ td.invert-image a img {
 }
 .buttonContainer{
     margin: 0px;
+}
+.order-describe{
+    font-size: 18px;
+    background: none;
+    border-style: none;
 }
