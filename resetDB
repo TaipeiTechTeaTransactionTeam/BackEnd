@@ -29,11 +29,11 @@ def rmMigrations():
     print("刪除 "+path)
 def createMigrations():
     try:
-        print(getoutput("python manage.py makemigrations storeApp".split(" ")))
+        print(getoutput("python manage.py makemigrations storeApp")))
     except:
         pass
     try:
-        print(getoutput("python manage.py migrate".split(" ")))
+        print(getoutput("python manage.py migrate"))
     except:
         pass
 def sql():
