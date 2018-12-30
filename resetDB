@@ -60,7 +60,7 @@ def sql():
     db.commit()
     db.close()
 def loadSqlDatas():
-    if input("是否載入sql預設資料?(y/n)\n")=="y":
+    if input("是否載入sql預設資料?(y/n)\n> ")=="y":
         user,pwd=readDBcnf()
         db  =  MySQLdb . connect ( 
         host = "localhost" ,     #主機名
@@ -82,6 +82,8 @@ def loadSqlDatas():
             db.commit()
         db.close()
 def createSU():
+    if input("是否建立網站superuser?(y/n):\n> ")=="n":
+        return
     os.system("python manage.py createsuperuser")
 def main():
     funcs=[rmMigrations,sql,createMigrations,loadSqlDatas,createSU]
