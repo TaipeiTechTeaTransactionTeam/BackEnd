@@ -31,11 +31,10 @@
         </div>
         <div class="col-md-8 products-right">
           <!-- {{ products }} -->
-          <div class="agile_top_brands_grids">
               {%block oneProductSearch%}
               {% if products %}
               {% for product in products %}
-            <div class="col-md-4 top_brand_left">
+            <div class="col-md-4 top_brand_left agile_top_brands_grids">
               <div class="hover14 column">
                 <div class="agile_top_brand_left_grid">
                     <div class="agile_top_brand_left_grid_pos">
@@ -171,7 +170,7 @@
             {% endif %}
             {%endblock oneProductSearch%}
             <div class="clearfix"> </div>
-          </div>
+          
           <!--- 換頁按鈕 -->
       <nav class="numbering">
           <ul class="pagination paging">
