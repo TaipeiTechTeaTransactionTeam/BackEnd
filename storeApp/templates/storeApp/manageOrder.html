@@ -22,14 +22,14 @@
           </h4>
         </div>
         <!--標頭-->
-        <!--標頭與商品清單分隔線-->
         <br>
-        <div class="border-solid"></div>
         <!--訂單中的商品清單-->
         <div class="item-detail-list">
           <!--訂單中其中一項商品-->
           {%block oneProductOfOrder%}
           {% for i in order.products %}
+          <!--標頭與商品清單分隔線-->
+          <div class="border-solid"></div>
           <div class="row">
             <div class="col-md-9">
               <div class="row">
@@ -58,15 +58,13 @@
           {% endfor %}
           {%endblock oneProductOfOrder%}
           <!--訂單中其中一項商品-->
-          <!--一筆訂單中每樣商品的分隔線-->
-          <div class="border-solid"></div>
         <!--訂單中的商品清單-->
       </div>
       <!--單筆訂單內與按鈕的分隔線-->
       <div class="border-dash"></div>
       <!--單筆訂單總價與按鈕-->
       <div class="item-button">
-        <div class="row">
+        <div class="row buttonContainer">
           <div class="total-price">
             <span class="form-total">訂單金額 : </span>
             <span class="form-price">
