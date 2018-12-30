@@ -2,14 +2,13 @@
 {% load static %}
 {%block breadcrumb%}
 <li><a href="{% url 'storeApp:userPanel' %}">使用者</a></li>
-<li class="active">訂單管理</li>
+<li class="active">訂單詳情</li>
 {%endblock breadcrumb%}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
 <div class="container">
   <!--一筆訂單-->
   {%block order%}
-  {% for order in oneOrder %}
   <div class="item-list">
     <div class="order-item">
       <div class="item-card">
@@ -17,7 +16,7 @@
         <div class="item-header">
           <h4>
             {%block buyer%}
-            <h4>買家:{{ order.order.own_user }}</h4> 
+            <h4>訂單日期:{{ oneOrder.order.date }}</h4> 
             {%endblock buyer%}
           </h4>
         </div>
@@ -27,7 +26,7 @@
         <div class="item-detail-list">
           <!--訂單中其中一項商品-->
           {%block oneProductOfOrder%}
-          {% for i in order.products %}
+          {% for i in oneOrder.products %}
           <!--標頭與商品清單分隔線-->
           <div class="border-solid"></div>
           <div class="row">
@@ -40,7 +39,7 @@
                 <div class="item-describe col-md-10">
                     {%block orderDescribe%}
                     <pre class="order-describe">名稱 {{i.product.name}}
-數量{{i.purchase_quantity}}
+                      數量{{i.purchase_quantity}}
                     </pre>
                     {%endblock orderDescribe%}
                 </div>
@@ -69,13 +68,10 @@
             <span class="form-total">訂單金額 : </span>
             <span class="form-price">
               {%block totalPrice%}
-              {{ order.order.total_price }}
+              {{ oneOrder.order.total_price }}
               {%endblock totalPrice%}
             </span>
           </div>
-        </div>
-        <div class="button-container">
-          <button>查看訂單詳情</button>
         </div>
       </div>
       <!--單筆訂單總價與按鈕-->
@@ -83,7 +79,6 @@
     <!--一筆訂單-->
   </div>
 </div>
-{% endfor %}
   {%endblock order%}
 </div>
 {% endblock content %}
