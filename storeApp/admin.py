@@ -89,14 +89,14 @@ class ReportAdmin(admin.ModelAdmin):
 
         response.context_data['summary'] = list(
             qs
-            .filter(order__status='4')
+            .filter(order__status='3')
             .values('product__name')
             .annotate(**metrics)
             .order_by('-total_sales','product__name')
         )
 
         response.context_data['summary_total'] = dict(
-            qs.filter(order__status='4').aggregate(**metrics)
+            qs.filter(order__status='3').aggregate(**metrics)
         )
 
         return response

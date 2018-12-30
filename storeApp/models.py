@@ -77,8 +77,7 @@ class Product(models.Model):
 
 
 class Order(models.Model):
-    ORDER_STATUS = [('1', '新訂單'), ('2', '已確認'), ('3', '待出貨'),
-                    ('4', '出貨中'), ('5', '己出貨')]
+    ORDER_STATUS = [('1', '已送出'), ('2', '處理中'), ('3', '已完成')]
     own_user = models.ForeignKey(
         User, verbose_name="持有者", on_delete=models.CASCADE)
     status = models.CharField(
@@ -123,12 +122,6 @@ class Discount(models.Model):
 
 
 class SeasoningDiscount(Discount):
-    # discount = models.DecimalField(
-    #     verbose_name="折扣", max_digits=10, decimal_places=2, null=False)
-    # start_date = models.DateField(verbose_name="開始日期", null=False)
-    # end_date = models.DateField(verbose_name="結束日期", null=False)
-    # description = models.CharField(
-    #     verbose_name="描述", max_length=255, null=False)
 
     def discountValue(self, price):
         if 0 <= self.discount and self.discount < 1:

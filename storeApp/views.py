@@ -41,7 +41,8 @@ def search(request):
         previous_page = page - 1
         next_page = page + 1 if total_page >= page + 1 else 0
         total_page = range(1, total_page+1)
-        products = getProductDiscountList(list(products)[(page - 1) * 9:page * 9])
+        products = getProductDiscountList(
+            list(products)[(page - 1) * 9:page * 9])
         return render(request, 'storeApp/search.html', locals())
     elif request.method == 'GET':
         if 'page' in request.GET and 'quireText' in request.GET:
@@ -61,7 +62,8 @@ def search(request):
         # 變成可迭代物件
         total_page = range(1, total_page+1)
         # 取好 9 個商品
-        products = getProductDiscountList(list(products)[(page - 1) * 9:page * 9])
+        products = getProductDiscountList(
+            list(products)[(page - 1) * 9:page * 9])
         return render(request, 'storeApp/search.html', locals())
 
 
@@ -225,8 +227,11 @@ def checkout(request):
     # 運費
     shippingPrice = list(Store.objects.all())[0].freight
     # 運費折扣
-    shippingDiscount = [x for x in list(
-        ShippingDiscount.objects.all()) if x.isValidNow()][-1]
+    try:
+        shippingDiscount = [x for x in list(
+            ShippingDiscount.objects.all()) if x.isValidNow()][-1]
+    except:
+        shippingDiscount = None
 
     if request.method == 'GET':
         # 事件折扣
@@ -242,13 +247,17 @@ def checkout(request):
         total_price = 0
         # 解析收到的資料
         datas = json.loads(request.POST['items'])
+        
         # 計算原總價
         for data in datas:
             total_price += Product.objects.get(
                 id=data['uid']).get_discount_price()['price'] * data['quantity']
-        # 拿出所選的折扣
-        eventDiscount = SeasoningDiscount.objects.get(
-            id=json.loads(request.POST.get("eventDiscount", -1))["id"])
+        try:
+            # 拿出所選的折扣
+            eventDiscount = SeasoningDiscount.objects.get(
+                id=json.loads(request.POST.get("eventDiscount", ''))["id"])
+        except:
+            eventDiscount = None
 
         if eventDiscount and eventDiscount.isValidNow():
             # 折價券折扣計算後的值
@@ -281,13 +290,14 @@ def detail(request, pk):
     products = getProductDiscountList(newoffers[:4])
     return render(request, 'storeApp/detail.html', locals())
 
+
 def product_record(request):
     orders = Order.objects.filter(own_user=request.user)
     a = []
     for i in orders:
         print('=====================')
         print(i)
-        for j in  OrderContainProduct.objects.filter(order=i):
+        for j in OrderContainProduct.objects.filter(order=i):
             a.append(j.product.id)
             print(j)
         print('=====================')
