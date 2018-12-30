@@ -3641,9 +3641,10 @@ td.invert-image a img {
 }
 .trStyle{
     border-block-start-style: solid;
+    border-block-start-color: #BEBEBE;
     border-width: 1px;
 }
-.tdImgStyle{
+.imgStyle{
     text-align: center;
 }
 .productLink{
