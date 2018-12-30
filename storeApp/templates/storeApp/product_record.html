@@ -11,7 +11,7 @@
     <table class="tableStyle">
       {% for product in products %}  
       <tr class="trStyle">
-        <td class="tdImgStyle"><img src="{{product.image.url}}" class="item-detail-image" alt="{{product.name}}"></td>
+        <td class="imgStyle"><img src="{{product.image.url}}" class="item-detail-image" alt="{{product.name}}"></td>
         <td><a class="productLink" href="{% url 'storeApp:detail' product.id %}">名稱：{{product.name}}</a></td>
       </tr>
       {% endfor %}
