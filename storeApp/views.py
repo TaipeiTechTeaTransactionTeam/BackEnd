@@ -280,3 +280,16 @@ def detail(request, pk):
     newoffers.reverse()
     products = getProductDiscountList(newoffers[:4])
     return render(request, 'storeApp/detail.html', locals())
+
+def product_record(request):
+    orders = Order.objects.filter(own_user=request.user)
+    a = []
+    for i in orders:
+        print('=====================')
+        print(i)
+        for j in  OrderContainProduct.objects.filter(order=i):
+            a.append(j.product.id)
+            print(j)
+        print('=====================')
+    products = Product.objects.filter(id__in=a)
+    return render(request, 'storeApp/product_record.html', locals())

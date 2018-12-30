@@ -1,4 +1,7 @@
 use TTTS;
+
+INSERT INTO storeApp_store VALUES(1,'北科老茶','台北市大安區忠孝東路三段1號','0227712171','60');
+
 insert into storeApp_teatype VALUES(1,'紅茶','teaType/紅茶.jpg');
 insert into storeApp_teatype VALUES(2,'綠茶','teaType/綠茶.jpg');
 insert into storeApp_teatype VALUES(3,'烏龍茶','teaType/烏龍茶.jpg');
