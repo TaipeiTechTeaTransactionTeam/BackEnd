@@ -59,7 +59,7 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
     change_list_template = 'storeApp/adminReport.html'
-    date_hierarchy = 'date' # 通过日期过滤对象
+    date_hierarchy = 'order__date' # 通过日期过滤对象
     # list_display = ['id', 'own_user']
 
     def get_total(self,request):
@@ -88,18 +88,18 @@ class ReportAdmin(admin.ModelAdmin):
 
         metrics = {
             'total_sales': Sum('purchase_quantity'),
-            'total_price': Sum('purchase_quantity') * 'product__price'
         }
 
         response.context_data['summary'] = list(
             qs
+            .filter(order__status='4')
             .values('product__name')
             .annotate(**metrics)
-            .order_by('-total_sales')
+            .order_by('-total_sales','product__name')
         )
 
         response.context_data['summary_total'] = dict(
-            qs.aggregate(**metrics)
+            qs.filter(order__status='4').aggregate(**metrics)
         )
 
         return response

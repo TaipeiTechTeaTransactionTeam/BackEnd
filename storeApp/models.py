@@ -82,7 +82,6 @@ class OrderContainProduct(models.Model):
     product = models.ForeignKey(
         Product, verbose_name="產品", on_delete=models.CASCADE)
     purchase_quantity = models.PositiveIntegerField(verbose_name="數量",)
-    date = models.DateField(verbose_name="日期", default=timezone.now)
 
     class Meta:
         verbose_name = '訂單內容'
