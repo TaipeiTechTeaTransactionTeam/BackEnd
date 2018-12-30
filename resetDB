@@ -29,7 +29,7 @@ def rmMigrations():
     print("刪除 "+path)
 def createMigrations():
     try:
-        print(getoutput("python manage.py makemigrations storeApp")))
+        print(getoutput("python manage.py makemigrations storeApp"))
     except:
         pass
     try:
