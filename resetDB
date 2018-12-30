@@ -81,8 +81,10 @@ def loadSqlDatas():
             cur.execute(stament)
             db.commit()
         db.close()
+def createSU():
+    os.system("python manage.py createsuperuser")
 def main():
-    funcs=[rmMigrations,sql,createMigrations,loadSqlDatas]
+    funcs=[rmMigrations,sql,createMigrations,loadSqlDatas,createSU]
     for key,val in enumerate(funcs):
         print(key+1,end="")
         print("/",end="")
@@ -90,4 +92,4 @@ def main():
         print()
         val()
         print("--------")
-main()
+#main()
