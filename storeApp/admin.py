@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponseRedirect
+from django.db.models import Count
+from django.db.models import Sum
 from .models import Product
 from .models import Store
 from .models import TeaType
@@ -58,31 +60,34 @@ class OrderAdmin(admin.ModelAdmin):
 class ReportAdmin(admin.ModelAdmin):
     change_list_template = 'storeApp/adminReport.html'
     date_hierarchy = 'date' # 通过日期过滤对象
-    # list_display = ['id', 'own_user']
-
-    def get_total(self,request):
-        #functions to calculate whatever you want...
-        total = len(super().get_queryset(request))
-        return total
-
-    def get_totalPrice(self):
-        #functions to calculate whatever you want...
-        price = 0
-        report = Report.objects.all()
-        for r in report:
-            price = r.total_price
-        return price
 
     def changelist_view(self, request, extra_context={}):
-        extra_context['total'] = self.get_total(request)
-        extra_context['price'] = self.get_totalPrice()
-        return super(ReportAdmin, self).changelist_view(request,
-            extra_context)
+        response = super().changelist_view(
+            request,
+            extra_context=extra_context,
+        )
 
-    def response_change(self, request, obj):
-        if "day" in request.POST:
-            self.message_user(request, "day")
-            return HttpResponseRedirect(".")
-        return super().response_change(request, obj)
+        try:
+            qs = response.context_data['cl'].queryset
+        except (AttributeError, KeyError):
+            return response
+
+        metrics = {
+            'total': Count('id'),
+            'total_sales': Sum('total_price'),
+        }
+
+        response.context_data['summary'] = list(
+            qs
+            .values('id')
+            .annotate(**metrics)
+            .order_by('-total_sales')
+        )
+
+        response.context_data['summary_total'] = dict(
+            qs.aggregate(**metrics)
+        )
+
+        return response
 
 admin.site.register(Store)
