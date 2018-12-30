@@ -107,7 +107,7 @@ class OrderContainProduct(models.Model):
         verbose_name_plural = '訂單內容'
 
 
-class SeasoningDiscount(models.Model):
+class Discount(models.Model):
     discount = models.DecimalField(
         verbose_name="折扣", max_digits=10, decimal_places=2, null=False)
     start_date = models.DateField(verbose_name="開始日期", null=False)
@@ -117,6 +117,18 @@ class SeasoningDiscount(models.Model):
 
     def isValidNow(self):
         return self.start_date <= date.today() and date.today() <= self.end_date
+
+    def __str__(self):
+        return self.description
+
+
+class SeasoningDiscount(Discount):
+    # discount = models.DecimalField(
+    #     verbose_name="折扣", max_digits=10, decimal_places=2, null=False)
+    # start_date = models.DateField(verbose_name="開始日期", null=False)
+    # end_date = models.DateField(verbose_name="結束日期", null=False)
+    # description = models.CharField(
+    #     verbose_name="描述", max_length=255, null=False)
 
     def discountValue(self, price):
         if 0 <= self.discount and self.discount < 1:
@@ -130,36 +142,33 @@ class SeasoningDiscount(models.Model):
     def calculatePrice(self, price):
         return price - self.discountValue(price)
 
-    def __str__(self):
-        return self.description
-
     class Meta:
         verbose_name = '季節折扣'
         verbose_name_plural = '季節折扣'
 
 
-class ShippingDiscount(SeasoningDiscount):
+class ShippingDiscount(Discount):
     condition = models.DecimalField(verbose_name="條件",
                                     max_digits=10, decimal_places=0, null=False, default=0)
 
     def calculate_price(self, price, shipping_price):
         return price + (shipping_price - self.discount) if price >= self.condition else price + shipping_price
 
-    def __str__(self):
-        return self.description
-
     class Meta:
         verbose_name = '運費折扣'
         verbose_name_plural = '運費折扣'
 
 
-class ProductDiscount(SeasoningDiscount):
+class ProductDiscount(Discount):
     product = models.ForeignKey(
         Product, verbose_name="產品", on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.description
 
     class Meta:
         verbose_name = '產品折扣'
         verbose_name_plural = '產品折扣'
+
+class Report(OrderContainProduct):
+    class Meta:
+        proxy = True # 不會額外建表 直接使用Order
+        verbose_name = '財務報表'
+        verbose_name_plural = '財務報表'

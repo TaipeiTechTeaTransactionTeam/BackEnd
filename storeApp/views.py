@@ -41,7 +41,7 @@ def search(request):
         previous_page = page - 1
         next_page = page + 1 if total_page >= page + 1 else 0
         total_page = range(1, total_page+1)
-        products = list(products)[(page - 1) * 9:page * 9]
+        products = getProductDiscountList(list(products)[(page - 1) * 9:page * 9])
         return render(request, 'storeApp/search.html', locals())
     elif request.method == 'GET':
         if 'page' in request.GET and 'quireText' in request.GET:
@@ -61,7 +61,7 @@ def search(request):
         # 變成可迭代物件
         total_page = range(1, total_page+1)
         # 取好 9 個商品
-        products = list(products)[(page - 1) * 9:page * 9]
+        products = getProductDiscountList(list(products)[(page - 1) * 9:page * 9])
         return render(request, 'storeApp/search.html', locals())
 
 
@@ -81,11 +81,6 @@ def userPanel(request):
         return redirect('storeApp:login')
 
 
-def testJsonApi(request):
-
-    return HttpResponse(json.dumps({"type": "a", "local": "b"}))
-
-
 def userSetting(request):
     types = TeaType.objects.all()
     return render(request, 'storeApp/userSetting.html', locals())
@@ -94,11 +89,6 @@ def userSetting(request):
 def accountPanel(request):
     types = TeaType.objects.all()
     return render(request, 'storeApp/accountPanel.html', locals())
-
-
-def report(request):
-    types = TeaType.objects.all()
-    return render(request, 'storeApp/report.html', locals())
 
 
 def productQuantity(request, ids):
@@ -290,16 +280,6 @@ def detail(request, pk):
     newoffers.reverse()
     products = getProductDiscountList(newoffers[:4])
     return render(request, 'storeApp/detail.html', locals())
-
-
-def editProduct(request):
-    types = TeaType.objects.all()
-    return render(request, 'storeApp/editProduct.html', locals())
-
-
-def manageProductAndDiscount(request):
-    types = TeaType.objects.all()
-    return render(request, 'storeApp/manageProductAndDiscount.html', locals())
 
 def product_record(request):
     orders = Order.objects.filter(own_user=request.user)
