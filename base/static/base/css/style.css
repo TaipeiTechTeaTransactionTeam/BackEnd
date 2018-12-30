@@ -1,3 +1,7 @@
+*,pre{
+    font-family: '思源黑體','微軟正黑體',sans-serif;
+}
+
 /*- 產品項目中圖片大小限制 -*/
 .snipcart-thumb img,td.invert-image img.img-responsive
 {
