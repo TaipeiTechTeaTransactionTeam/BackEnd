@@ -81,11 +81,6 @@ def userPanel(request):
         return redirect('storeApp:login')
 
 
-def testJsonApi(request):
-
-    return HttpResponse(json.dumps({"type": "a", "local": "b"}))
-
-
 def userSetting(request):
     types = TeaType.objects.all()
     return render(request, 'storeApp/userSetting.html', locals())
@@ -94,11 +89,6 @@ def userSetting(request):
 def accountPanel(request):
     types = TeaType.objects.all()
     return render(request, 'storeApp/accountPanel.html', locals())
-
-
-def report(request):
-    types = TeaType.objects.all()
-    return render(request, 'storeApp/report.html', locals())
 
 
 def productQuantity(request, ids):
@@ -290,13 +280,3 @@ def detail(request, pk):
     newoffers.reverse()
     products = getProductDiscountList(newoffers[:4])
     return render(request, 'storeApp/detail.html', locals())
-
-
-def editProduct(request):
-    types = TeaType.objects.all()
-    return render(request, 'storeApp/editProduct.html', locals())
-
-
-def manageProductAndDiscount(request):
-    types = TeaType.objects.all()
-    return render(request, 'storeApp/manageProductAndDiscount.html', locals())
