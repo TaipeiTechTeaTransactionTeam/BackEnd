@@ -82,6 +82,7 @@ class OrderContainProduct(models.Model):
     product = models.ForeignKey(
         Product, verbose_name="產品", on_delete=models.CASCADE)
     purchase_quantity = models.PositiveIntegerField(verbose_name="數量",)
+    date = models.DateField(verbose_name="日期", default=timezone.now)
 
     class Meta:
         verbose_name = '訂單內容'
@@ -124,7 +125,7 @@ class ProductDiscount(SeasoningDiscount):
         verbose_name = '產品折扣'
         verbose_name_plural = '產品折扣'
 
-class Report(Order):
+class Report(OrderContainProduct):
     class Meta:
         proxy = True # 不會額外建表 直接使用Order
         verbose_name = '財務報表'

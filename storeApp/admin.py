@@ -60,6 +60,20 @@ class OrderAdmin(admin.ModelAdmin):
 class ReportAdmin(admin.ModelAdmin):
     change_list_template = 'storeApp/adminReport.html'
     date_hierarchy = 'date' # 通过日期过滤对象
+    # list_display = ['id', 'own_user']
+
+    def get_total(self,request):
+        #functions to calculate whatever you want...
+        total = len(super().get_queryset(request))
+        return total
+
+    def get_totalPrice(self):
+        #functions to calculate whatever you want...
+        price = 0
+        report = Report.objects.all()
+        for r in report:
+            price = r.total_price
+        return price
 
     def changelist_view(self, request, extra_context={}):
         response = super().changelist_view(
@@ -73,13 +87,13 @@ class ReportAdmin(admin.ModelAdmin):
             return response
 
         metrics = {
-            'total': Count('id'),
-            'total_sales': Sum('total_price'),
+            'total_sales': Sum('purchase_quantity'),
+            'total_price': Sum('purchase_quantity') * 'product__price'
         }
 
         response.context_data['summary'] = list(
             qs
-            .values('id')
+            .values('product__name')
             .annotate(**metrics)
             .order_by('-total_sales')
         )
