@@ -10,17 +10,17 @@ $(
         }
         var container=document.querySelector(".products-right");
         var productContainers=Array.from(container.querySelectorAll(".top_brand_left.agile_top_brands_grids"));
-        function asc(a,b)
+        function ascCmp(a,b)
         {
             if(getPrice(a)<getPrice(b))
-                return 1;
-            else if(getPrice(a)>getPrice(b))
                 return -1;
+            else if(getPrice(a)>getPrice(b))
+                return 1;
             return 0;
         }
-        function desc(a,b)
+        function descCmp(a,b)
         {
-            return asc(b,a)
+            return ascCmp(b,a);
         }
         function resetContainer(containers)
         {
@@ -28,8 +28,12 @@ $(
             for(var pc of containers)
                 container.append(pc);
         }
-        productContainers.sort(desc);
-        resetContainer(productContainers);
-        
+        var sortProducts=(cmp=ascCmp)=>
+        {
+            productContainers.sort(cmp);
+            resetContainer(productContainers);
+        }
+        document.querySelector("#ascSort").addEventListener("click",()=>{sortProducts();})
+        document.querySelector("#descSort").addEventListener("click",()=>{sortProducts(descCmp);})
     }
 )
