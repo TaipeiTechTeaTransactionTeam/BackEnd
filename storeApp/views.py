@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.views import generic
 from django.http import HttpResponseForbidden
 from django.http import HttpResponse
@@ -67,7 +67,9 @@ def search(request):
         return render(request, 'storeApp/search.html', locals())
 
 
-def userPanel(request):
+def user_panel(request):
+    if not request.user.is_authenticated:
+        return redirect('storeApp:login')
     if request.user.is_authenticated:
         types = TeaType.objects.all()
         # 取得目前使用者的訂單
@@ -78,17 +80,35 @@ def userPanel(request):
         for order in orders:
             order_list.append(
                 {'order_id': order.id, 'items': order_contain_products.filter(order=order)})
-        return render(request, 'storeApp/userPanel.html', locals())
+        return render(request, 'storeApp/user_panel.html', locals())
     else:
         return redirect('storeApp:login')
 
 
-def userSetting(request):
+def user_setting(request):
     types = TeaType.objects.all()
-    return render(request, 'storeApp/userSetting.html', locals())
+    if not request.user.is_authenticated:
+        return redirect('storeApp:login')
+    return render(request, 'storeApp/user_setting.html', locals())
+
+@require_http_methods(["POST"])
+def edit_password(request):
+    print(request.method)
+    print(request.POST)
+    if request.is_ajax():
+        username = request.user.username
+        old_passwd = request.POST.get('old_passwd', '')
+        new_passwd = request.POST.get('new_passwd_again', '')
+        data = {}
+        data['status'] = db_change_password(username, old_passwd, new_passwd)
+        data['url'] = '/login/'
+        return HttpResponse(json.dumps(data))
+
 
 
 def accountPanel(request):
+    if not request.user.is_authenticated:
+        return redirect('storeApp:login')
     types = TeaType.objects.all()
     return render(request, 'storeApp/accountPanel.html', locals())
 
@@ -167,6 +187,8 @@ def manageOrder(request):
 
 @require_http_methods(['POST', 'GET'])
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('storeApp:home')
     if request.method == 'POST':
         name = request.POST['username']  # 取得表單傳送的帳號、密碼
         password = request.POST['password']
@@ -205,7 +227,7 @@ def regesiter(request):
             return render(request, 'storeApp/regesiter.html', locals())
         else:  # 建立 username 帳號
             user = User.objects.create_user(
-                username=data['username'], password=data['password'])
+                username=data['username'], email=data['email'], password=data['password'])
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.is_staff = "False"
@@ -247,7 +269,7 @@ def checkout(request):
         total_price = 0
         # 解析收到的資料
         datas = json.loads(request.POST['items'])
-        
+
         # 計算原總價
         for data in datas:
             total_price += Product.objects.get(

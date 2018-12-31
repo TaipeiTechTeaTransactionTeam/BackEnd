@@ -8,8 +8,8 @@
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
 <!-- //插入區 -->
-<div class="userpanel-image-container">
-    <img src="{% static 'base/images/綠茶.jpg' %}" alt="" class="userpanel-main_image" />
+<div class="user_panel-image-container">
+    <img src="{% static 'base/images/綠茶.jpg' %}" alt="" class="user_panel-main_image" />
   <!--使用者名稱-->
   <h3>使用者名稱: {{ user.username }}</h3>
   <!--使用者名稱-->
@@ -20,7 +20,7 @@
       <div class="tab-content">
         <div id="user" class="tab-pane fade in active">
           <div class="list-group">
-            <a class="list-group-item list-group-item-action" href="{% url 'storeApp:accountPanel' %}">帳戶設定</a>
+            <a class="list-group-item list-group-item-action" href="{% url 'storeApp:account_panel' %}">帳戶設定</a>
             <a class="list-group-item list-group-item-action" href="{% url 'storeApp:manageOrder' %}">訂單管理</a>
             <a class="list-group-item list-group-item-action" href="{% url 'storeApp:product_record' %}">產品購買紀錄</a>
           </div>
