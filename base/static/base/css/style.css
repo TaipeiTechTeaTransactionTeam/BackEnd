@@ -3698,3 +3698,7 @@ td.invert-image a img {
     color: #FFF;
     padding: 10px 30px;
 }
+.order-status{
+    text-align: left;
+    margin-top: 55px;
+}
