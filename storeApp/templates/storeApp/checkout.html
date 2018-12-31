@@ -12,8 +12,8 @@
 	window.eventDiscount={ 
 		id : {{eventDiscounts.0.id}},
 		discount : {{eventDiscounts.0.discount}}
-		{%if discount.description%},description:"{{discount.description}}"{%endif%}
-		{%if discount.condition%},condition:{{discount.condition}}{%endif%}
+		{%if eventDiscounts.0.description%},description:"{{eventDiscounts.0.description}}"{%endif%}
+		{%if eventDiscounts.0.condition%},condition:{{eventDiscounts.0.condition}}{%endif%}
 	 };
 	window.eventDiscounts=[{%for discount in eventDiscounts%} {id : {{discount.id}},discount:{{discount.discount}}{%if discount.description%},description:"{{discount.description}}"{%endif%} {%if discount.condition%},condition:{{discount.condition}}{%endif%} },
 		 {%endfor%} ];
