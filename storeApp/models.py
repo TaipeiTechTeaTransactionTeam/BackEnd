@@ -159,7 +159,6 @@ class ShippingDiscount(Discount):
         else:
             return 0
     def calculate_price(self, price, shipping_price):
-        print("shippingPrice",shipping_price)
         return price -self.discountValue(shipping_price)
 
     class Meta:

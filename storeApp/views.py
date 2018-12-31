@@ -252,6 +252,7 @@ def checkout(request):
         for data in datas:
             total_price += Product.objects.get(
                 id=data['uid']).get_discount_price()['price'] * data['quantity']
+        #print("總價",total_price)
         try:
             # 拿出所選的折扣
             eventDiscount = SeasoningDiscount.objects.get(
