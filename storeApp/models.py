@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 import django.utils.timezone as timezone
 from django.urls import reverse
 from datetime import date
+from django.contrib import auth
 from math import floor
 # Create your models here.
 
@@ -165,3 +166,14 @@ class Report(OrderContainProduct):
         proxy = True # 不會額外建表 直接使用Order
         verbose_name = '財務報表'
         verbose_name_plural = '財務報表'
+
+
+def db_change_password(username, old_password, new_password):
+    user = auth.authenticate(username=username, password=old_password)
+    if user is not None:
+        if user.is_active:
+            user.set_password(new_password)
+            user.save()
+            return 1
+        else: return -2
+    else: return -1
