@@ -8,10 +8,9 @@
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
 <div class="container checkout">
-  <h4 class="productRecord">您的訂單如下 :</h4>
+  <h4 class="productRecord">您的訂單詳情如下 :</h4>
   <!--一筆訂單-->
   {%block order%}
-  {% if order %}
   <div class="item-list">
     <div class="order-item">
       <div class="item-card">
@@ -83,17 +82,6 @@
       <!--一筆訂單-->
     </div>
   </div>
-
-  {% else %}
-  <div class="emptyImgDiv">
-    <img src="/static/base/images/orderEmpty.png" alt="" class="emptyImg">
-    <h4 class="my-2">竟然沒有買過東西</h4>
-    <small class="text-muted">快去買個好茶，陶冶一下身心靈吧～</small>
-  </div>
-  <div class="button-container2">
-    <button><a href="/teas/">前往購物</a></button>
-  </div>
-  {% endif %}
   {%endblock order%}
 </div>
 {% endblock content %}

@@ -6,9 +6,11 @@
 {% endblock breadcrumb %}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
-<div class="container">
+<div class="container checkout">
+  <h4 class="productRecord">您的訂單如下 :</h4>
   <!--一筆訂單-->
   {% block order %}
+  {% if oneOrder %}
   {% for order in oneOrder %}
   <div class="item-list">
     <div class="order-item">
@@ -69,18 +71,24 @@
         <!--單筆訂單總價與按鈕-->
         <div class="item-button">
           <div class="row buttonContainer">
-            <div class="total-price">
-              <span class="form-total">訂單金額 : </span>
-              <span class="form-price">
-                {%block totalPrice%}
-                {{ order.order.total_price }}
-                {%endblock totalPrice%}
-              </span>
+            <div class="col-md-6">
+              <div class="order-status">
+                <h3 class="form-total">訂單狀態 : {{ order.order.status }}</h3>
+              </div>
             </div>
+            <div class="col-md-6">
+              <div class="total-price">
+                  <span class="form-total">訂單金額 : </span>
+                  <span class="form-price">
+                    {%block totalPrice%}
+                    {{ order.order.total_price }}
+                    {%endblock totalPrice%}
+                  </span>
+                </div>
+            </div>            
           </div>
           <div class="button-container">
-            <h3 class="form-total" style="margin-right: 950px">訂單狀態 : {{ order.order.status }}</h3>
-            <a href="{% url 'storeApp:order_detail' order.order.id%}"><button>查看訂單詳情</button></a>
+              <button><a href="{% url 'storeApp:order_detail' order.order.id%}">查看訂單詳情</a></button>
           </div>
         </div>
         <!--單筆訂單總價與按鈕-->
@@ -89,6 +97,16 @@
     </div>
   </div>
   {% endfor %}
+  {% else %}
+  <div class="emptyImgDiv">
+    <img src="/static/base/images/orderEmpty.png" alt="" class="emptyImg">
+    <h4 class="my-2">竟然沒有買過東西</h4>
+    <small class="text-muted">快去買個好茶，陶冶一下身心靈吧～</small>
+  </div>
+  <div class="button-container2">
+    <button><a href="/teas/">前往購物</a></button>
+  </div>
+  {% endif %}
   {%endblock order%}
 </div>
 {% endblock content %}
