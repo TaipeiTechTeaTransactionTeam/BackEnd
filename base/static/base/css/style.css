@@ -3577,14 +3577,17 @@ td.invert-image a img {
     margin-left: 10px;
     font-size: 18px;
     color: #fff;
-    background: #03ad1d;
+    background: #212121;
     text-decoration: none;
     position: relative;
     border: none;
-    border-radius: 0;
+    border-radius: 5px;
     text-transform: uppercase;
     padding: .5em;
     outline: none;
+}
+.button-container button:hover{
+    background: #03ad1d;
 }
 .form-total{
     font-size: 18px;
@@ -3654,4 +3657,14 @@ td.invert-image a img {
 }
 .productRecord{
     margin-top: 20px;
+}
+.emptyImgDiv{
+    text-align: center;
+}
+.emptyImg{
+    width: 320px;
+    height: 320px;
+}
+.high-limit{
+    height: 18px;
 }
