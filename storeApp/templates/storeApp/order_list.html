@@ -80,7 +80,7 @@
         </div>
         <div class="button-container">
         <h3 class="form-total" style= "margin-right: 950px">訂單狀態 : {{ order.order.status }}</h3>
-          <a href = "{% url 'storeApp:manageOrder' order.order.id%}"><button>查看訂單詳情</button></a>
+          <a href = "{% url 'storeApp:order_detail' order.order.id%}"><button>查看訂單詳情</button></a>
         </div>
       </div>
       <!--單筆訂單總價與按鈕-->
