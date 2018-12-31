@@ -159,7 +159,7 @@ def manageOrder(request):
     types = TeaType.objects.all()
     orders = Order.objects.filter(own_user=request.user)
     oneOrder = []
-    for i in orders:
+    for i in reversed(orders):
         oneOrder.append(
             {'order': i, 'products': OrderContainProduct.objects.filter(order=i)})
     return render(request, 'storeApp/manageOrder.html', locals())
