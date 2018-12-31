@@ -2,7 +2,8 @@
 {% load static %}
 {%block breadcrumb%}
 <li><a href="{% url 'storeApp:user_panel' %}">使用者</a></li>
-<li class="active">訂單管理</li>
+<li><a href="{% url 'storeApp:order_list' %}">訂單管理</a></li>
+<li class="active">訂單詳情</li>
 {%endblock breadcrumb%}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
@@ -10,8 +11,7 @@
   <h4 class="productRecord">您的訂單如下 :</h4>
   <!--一筆訂單-->
   {%block order%}
-  {% if oneOrder %}
-  {% for order in oneOrder %}
+  {% if order %}
   <div class="item-list">
     <div class="order-item">
       <div class="item-card">
@@ -19,7 +19,7 @@
         <div class="item-header">
           <h4>
             {%block buyer%}
-            <h4>訂單日期:{{ oneOrder.order.date }}</h4> 
+            <h4>訂單日期:{{ order.date }}</h4>
             {%endblock buyer%}
           </h4>
         </div>
@@ -29,25 +29,23 @@
         <div class="item-detail-list">
           <!--訂單中其中一項商品-->
           {%block oneProductOfOrder%}
-          {% for i in oneOrder.products %}
+          {% for i in products %}
           <!--標頭與商品清單分隔線-->
           <div class="border-solid"></div>
-          <div class="row  d-flex">
+          <div class="row d-flex">
             <div class="col-md-9">
               <div class="row">
                 <div class=" col-md-3 imgStyle">
                   <!--need to change image-->
-                  <img src="{{i.product.image.url}}" class="item-detail-image" alt="無法顯示">
+                  <img src="{{ i.product.image.url }}" class="item-detail-image" alt="無法顯示">
                 </div>
                 <div class="item-describe col-md-9 d-flex">
-                    {%block orderDescribe%}
-
-                    <!--<pre class="order-describe">名稱 {{i.product.name}}
-                      數量{{i.purchase_quantity}}
-                    </pre>-->
-                    <pre class="order-describe my-auto">名稱 {{i.product.name}}
-數量 {{i.purchase_quantity}}</pre>
-                    {%endblock orderDescribe%}
+                  {%block orderDescribe%}
+                  <pre class="order-describe my-auto">
+                    名稱 {{i.product.name}}
+                    數量 {{i.purchase_quantity}}
+                  </pre>
+                  {%endblock orderDescribe%}
                 </div>
               </div>
             </div>
@@ -63,34 +61,30 @@
           {% endfor %}
           {%endblock oneProductOfOrder%}
           <!--訂單中其中一項商品-->
-        <!--訂單中的商品清單-->
-      </div>
-      <!--單筆訂單內與按鈕的分隔線-->
-      <div class="border-dash"></div>
-      <!--單筆訂單總價與按鈕-->
-      <div class="item-button">
-        <div class="row buttonContainer">
-          <div class="total-price">
-            <span class="form-total">訂單金額 : </span>
-            <span class="form-price">
-              {%block totalPrice%}
-              {{ oneOrder.order.total_price }}
-              {%endblock totalPrice%}
-            </span>
+          <!--訂單中的商品清單-->
+        </div>
+        <!--單筆訂單內與按鈕的分隔線-->
+        <div class="border-dash"></div>
+        <!--單筆訂單總價與按鈕-->
+        <div class="item-button">
+          <div class="row buttonContainer">
+            <div class="total-price">
+              <span class="form-total">訂單金額 : </span>
+              <span class="form-price">
+                {%block totalPrice%}
+                {{ order.total_price }}
+                {%endblock totalPrice%}
+              </span>
+            </div>
           </div>
         </div>
-
-        <div class="button-container">
-          <button><a href="">查看訂單詳情</a></button>
-        </div>
+        <!--單筆訂單總價與按鈕-->
       </div>
-      <!--單筆訂單總價與按鈕-->
+      <!--一筆訂單-->
     </div>
-    <!--一筆訂單-->
   </div>
-</div>
-{% endfor %}
-{% else %}
+
+  {% else %}
   <div class="emptyImgDiv">
     <img src="/static/base/images/orderEmpty.png" alt="" class="emptyImg">
     <h4 class="my-2">竟然沒有買過東西</h4>
@@ -99,7 +93,7 @@
   <div class="button-container2">
     <button><a href="/teas/">前往購物</a></button>
   </div>
-{% endif %}
+  {% endif %}
   {%endblock order%}
 </div>
 {% endblock content %}
