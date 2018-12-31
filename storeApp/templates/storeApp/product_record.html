@@ -1,48 +1,31 @@
 {% extends 'storeApp/base.html' %}
 {% load static %}
 {%block breadcrumb%}
-<li><a href="{% url 'storeApp:userPanel' %}">使用者</a></li>
+<li><a href="{% url 'storeApp:user_panel' %}">使用者</a></li>
 <li class="active">產品購買紀錄</li>
 {%endblock breadcrumb%}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
-<div class="container">
-  <!--一筆訂單-->
-  {%block order%}
-  <div class="item-list">
-    <div class="order-item">
-      <div class="item-card">
-        <!--訂單中的商品清單-->
-        <div class="item-detail-list">
-          <!--訂單中其中一項商品-->
-          {%block oneProductOfOrder%}
-          {% for product in products %}
-          <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-              <div class="row">
-                <div class="col-md-4">
-                  <!--need to change image-->
-                  <img src="{{product.image.url}}" class="item-detail-image" alt="{{product.name}}">
-                </div>
-                <div class="item-describe col-md-8">
-                  <p>
-                    {%block orderDescribe%}
-                    <h4><a href="{% url 'storeApp:detail' product.id %}">名稱：{{product.name}}</a></h4><br>
-                    {%endblock orderDescribe%}
-                  </p>
-                </div>
-              </div>
-              <div class="border-solid"></div>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
-          {% endfor %}
-          {%endblock oneProductOfOrder%}
-        </div>
-      </div>
+<div class="container checkout">
+  <h4 class="productRecord">產品購買紀錄 :</h4>
+  {% if products %}  
+  <table class="tableStyle">
+      {% for product in products %}  
+      <tr class="trStyle">
+        <td class="imgStyle"><img src="{{product.image.url}}" class="item-detail-image" alt="{{product.name}}"></td>
+        <td><a class="productLink" href="{% url 'storeApp:detail' product.id %}">名稱：{{product.name}}</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <div class="emptyImgDiv">
+      <img src="/static/base/images/orderEmpty.png" alt="" class="emptyImg">
+      <h4 class="my-2">竟然沒有買過東西</h4>
+      <small class="text-muted">快去買個好茶，陶冶一下身心靈吧～</small>
     </div>
-  </div>
-  {%endblock order%}
+    <div class="button-container2">
+      <button><a href="/teas/">前往購物</a></button>
+    </div>
+    {% endif %}
 </div>
 {% endblock content %}

@@ -1,3 +1,7 @@
+*,pre{
+    font-family: '思源黑體','微軟正黑體',sans-serif;
+}
+
 /*- 產品項目中圖片大小限制 -*/
 .snipcart-thumb img,td.invert-image img.img-responsive
 {
@@ -35,7 +39,7 @@ h1,h2,h3,h4,h5,h6,a{
 	margin:0;
 	font-weight:700;
 }
-.skdslider > .slides   h3,.userpanel-image-container h3
+.skdslider > .slides   h3,.user_panel-image-container h3
 {
     text-shadow: -1px 2px 5px black;
 }
@@ -611,7 +615,7 @@ p.w3l-ad {
     line-height: 28px;
 }
 .agile_top_brands_grids {
-    margin-top: 40px;
+    margin-bottom: 40px;
 }
 .hover14.column {
     border: 1px solid #c0bebe;
@@ -1039,13 +1043,11 @@ a.w3_agile_vimeo:hover{
 	text-transform:uppercase;
 	margin:0 0 2em;
 }
-.login-form-grids input[type="text"]{
-	background:url(../images/img-sp.png) no-repeat 5px -259px #fff;
+.login-form-grids input[type="text"],.login-form-grids input[type="email"]{
+    background:url(../images/img-sp.png) no-repeat 5px -259px #fff;
+    margin-bottom:1em;
 }
-.login-form-grids input[type="text"]:nth-child(2){
-	background:url(../images/img-sp.png) no-repeat 0px -298px #fff;
-	margin:1em 0;
-}
+
 .register-check-box label{
 	font-size:14px;
 	font-weight:500;
@@ -2851,7 +2853,7 @@ ul.faq {
 .logo_products {
     padding: 1.5em 0;
 }
-.skdslider,.userpanel-image-container {
+.skdslider,.user_panel-image-container {
     height: 281px;
 }
 
@@ -3486,7 +3488,7 @@ td.invert-image a img {
     font-size: 13px;
 }
 }
-.userpanel-image-container {
+.user_panel-image-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -3494,11 +3496,11 @@ td.invert-image a img {
     max-height: 350px;
     margin-bottom: 2em;
 }
-.userpanel-image-container > .userpanel-main_image
+.user_panel-image-container > .user_panel-main_image
 {
     width:100%;
 }
-.userpanel-image-container  h3{
+.user_panel-image-container  h3{
     position: absolute;
     color:white;
     font-size: 2em;
@@ -3518,8 +3520,7 @@ td.invert-image a img {
     padding-bottom: 10px;
 }
 .order-item{
-    padding-left: 20px;
-    padding-top: 20px;
+    padding: 20px;
     border:#BEBEBE;
     border-style: solid;
     border-width: 1px;
@@ -3536,6 +3537,7 @@ td.invert-image a img {
 .item-detail-image{
     height: 120px;
     width: 120px;
+    margin: 10px;
 }
 .item-button{
     width: 100%
@@ -3570,19 +3572,23 @@ td.invert-image a img {
 .button-container{
     text-align: right;
     padding: 10px;
+    margin-top: 10px;
 }
 .button-container button{
     margin-left: 10px;
     font-size: 18px;
     color: #fff;
-    background: #03ad1d;
+    background: #212121;
     text-decoration: none;
     position: relative;
     border: none;
-    border-radius: 0;
+    border-radius: 5px;
     text-transform: uppercase;
     padding: .5em;
     outline: none;
+}
+.button-container button:hover{
+    background: #03ad1d;
 }
 .form-total{
     font-size: 18px;
@@ -3626,4 +3632,69 @@ td.invert-image a img {
     font-size: 18px;
     background: none;
     border-style: none;
+}
+.tableStyle{
+    /* border-style: solid; */
+    border-width: 1px;
+    width: 100%;
+    margin:20px 0px;
+    font-size: 18px;
+}
+.trStyle{
+    border-block-start-style: solid;
+    border-block-start-color: #BEBEBE;
+    border-width: 1px;
+}
+.imgStyle{
+    text-align: center;
+    height: 140px;
+}
+.productLink{
+    color: #000000;
+    font-weight: normal;
+}
+.productLink:hover{
+    color: #03ad1d;
+}
+.productRecord{
+    margin-top: 20px;
+}
+.emptyImgDiv{
+    text-align: center;
+}
+.emptyImg{
+    width: 320px;
+    height: 320px;
+}
+.high-limit{
+    height: 18px;
+}
+.button-container2{
+    text-align: right;
+    padding: 10px;
+    margin-top: 128px;
+}
+.button-container2 button{
+    margin-left: 10px;
+    font-size: 18px;
+    color: #fff;
+    background: #212121;
+    text-decoration: none;
+    position: relative;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    padding: .5em;
+    outline: none;
+}
+.button-container2 button:hover{
+    background: #03ad1d;
+}
+.button-container a{
+    color: #FFF;
+    padding: 10px 30px;
+}
+.button-container2 a{
+    color: #FFF;
+    padding: 10px 30px;
 }

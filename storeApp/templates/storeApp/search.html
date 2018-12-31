@@ -5,6 +5,7 @@
 {%endblock breadcrumb%}
 <!-- 新增麵包屑 請使用block breadcrumb  %endblock  breadcrumb% 並在上方區塊繼承super-->
 {% block content %}
+
 <div class="container">
   <div class="item-list">
     <!--搜尋結果-->
@@ -19,9 +20,9 @@
             價格排列
           </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item h4" style="padding-left: 5px" href="#">高到低</a>
+            <a class="dropdown-item h4" style="padding-left: 5px" id="descSort">高到低</a>
             <div class="dropdown-divider h4"></div>
-            <a class="dropdown-item h4" style="padding-left: 5px" href="#">低到高</a>
+            <a class="dropdown-item h4" style="padding-left: 5px" id="ascSort">低到高</a>
           </div>
         </div>
         <!--價格排序按鈕-->
@@ -31,11 +32,10 @@
         </div>
         <div class="col-md-8 products-right">
           <!-- {{ products }} -->
-          <div class="agile_top_brands_grids">
               {%block oneProductSearch%}
               {% if products %}
               {% for product in products %}
-            <div class="col-md-4 top_brand_left">
+            <div class="col-md-4 top_brand_left agile_top_brands_grids">
               <div class="hover14 column">
                 <div class="agile_top_brand_left_grid">
                     <div class="agile_top_brand_left_grid_pos">
@@ -171,7 +171,7 @@
             {% endif %}
             {%endblock oneProductSearch%}
             <div class="clearfix"> </div>
-          </div>
+          
           <!--- 換頁按鈕 -->
       <nav class="numbering">
           <ul class="pagination paging">
@@ -207,4 +207,5 @@
     {%endblock search%}
   </div>
 </div>
+<script src="{%static 'storeApp/js/sortSearch.js'%}"></script>
 {% endblock content %}

@@ -1,10 +1,10 @@
-use TTTS;
+USE TTTS;
 
 INSERT INTO storeApp_store VALUES(1,'北科老茶','台北市大安區忠孝東路三段1號','0227712171','60');
 
-insert into storeApp_teatype VALUES(1,'紅茶','teaType/紅茶.jpg');
-insert into storeApp_teatype VALUES(2,'綠茶','teaType/綠茶.jpg');
-insert into storeApp_teatype VALUES(3,'烏龍茶','teaType/烏龍茶.jpg');
+INSERT INTO storeApp_teatype VALUES(1,'紅茶','teaType/紅茶.jpg');
+INSERT INTO storeApp_teatype VALUES(2,'綠茶','teaType/綠茶.jpg');
+INSERT INTO storeApp_teatype VALUES(3,'烏龍茶','teaType/烏龍茶.jpg');
 
 INSERT INTO storeApp_product VALUES(1,'product/苗栗貓裏紅茶.jpg','苗栗貓裏紅茶',100,675,
 '商品規格
@@ -339,3 +339,19 @@ INSERT INTO storeApp_product VALUES(25,'product/【峨眉茶行】凍頂老茶.j
     保存期限 : 10年
     有限日期 : 詳細見外包裝標示
     特色 : 入口濃醇溫潤， 自然回甘喉韻足， 有老茶特有的陳年香氣， 以及淡淡的木質香， 味道沉穩舒適。',now(),3);
+
+
+INSERT INTO storeApp_discount VALUES(1,500,now(),"2019-03-31","冬季特賣");
+INSERT INTO storeApp_seasoningdiscount VALUES(1,3000);
+
+INSERT INTO storeApp_discount VALUES(2,0,now(),"2019-03-31","滿額免運費");
+INSERT INTO storeApp_shippingdiscount VALUES(2,499);
+
+INSERT INTO storeApp_discount VALUES(3,50,now(),"2019-03-31","紅茶好喝");
+INSERT INTO storeApp_productdiscount VALUES(3,1);
+
+INSERT INTO storeApp_discount VALUES(4,0.85,now(),"2019-03-31","冬季幫幫我");
+INSERT INTO storeApp_seasoningdiscount VALUES(4,2000);
+
+INSERT INTO storeApp_discount VALUES(5,10,now(),"2019-03-31","10塊還人家");
+INSERT INTO storeApp_seasoningdiscount VALUES(5,0);

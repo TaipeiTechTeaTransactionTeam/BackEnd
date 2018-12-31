@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 import django.utils.timezone as timezone
 from django.urls import reverse
 from datetime import date
+from django.contrib import auth
 from math import floor
 # Create your models here.
 
@@ -77,8 +78,7 @@ class Product(models.Model):
 
 
 class Order(models.Model):
-    ORDER_STATUS = [('1', '新訂單'), ('2', '已確認'), ('3', '待出貨'),
-                    ('4', '出貨中'), ('5', '己出貨')]
+    ORDER_STATUS = [('1', '已送出'), ('2', '處理中'), ('3', '已完成')]
     own_user = models.ForeignKey(
         User, verbose_name="持有者", on_delete=models.CASCADE)
     status = models.CharField(
@@ -123,21 +123,19 @@ class Discount(models.Model):
 
 
 class SeasoningDiscount(Discount):
-    # discount = models.DecimalField(
-    #     verbose_name="折扣", max_digits=10, decimal_places=2, null=False)
-    # start_date = models.DateField(verbose_name="開始日期", null=False)
-    # end_date = models.DateField(verbose_name="結束日期", null=False)
-    # description = models.CharField(
-    #     verbose_name="描述", max_length=255, null=False)
-
+    condition = models.DecimalField(verbose_name="條件",
+                                        max_digits=10, decimal_places=0, null=False, default=0)
     def discountValue(self, price):
-        if 0 <= self.discount and self.discount < 1:
-            return floor(price * (1 - self.discount))
-        elif 1 <= self.discount:
-            if price < floor(self.discount):
-                return price
-            else:
-                return floor(self.discount)
+        if price>=float(self.condition):
+            if 0 <= self.discount and self.discount < 1:
+                return floor(price * (1 - self.discount))
+            elif 1 <= self.discount:
+                if price < floor(self.discount):
+                    return price
+                else:
+                    return floor(self.discount)
+        else:
+            return 0
 
     def calculatePrice(self, price):
         return price - self.discountValue(price)
@@ -150,9 +148,19 @@ class SeasoningDiscount(Discount):
 class ShippingDiscount(Discount):
     condition = models.DecimalField(verbose_name="條件",
                                     max_digits=10, decimal_places=0, null=False, default=0)
-
+    def discountValue(self, price):
+        if price>=float(self.condition):
+            if 0 <= self.discount and self.discount < 1:
+                return floor(price * (1 - self.discount))
+            elif 1 <= self.discount:
+                if price < floor(self.discount):
+                    return price
+                else:
+                    return floor(self.discount)
+        else:
+            return 0
     def calculate_price(self, price, shipping_price):
-        return price + (shipping_price - self.discount) if price >= self.condition else price + shipping_price
+        return price -self.discountValue(shipping_price)
 
     class Meta:
         verbose_name = '運費折扣'
@@ -172,3 +180,14 @@ class Report(OrderContainProduct):
         proxy = True # 不會額外建表 直接使用Order
         verbose_name = '財務報表'
         verbose_name_plural = '財務報表'
+
+
+def db_change_password(username, old_password, new_password):
+    user = auth.authenticate(username=username, password=old_password)
+    if user is not None:
+        if user.is_active:
+            user.set_password(new_password)
+            user.save()
+            return 1
+        else: return -2
+    else: return -1

@@ -16,6 +16,7 @@
       <h5>個人資訊</h5>
       <input type="text" placeholder="姓" name="first_name" required=" ">
       <input type="text" placeholder="名" name="last_name" required=" ">
+      <input type="email" placeholder="email" name="email" required=" ">
       <h6>帳號資訊</h6>
       {% csrf_token %}
       <input type="text" placeholder="使用者名稱" name="username" required=" ">
@@ -29,7 +30,7 @@
       {% if message %}
       <a style="color:red">{{ message }}!</a>
       {% endif %}
-      <input type="submit" value="Register">
+      <input type="submit" value="註冊">
     </form>
   </div>
   <div class="register-home">

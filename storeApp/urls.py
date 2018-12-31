@@ -6,10 +6,11 @@ app_name = 'storeApp'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('userPanel/', views.userPanel, name='userPanel'),
-    path('userSetting/', views.userSetting, name='userSetting'),
+    path('user_panel/', views.user_panel, name='user_panel'),
+    path('user_setting/', views.user_setting, name='user_setting'),
+    path('user_setting/edit_password/', views.edit_password, name='edit_password'),
     path('search/', views.search, name='search'),
-    path('accountPanel/', views.accountPanel, name='accountPanel'),
+    path('account_panel/', views.account_panel, name='account_panel'),
     path('teas/', views.teas, name='teas'),
     path('teas/<str:fk>/', views.teas_type, name='teas_type'),
     path('login/', views.login, name='login'),

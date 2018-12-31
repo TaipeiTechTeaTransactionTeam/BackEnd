@@ -42,6 +42,7 @@ def sql():
      host = "localhost" ,     #主機名
      user = user ,          #用戶名
      passwd = pwd,   #密碼
+       charset='utf8',
     )         #數據庫名稱
 
     #查詢前，必須先獲取游標
@@ -58,13 +59,39 @@ def sql():
         pass
     db.commit()
     db.close()
-funcs=[rmMigrations,sql,createMigrations]
-for key,val in enumerate(funcs):
-    print(key+1,end="")
-    print("/",end="")
-    print(len(funcs))
-    print()
-    val()
-    print("--------")
+def loadSqlDatas():
+    if input("是否載入sql預設資料?(y/n)\n> ")=="y":
+        user,pwd=readDBcnf()
+        db  =  MySQLdb . connect ( 
+        host = "localhost" ,     #主機名
+        user = user ,          #用戶名
+        passwd = pwd,   #密碼
+        charset='utf8',
+        )         #數據庫名稱
 
-
+        #查詢前，必須先獲取游標
+        cur  =  db . cursor ()
+        cur.execute("use TTTS;")
+        sqlStaments=[x+";" for x in open("testData.sql","r",encoding="utf-8").read(-1).split(";")]
+        sqlLines=len(sqlStaments)
+        for index,stament in enumerate(sqlStaments):
+            print("{}/{}".format(str(index+1),str(sqlLines)))
+            if stament==";":
+                continue
+            cur.execute(stament)
+            db.commit()
+        db.close()
+def createSU():
+    if input("是否建立網站superuser?(y/n):\n> ")=="n":
+        return
+    os.system("python manage.py createsuperuser")
+def main():
+    funcs=[rmMigrations,sql,createMigrations,loadSqlDatas,createSU]
+    for key,val in enumerate(funcs):
+        print(key+1,end="")
+        print("/",end="")
+        print(len(funcs))
+        print()
+        val()
+        print("--------")
+main()
