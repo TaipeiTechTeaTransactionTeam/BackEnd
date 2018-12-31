@@ -3668,3 +3668,28 @@ td.invert-image a img {
 .high-limit{
     height: 18px;
 }
+.button-container2{
+    text-align: right;
+    padding: 10px;
+    margin-top: 128px;
+}
+.button-container2 button{
+    margin-left: 10px;
+    font-size: 18px;
+    color: #fff;
+    background: #212121;
+    text-decoration: none;
+    position: relative;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    padding: .5em;
+    outline: none;
+}
+.button-container2 button:hover{
+    background: #03ad1d;
+}
+.button-container2 a{
+    color: #FFF;
+    padding: 10px 30px;
+}
