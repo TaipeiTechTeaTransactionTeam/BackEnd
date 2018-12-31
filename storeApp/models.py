@@ -122,15 +122,19 @@ class Discount(models.Model):
 
 
 class SeasoningDiscount(Discount):
-
+    condition = models.DecimalField(verbose_name="條件",
+                                        max_digits=10, decimal_places=0, null=False, default=0)
     def discountValue(self, price):
-        if 0 <= self.discount and self.discount < 1:
-            return floor(price * (1 - self.discount))
-        elif 1 <= self.discount:
-            if price < floor(self.discount):
-                return price
-            else:
-                return floor(self.discount)
+        if price>=float(self.condition):
+            if 0 <= self.discount and self.discount < 1:
+                return floor(price * (1 - self.discount))
+            elif 1 <= self.discount:
+                if price < floor(self.discount):
+                    return price
+                else:
+                    return floor(self.discount)
+        else:
+            return 0
 
     def calculatePrice(self, price):
         return price - self.discountValue(price)
