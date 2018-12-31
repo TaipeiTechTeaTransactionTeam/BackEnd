@@ -3,7 +3,7 @@
 {%block breadcrumb%}
 <li>
   <!-- username -->
-  <a href="{% url 'storeApp:userPanel' %}">{{ user.username }}</a>
+  <a href="{% url 'storeApp:user_panel' %}">{{ user.username }}</a>
   <!-- username -->
 </li>
 <li class="active">
@@ -17,10 +17,10 @@
   <div class="row">
     <div class="col-12">
       <h2 class="bheader mt-3">帳號設定</h2>
-      <a class="glyphicon glyphicon-menu-left" href="{% url 'storeApp:userPanel' %}"></a>
+      <a class="glyphicon glyphicon-menu-left" href="{% url 'storeApp:user_panel' %}"></a>
       <div class="container my-1">基本資料</div>
       <div class="list-group">
-        <a class="list-group-item  list-group-item-action" href="{% url 'storeApp:userSetting' %}">個人檔案設定</a>
+        <a class="list-group-item  list-group-item-action" href="{% url 'storeApp:user_setting' %}">個人檔案設定</a>
       </div>
       <div class="container my-1">其他</div>
       <div class="list-group">

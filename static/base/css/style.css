@@ -35,7 +35,7 @@ h1,h2,h3,h4,h5,h6,a{
 	margin:0;
 	font-weight:700;
 }
-.skdslider > .slides   h3,.userpanel-image-container h3
+.skdslider > .slides   h3,.user_panel-image-container h3
 {
     text-shadow: -1px 2px 5px black;
 }
@@ -2851,7 +2851,7 @@ ul.faq {
 .logo_products {
     padding: 1.5em 0;
 }
-.skdslider,.userpanel-image-container {
+.skdslider,.user_panel-image-container {
     height: 281px;
 }
 
@@ -3486,7 +3486,7 @@ td.invert-image a img {
     font-size: 13px;
 }
 }
-.userpanel-image-container {
+.user_panel-image-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -3494,11 +3494,11 @@ td.invert-image a img {
     max-height: 350px;
     margin-bottom: 2em;
 }
-.userpanel-image-container > .userpanel-main_image
+.user_panel-image-container > .user_panel-main_image
 {
     width:100%;
 }
-.userpanel-image-container  h3{
+.user_panel-image-container  h3{
     position: absolute;
     color:white;
     font-size: 2em;
