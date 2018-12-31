@@ -91,6 +91,7 @@ def user_setting(request):
         return redirect('storeApp:login')
     return render(request, 'storeApp/user_setting.html', locals())
 
+
 @require_http_methods(["POST"])
 def edit_password(request):
     print(request.method)
@@ -105,12 +106,11 @@ def edit_password(request):
         return HttpResponse(json.dumps(data))
 
 
-
-def accountPanel(request):
+def account_panel(request):
     if not request.user.is_authenticated:
         return redirect('storeApp:login')
     types = TeaType.objects.all()
-    return render(request, 'storeApp/accountPanel.html', locals())
+    return render(request, 'storeApp/account_panel.html', locals())
 
 
 def productQuantity(request, ids):
@@ -175,27 +175,28 @@ def teas_type(request, fk):
     return render(request, 'storeApp/teas.html', locals())
 
 
-def manageOrder(request, pk=None):
+ORDER_STATUS = {'1': '已送出', '2': '處理中', '3': '已完成'}
+
+
+def order_detail(request, pk=None):
+    types = TeaType.objects.all()
+    order = get_object_or_404(Order, id=pk)
+    products = OrderContainProduct.objects.filter(order=order)
+
+    return render(request, 'storeApp/order_detail.html', {'order': order, 'products': list(products), 'types': types})
+
+
+def order_list(request):
     types = TeaType.objects.all()
     orders = Order.objects.filter(own_user=request.user)
-    order = get_object_or_404(Order,id=pk)
-    OrderContainProduct.objects.filter(order=order)
-    oneOrder = {'order':order, 'products':list(OrderContainProduct.objects.filter(order=order))}
-    print(oneOrder)
-    return render(request, 'storeApp/manageOrder.html', locals())
-
-
-
-
-
-def manageOrderList(request):
-    types = TeaType.objects.all()
-    orders = Order.objects.filter(own_user=request.user)
+    for i in orders:
+        i.status = ORDER_STATUS[i.status]
     oneOrder = []
     for i in reversed(orders):
         oneOrder.append(
             {'order': i, 'products': OrderContainProduct.objects.filter(order=i)})
-    return render(request, 'storeApp/manageOrderList.html', locals())
+    return render(request, 'storeApp/order_list.html', locals())
+
 
 @require_http_methods(['POST', 'GET'])
 def login(request):
@@ -286,7 +287,7 @@ def checkout(request):
         for data in datas:
             total_price += Product.objects.get(
                 id=data['uid']).get_discount_price()['price'] * data['quantity']
-        #print("總價",total_price)
+        # print("總價",total_price)
         try:
             # 拿出所選的折扣
             eventDiscount = SeasoningDiscount.objects.get(
