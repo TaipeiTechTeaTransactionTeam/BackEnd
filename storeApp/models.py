@@ -147,9 +147,20 @@ class SeasoningDiscount(Discount):
 class ShippingDiscount(Discount):
     condition = models.DecimalField(verbose_name="條件",
                                     max_digits=10, decimal_places=0, null=False, default=0)
-
+    def discountValue(self, price):
+        if price>=float(self.condition):
+            if 0 <= self.discount and self.discount < 1:
+                return floor(price * (1 - self.discount))
+            elif 1 <= self.discount:
+                if price < floor(self.discount):
+                    return price
+                else:
+                    return floor(self.discount)
+        else:
+            return 0
     def calculate_price(self, price, shipping_price):
-        return price + (shipping_price - self.discount) if price >= self.condition else price + shipping_price
+        print("shippingPrice",shipping_price)
+        return price -self.discountValue(shipping_price)
 
     class Meta:
         verbose_name = '運費折扣'
