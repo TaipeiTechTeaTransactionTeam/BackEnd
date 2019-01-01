@@ -42,6 +42,7 @@
                 {%if product.isDiscount%}
                 <input type="hidden" name="discount_amount" value="{{product.discount}}">
                 {%endif %}
+                <input type="hidden" name="imgSrc" value="{{ product.image.url }}">
                 <input type="hidden" name="return" value=" ">
                 <input type="hidden" name="cancel_return" value=" ">
                 <input type="submit" name="submit" {%if not product.isSoldout %}value="加入購物車"{%else%}value="已售完" disabled{%endif%} class="button">
