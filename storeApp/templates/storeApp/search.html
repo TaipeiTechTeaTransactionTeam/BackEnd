@@ -173,37 +173,38 @@
             <div class="clearfix"> </div>
           
           <!--- 換頁按鈕 -->
-      <nav class="numbering">
-          <ul class="pagination paging">
-            {% if previous_page != 0 %}
-            <li>
-              <a href="?page={{ previous_page }}&quireText={{ search_text }}" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            {% endif %}
-            {% for i in total_page %}
-            {% if i == page%}
-            <li class="active"><a href="?page={{ i }}&quireText={{ search_text }}">{{ i }}<span class="sr-only">(current)</span></a></li>
-            {% else %}
-            <li><a href="?page={{ i }}&quireText={{ search_text }}">{{ i }}</a></li>
-            {% endif %}
-            {% endfor %}
-  
-            {% if next_page != 0 %}
-            <li>
-              <a href="?page={{ next_page }}&quireText={{ search_text }}" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-            {% endif %}
-          </ul>
-        </nav>
-        <!--- 換頁按鈕 -->
+
         </div>
         <div class="clearfix"> </div>
       </div>
     </div>
+    <nav class="numbering mb-5">
+      <ul class="pagination paging">
+        {% if previous_page != 0 %}
+        <li>
+          <a href="?page={{ previous_page }}&quireText={{ search_text }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% endif %}
+        {% for i in total_page %}
+        {% if i == page%}
+        <li class="active"><a href="?page={{ i }}&quireText={{ search_text }}">{{ i }}<span class="sr-only">(current)</span></a></li>
+        {% else %}
+        <li><a href="?page={{ i }}&quireText={{ search_text }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+
+        {% if next_page != 0 %}
+        <li>
+          <a href="?page={{ next_page }}&quireText={{ search_text }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    <!--- 換頁按鈕 -->
     {%endblock search%}
   </div>
 </div>

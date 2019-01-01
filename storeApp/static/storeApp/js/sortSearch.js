@@ -9,7 +9,6 @@ $(
             return originPrice-discount;
         }
         var container=document.querySelector(".products-right");
-        var pages=document.querySelector(".numbering");
         var productContainers=Array.from(container.querySelectorAll(".top_brand_left.agile_top_brands_grids"));
         function ascCmp(a,b)
         {
@@ -28,7 +27,7 @@ $(
             container.innerHTML="";
             for(var pc of containers)
                 container.append(pc);
-            container.append(pages);
+         
         }
         var sortProducts=(cmp=ascCmp)=>
         {
