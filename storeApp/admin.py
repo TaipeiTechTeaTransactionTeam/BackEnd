@@ -52,7 +52,7 @@ class OrderContainProductInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'own_user', 'status', 'date', 'total_price']
+    list_display = ['own_user', 'id', 'address', 'status', 'date', 'total_price']
     inlines = [OrderContainProductInline]
 
 
