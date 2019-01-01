@@ -1,8 +1,12 @@
 {% extends "admin/change_list.html" %}
+{% load static %}
+<script type="text/javascript" src="{% static 'base/js/jquery-1.11.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'base/js/jquery.tablesorter.min.js' %}"></script>
+
 
 {% block result_list %}
    <div class="results">
-    <table>
+    <table id="myTable" class="tablesorter">
 
     <thead>
       <tr>
@@ -38,3 +42,9 @@
 {% endblock %}
 
 {% block pagination %}{% endblock %}
+
+<script>
+$(function() {
+  $("#myTable").tablesorter();
+});
+</script>

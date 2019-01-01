@@ -10,7 +10,7 @@
   <div class="w3_agileits_contact_grids">
     <div class="col-md-6 w3_agileits_contact_grid_left">
       <!-- google map -->
-      <div class="agile_map">
+      <div class="agile_map ml-5">
         <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyANoZT8q6vdk9eRYy1GDoBTSzka6dK7PQU&q=北科大"
           style="border:0"></iframe>
       </div>
@@ -38,7 +38,7 @@
         <!-- 輸入信箱區塊 -->
         <!-- 輸入留言區塊 -->
         <textarea name="Message" placeholder="您的留言...." required=""></textarea>
-        <input type="submit" value="Submit">
+        <a class="btn btn-success mt-4" href="{% url 'storeApp:home' %}"> submit </a>
         <!-- 輸入留言區塊 -->
       </form>
     </div>
