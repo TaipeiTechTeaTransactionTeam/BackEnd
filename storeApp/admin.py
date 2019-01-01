@@ -29,7 +29,8 @@ class TeaTypeAdmin(admin.ModelAdmin):
 
 @admin.register(SeasoningDiscount)
 class SeasoningDiscountAdmin(admin.ModelAdmin):
-    list_display = ['description', 'discount', 'id', 'start_date', 'end_date']
+    list_display = ['description', 'discount',
+                    'condition', 'id', 'start_date', 'end_date']
 
 
 @admin.register(ShippingDiscount)
@@ -54,10 +55,11 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'own_user', 'status', 'date', 'total_price']
     inlines = [OrderContainProductInline]
 
+
 @admin.register(ProductReport)
 class ProductReportAdmin(admin.ModelAdmin):
     change_list_template = 'storeApp/adminProductReport.html'
-    date_hierarchy = 'order__date' # 通过日期过滤对象
+    date_hierarchy = 'order__date'  # 通过日期过滤对象
 
     def changelist_view(self, request, extra_context={}):
         response = super().changelist_view(
@@ -79,7 +81,7 @@ class ProductReportAdmin(admin.ModelAdmin):
             .filter(order__status='3')
             .values('product__name')
             .annotate(**metrics)
-            .order_by('-total_sales','product__name')
+            .order_by('-total_sales', 'product__name')
         )
 
         response.context_data['summary_total'] = dict(
@@ -88,10 +90,11 @@ class ProductReportAdmin(admin.ModelAdmin):
 
         return response
 
+
 @admin.register(OrderReport)
 class OrderReportAdmin(admin.ModelAdmin):
     change_list_template = 'storeApp/adminOrderReport.html'
-    date_hierarchy = 'date' # 通过日期过滤对象
+    date_hierarchy = 'date'  # 通过日期过滤对象
 
     def changelist_view(self, request, extra_context={}):
         response = super().changelist_view(
@@ -121,6 +124,7 @@ class OrderReportAdmin(admin.ModelAdmin):
         )
 
         return response
+
 
 @admin.register(Store)
 class StoreAdmin(admin.ModelAdmin):

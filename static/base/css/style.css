@@ -1489,9 +1489,7 @@ select#country,select#country1 {
 .numbering{
 	text-align:right;
 }
-ul.paging {
-    margin: 4em auto 0;
-}
+
 .paging > .active > a,.paging > .active > a:hover {
     background-color:#ffc229;
     border-color:#EDB62B;
@@ -3684,7 +3682,9 @@ td.invert-image a img {
     border: none;
     border-radius: 5px;
     text-transform: uppercase;
-    padding: .5em;
+    padding: .8em;
+    padding-left: 2em;
+    padding-right: 2em;
     outline: none;
 }
 .button-container2 .mybtn:hover{
