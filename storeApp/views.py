@@ -32,39 +32,27 @@ def home(request):
 
 def search(request):
     types = TeaType.objects.all()
-    if request.method == 'POST':
-        search_text = request.POST['Search']
-        products = Product.objects.filter(name__contains=search_text)
-        page = 1
-        total_page = math.ceil(len(products) / 9)
-        # 計算上、下頁
-        previous_page = page - 1
-        next_page = page + 1 if total_page >= page + 1 else 0
-        total_page = range(1, total_page+1)
-        products = getProductDiscountList(
-            list(products)[(page - 1) * 9:page * 9])
-        return render(request, 'storeApp/search.html', locals())
-    elif request.method == 'GET':
-        if 'page' in request.GET and 'quireText' in request.GET:
-            search_text = request.GET['quireText']
-            if request.GET['page'] == '':
-                page = 1
-            else:
-                page = int(request.GET['page'])
-        else:
+    if 'page' in request.GET and 'quireText' in request.GET:
+        search_text = request.GET['quireText']
+        if request.GET['page'] == '':
             page = 1
-        # 取出總頁數
-        products = Product.objects.filter(name__contains=search_text)
-        total_page = math.ceil(len(products) / 9)
-        # 計算上、下頁
-        previous_page = page - 1
-        next_page = page + 1 if total_page >= page + 1 else 0
-        # 變成可迭代物件
-        total_page = range(1, total_page+1)
-        # 取好 9 個商品
-        products = getProductDiscountList(
-            list(products)[(page - 1) * 9:page * 9])
-        return render(request, 'storeApp/search.html', locals())
+        else:
+            page = int(request.GET['page'])
+    elif 'quireText' in request.GET:
+        search_text = request.GET['quireText']
+        page = 1
+    # 取出總頁數
+    products = Product.objects.filter(name__contains=search_text)
+    total_page = math.ceil(len(products) / 9)
+    # 計算上、下頁
+    previous_page = page - 1
+    next_page = page + 1 if total_page >= page + 1 else 0
+    # 變成可迭代物件
+    total_page = range(1, total_page+1)
+    # 取好 9 個商品
+    products = getProductDiscountList(
+        list(products)[(page - 1) * 9:page * 9])
+    return render(request, 'storeApp/search.html', locals())
 
 
 def user_panel(request):
@@ -314,8 +302,8 @@ def checkout(request):
                 order=order, product=product, purchase_quantity=data['quantity'])
             product.amount -= data['quantity']
             product.save()
-
-    return render(request, 'storeApp/checkout.html', locals())
+            
+    return redirect('storeApp:order_liset')
 
 
 def detail(request, pk):
