@@ -74,25 +74,29 @@ class CheckOut
         this.cart.on("checkout",this.onCheckout,this);
         this.onViewsChange();
     }
-    postTo(path=".")
+    postFormGenerate(path=".")
     {
         var items=[];
-        var form=document.createElement("form");
-        form.action=path;
-        form.method="post";
+        this.postForm=document.createElement("form");
+        this.postForm.action=path;
+        this.postForm.method="post";
         for(var item of this.items)
         {
             var newItem={uid:item.get("uid"),quantity:item.get("quantity")}
             items.push(newItem);
         }
-        form.innerHTML+=`<input name="items" value='${JSON.stringify(items)}' type="hidden" >`;
-        form.innerHTML+=`<input name="eventDiscount" value='${JSON.stringify(this.eventDiscountSrcObject)}' type="hidden" >`;//testing
+        this.postForm.innerHTML+=`<input name="items" value='${JSON.stringify(items)}' type="hidden" >`;
+        if(typeof this.eventDiscountSrcObject !=="undefined")
+            this.postForm.innerHTML+=`<input name="eventDiscount" value='${JSON.stringify(this.eventDiscountSrcObject)}' type="hidden" >`;//testing
         var value=document.querySelector(".modal-dialog #addressInput").value;
-        form.innerHTML+=`<input name="address" value='${value}' type="hidden">`;
-        form.style.display="none";
-        form.innerHTML+=csrf;
-        document.body.append(form);
-        form.submit();
+        this.postForm.innerHTML+=`<input name="address" value='${value}' type="hidden">`;
+        this.postForm.style.display="none";
+        this.postForm.innerHTML+=csrf;
+        document.body.append(this.postForm);
+    }
+    postFormSubmit()
+    {
+        this.postForm.submit();
     }
     onCheckout()
     {
@@ -261,7 +265,7 @@ class CheckOutList extends Nawa.Class.DisplayObject
         (
             typeof this.shippingDiscountSrcObject!=="undefined"?
             (
-                this.totalWithoutShippingPrice>=this.shippingDiscountCondition?
+                this.totalWithoutShippingPrice>=(this.shippingDiscountCondition||0)?
                 (
                     this.shippingDiscount>=1?
                     (
@@ -278,7 +282,7 @@ class CheckOutList extends Nawa.Class.DisplayObject
         );
     }
 
-    get totalWithoutShippingPrice(){return this.subtotal+this.eventDiscountValue;}
+    get totalWithoutShippingPrice(){return this.subtotal-this.eventDiscountValue;}
     
     get subtotal(){return this.cart.total();}
     set subtotal(val){this.subtotalObject.total=val;}
@@ -609,12 +613,13 @@ $(
                 alert("地址欄位不小於8");
                 return;
             }
+            checkOut.postFormGenerate();
             if(!Uti.isDebug())
             {
                 checkOut.cart.destroy();
             }
-                
-            checkOut.postTo();
+            checkOut.postFormSubmit();  
+            
 
         })
         function updateEventDiscountToWindow()

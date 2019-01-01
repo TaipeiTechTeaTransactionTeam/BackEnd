@@ -3572,7 +3572,7 @@ td.invert-image a img {
     padding: 10px;
     margin-top: 10px;
 }
-.button-container button{
+.button-container .mybtn{
     margin-left: 10px;
     font-size: 18px;
     color: #fff;
@@ -3585,7 +3585,7 @@ td.invert-image a img {
     padding: .5em;
     outline: none;
 }
-.button-container button:hover{
+.button-container .mybtn:hover{
     background: #03ad1d;
 }
 .form-total{
@@ -3672,7 +3672,7 @@ td.invert-image a img {
     padding: 10px;
     margin-top: 128px;
 }
-.button-container2 button{
+.button-container2 .mybtn{
     margin-left: 10px;
     font-size: 18px;
     color: #fff;
@@ -3682,10 +3682,12 @@ td.invert-image a img {
     border: none;
     border-radius: 5px;
     text-transform: uppercase;
-    padding: .5em;
+    padding: .8em;
+    padding-left: 2em;
+    padding-right: 2em;
     outline: none;
 }
-.button-container2 button:hover{
+.button-container2 .mybtn:hover{
     background: #03ad1d;
 }
 .button-container a{

@@ -88,7 +88,7 @@
             </div>            
           </div>
           <div class="button-container">
-              <button><a href="{% url 'storeApp:order_detail' order.order.id%}">查看訂單詳情</a></button>
+              <a class="mybtn" href="{% url 'storeApp:order_detail' order.order.id%}">查看訂單詳情</a>
           </div>
         </div>
         <!--單筆訂單總價與按鈕-->
@@ -104,7 +104,7 @@
     <small class="text-muted">快去買個好茶，陶冶一下身心靈吧～</small>
   </div>
   <div class="button-container2">
-    <button><a href="/teas/">前往購物</a></button>
+    <a class=" mybtn" href="/teas/">前往購物</a>
   </div>
   {% endif %}
   {%endblock order%}

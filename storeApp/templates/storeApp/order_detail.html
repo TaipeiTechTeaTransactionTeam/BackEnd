@@ -66,16 +66,23 @@
         <div class="border-dash"></div>
         <!--單筆訂單總價與按鈕-->
         <div class="item-button">
-          <div class="row buttonContainer">
-            <div class="total-price">
-              <span class="form-total">訂單金額 : </span>
-              <span class="form-price">
-                {%block totalPrice%}
-                {{ order.total_price }}
-                {%endblock totalPrice%}
-              </span>
-            </div>
-          </div>
+            <div class="row buttonContainer">
+                <div class="col-md-6">
+                  <div class="order-status">
+                    <h3 class="form-total">訂單狀態 : {{ order.status }}</h3>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="total-price">
+                      <span class="form-total">訂單金額 : </span>
+                      <span class="form-price">
+                        {%block totalPrice%}
+                        {{ order.total_price }}
+                        {%endblock totalPrice%}
+                      </span>
+                    </div>
+                </div>
+              </div>  
         </div>
         <!--單筆訂單總價與按鈕-->
       </div>

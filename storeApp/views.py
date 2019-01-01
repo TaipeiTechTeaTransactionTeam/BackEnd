@@ -181,6 +181,7 @@ ORDER_STATUS = {'1': '已送出', '2': '處理中', '3': '已完成'}
 def order_detail(request, pk=None):
     types = TeaType.objects.all()
     order = get_object_or_404(Order, id=pk)
+    order.status = ORDER_STATUS[order.status]
     products = OrderContainProduct.objects.filter(order=order)
 
     return render(request, 'storeApp/order_detail.html', {'order': order, 'products': list(products), 'types': types})
