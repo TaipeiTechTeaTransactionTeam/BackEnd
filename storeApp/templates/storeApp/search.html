@@ -59,16 +59,18 @@
                           <p class="productItemTitle">{{ product }}</p>
                           <!-- 產品名稱 -->
                           <!-- 產品價格顯示 -->
-                          <h4>
-                            <!-- 現價 -->
-                            NT${{ product.price }}
-                            <!-- 現價 -->
-                            {% if product.isDiscount%}
-                            <!-- 原價 *必填-->
-                            <span>NT${{ product.originPrice }}</span>
-                            <!-- 原價 -->
-                            {% endif %}
+                          <div class="high-limit">
+                            <h4>
+                              <!-- 現價 -->
+                              NT${{ product.price }}
+                              <!-- 現價 -->
+                              {% if product.isDiscount%}
+                              <!-- 原價 *必填-->
+                              <span>NT${{ product.originPrice }}</span>
+                              <!-- 原價 -->
+                              {% endif %}
                           </h4>
+                          </div>
                           <!-- 產品價格顯示 -->
                         </div>
       
