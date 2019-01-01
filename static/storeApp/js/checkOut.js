@@ -209,7 +209,7 @@ class ShoppingCartTable extends Nawa.Class.DisplayObject
         </thead>`;
         this.display.append(this.bodyDisplay=document.createElement("tbody"));
         this.emptyDisplay=document.createElement("div");
-        this.checkOutButton = new Nawa.Class.DisplayObject(document.querySelector(".checkout.btn.glyphicon.glyphicon-menu-left"));
+        this.checkOutButton = new Nawa.Class.DisplayObject(document.querySelector("#checkoutButton"));
     }
     set emptyText(val) {this.emptyDisplay.innerHTML=val;}
     get emptyText() {return this.emptyDisplay.innerHTML;}
