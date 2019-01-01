@@ -18,13 +18,54 @@
     <div class="col-12">
       <h2 class="bheader mt-3">帳號設定</h2>
       <a class="glyphicon glyphicon-menu-left" href="{% url 'storeApp:user_panel' %}"></a>
-      <div class="container my-1">基本資料</div>
       <div class="list-group">
-        <a class="list-group-item  list-group-item-action" href="{% url 'storeApp:user_setting' %}">個人檔案設定</a>
-      </div>
-      <div class="container my-1">其他</div>
-      <div class="list-group">
-        <a class="list-group-item list-group-item-action">刪除帳號申請</a>
+        <button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#exampleModal" style="margin-top: 15px">
+          更改密碼
+        </button>
+        <div>
+          {% if message %}
+          <a class="h3 text-danger">{{ message }}</a>
+          {% endif %}
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <form>
+                <div class="modal-header btn-success">
+                  <h3 class="modal-title " id="exampleModalLabel">更改密碼</h3>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="ajax-contact">
+                    <div class="form-group">
+                      <label class="mb-2" for="InputOldPassword">請輸入原密碼</label>
+                      <input type="password" class="form-control" name="old_passwd" id="InputOldPassword" required=" "
+                        placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label class="mb-2" for="leInputNewPassword">請輸入新密碼</label>
+                      <input type="password" class="form-control" name="new_passwd" id="leInputNewPassword" required=" "
+                        placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label class="mb-2" for="InputNewPasswordAgain">請再次輸入新密碼</label>
+                      <input type="password" class="form-control" name="new_passwd_again" id="InputNewPasswordAgain"
+                        required=" " placeholder="">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-success" data-dismiss="modal">離開</button>
+                      <button id="button1" type="button" class="btn btn-success">確認設定</button>
+                    </div>
+                    <!-- {% csrf_token %} -->
+                  </form>
+                </div>
+            </div>
+          </div>
+        </div>
         <a href="{% url 'storeApp:logout' %}" class="list-group-item list-group-item-action text-light bg-secondary">登出帳號</a>
       </div>
     </div>
