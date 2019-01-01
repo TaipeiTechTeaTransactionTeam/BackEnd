@@ -23,4 +23,5 @@ urlpatterns = [
     path('order_detail/<int:pk>/', views.order_detail, name='order_detail'),
     path('productQuantity/<str:ids>',views.productQuantity,name="productQuantity"),
     path('product_record',views.product_record,name="product_record"),
+    path('forgot_password/', views.forgot_password, name='forgot_password'),    
 ]
