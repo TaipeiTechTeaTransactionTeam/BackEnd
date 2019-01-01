@@ -41,7 +41,7 @@ class ShippingDiscountAdmin(admin.ModelAdmin):
 
 @admin.register(ProductDiscount)
 class ProductDiscountAdmin(admin.ModelAdmin):
-    list_display = ['description', 'id', 'discount', 'condition',
+    list_display = ['description', 'id', 'discount',
                     'product', 'start_date', 'end_date']
 
 
