@@ -17,7 +17,7 @@ from .models import OrderReport
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'tea_type', 'amount',
-                    'price', 'description', 'image', 'add_date']
+                    'price', 'image', 'add_date']
     fields = ['name', 'tea_type', 'image', 'amount', 'price', 'description']
     ordering = ['add_date', ]
 
