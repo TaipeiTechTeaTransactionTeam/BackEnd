@@ -3684,7 +3684,9 @@ td.invert-image a img {
     border: none;
     border-radius: 5px;
     text-transform: uppercase;
-    padding: .5em;
+    padding: .8em;
+    padding-left: 2em;
+    padding-right: 2em;
     outline: none;
 }
 .button-container2 .mybtn:hover{
