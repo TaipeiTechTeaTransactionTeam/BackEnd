@@ -10,7 +10,8 @@ from .models import Order, OrderContainProduct
 from .models import SeasoningDiscount
 from .models import ShippingDiscount
 from .models import ProductDiscount
-from .models import Report
+from .models import ProductReport
+from .models import OrderReport
 
 
 @admin.register(Product)
@@ -53,24 +54,10 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'own_user', 'status', 'date', 'total_price']
     inlines = [OrderContainProductInline]
 
-@admin.register(Report)
-class ReportAdmin(admin.ModelAdmin):
-    change_list_template = 'storeApp/adminReport.html'
+@admin.register(ProductReport)
+class ProductReportAdmin(admin.ModelAdmin):
+    change_list_template = 'storeApp/adminProductReport.html'
     date_hierarchy = 'order__date' # 通过日期过滤对象
-    # list_display = ['id', 'own_user']
-
-    def get_total(self,request):
-        #functions to calculate whatever you want...
-        total = len(super().get_queryset(request))
-        return total
-
-    def get_totalPrice(self):
-        #functions to calculate whatever you want...
-        price = 0
-        report = Report.objects.all()
-        for r in report:
-            price = r.total_price
-        return price
 
     def changelist_view(self, request, extra_context={}):
         response = super().changelist_view(
@@ -97,6 +84,40 @@ class ReportAdmin(admin.ModelAdmin):
 
         response.context_data['summary_total'] = dict(
             qs.filter(order__status='3').aggregate(**metrics)
+        )
+
+        return response
+
+@admin.register(OrderReport)
+class OrderReportAdmin(admin.ModelAdmin):
+    change_list_template = 'storeApp/adminOrderReport.html'
+    date_hierarchy = 'date' # 通过日期过滤对象
+
+    def changelist_view(self, request, extra_context={}):
+        response = super().changelist_view(
+            request,
+            extra_context=extra_context,
+        )
+
+        try:
+            qs = response.context_data['cl'].queryset
+        except (AttributeError, KeyError):
+            return response
+
+        metrics = {
+            'total_price': Sum('total_price'),
+        }
+
+        response.context_data['summary'] = list(
+            qs
+            .filter(status='3')
+            .values('id')
+            .annotate(**metrics)
+            .order_by('-total_price',)
+        )
+
+        response.context_data['summary_total'] = dict(
+            qs.filter(status='3').aggregate(**metrics)
         )
 
         return response

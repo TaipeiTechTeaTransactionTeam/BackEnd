@@ -175,11 +175,18 @@ class ProductDiscount(Discount):
         verbose_name = '產品折扣'
         verbose_name_plural = '產品折扣'
 
-class Report(OrderContainProduct):
+class ProductReport(OrderContainProduct):
     class Meta:
         proxy = True # 不會額外建表 直接使用Order
-        verbose_name = '財務報表'
-        verbose_name_plural = '財務報表'
+        verbose_name = '產品銷售量報表'
+        verbose_name_plural = '產品銷售量報表'
+
+
+class OrderReport(Order):
+    class Meta:
+        proxy = True # 不會額外建表 直接使用Order
+        verbose_name = '訂單銷售額報表'
+        verbose_name_plural = '訂單銷售額報表'
 
 
 def db_change_password(username, old_password, new_password):
