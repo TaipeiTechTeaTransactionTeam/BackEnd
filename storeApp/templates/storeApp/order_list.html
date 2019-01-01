@@ -36,13 +36,13 @@
           <div class="row">
             <div class="col-md-9">
               <div class="row">
-                <div class=" col-md-2">
+                <div class=" col-md-3">
                   <!--need to change image-->
                   <img src="{{i.product.image.url}}" class="item-detail-image" alt="無法顯示">
                 </div>
-                <div class="item-describe col-md-10">
+                <div class="item-describe col-md-9 d-flex">
                   {%block orderDescribe%}
-                  <pre class="order-describe">名稱 {{i.product.name}}
+                  <pre class="order-describe my-auto">名稱 {{i.product.name}}
 數量{{i.purchase_quantity}}</pre>
                   {% endblock orderDescribe %}
                 </div>
@@ -102,7 +102,7 @@
     <small class="text-muted">快去買個好茶，陶冶一下身心靈吧～</small>
   </div>
   <div class="button-container2">
-    <a class=" mybtn" href="/teas/">前往購物</a>
+    <a class="mybtn" href="/teas/">前往購物</a>
   </div>
   {% endif %}
   {%endblock order%}
