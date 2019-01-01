@@ -1,0 +1,30 @@
+.tablesorter-headerAsc,.tablesorter-headerDesc,table thead th .text a:focus, table thead th .text a:hover
+{
+    background-color: #ccc;
+}
+.text>a{
+    position: relative;
+}
+.text>a>.mark
+{
+    display: inline !important;
+    margin: 0 !important;
+     padding: 0 !important;
+
+}
+.tablesorter-headerDesc .mark::after
+{
+    content:"▲";
+    padding: 0;
+    position: absolute;
+    right: 10px;
+
+}
+.tablesorter-headerAsc .mark::after
+{
+    content:"▼";
+    padding: 0;
+    position: absolute;
+    right: 10px;
+}
+
