@@ -128,3 +128,21 @@ LOGIN_REDIRECT_URL = reverse_lazy('storeApp:home')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 DEFAULT_CHARSET = 'utf-8'
+
+### conf for email ###
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+
+EMAIL_USE_SSL = False
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = 25
+
+EMAIL_HOST_USER = 'zxjte9411@gmail.com'
+
+EMAIL_HOST_PASSWORD = ''
+
+DEFAULT_FROM_EMAIL = '北科老茶 <zxjte9411@gmail.com>'
+#####################
