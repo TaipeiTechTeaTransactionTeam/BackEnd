@@ -245,8 +245,7 @@ def regesiter(request):
             user.last_name = data['last_name']
             user.is_staff = "False"
             user.save()  # 將資料寫入資料庫
-            # 若成功建立，重新導向至 index.html
-            return redirect("storeApp:home")
+            return redirect("storeApp:login")
     else:
         return render(request, 'storeApp/regesiter.html', locals())
 
