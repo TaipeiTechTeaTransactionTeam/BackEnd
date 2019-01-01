@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import Http404, JsonResponse
@@ -15,10 +16,6 @@ import math
 from pprint import pprint
 from .models import *
 from .productDiscountItem import ProductDiscountItem, getProductDiscountList
-
-# Create your views here.
-
-teas_pageOne = 1  # first page
 
 
 def home(request):
@@ -335,3 +332,17 @@ def product_record(request):
             ids.append(j.product.id)
     products = Product.objects.filter(id__in=ids)
     return render(request, 'storeApp/product_record.html', locals())
+
+
+def forgot_password(request):
+    return render(request, 'storeApp/forgot_password.html', locals())
+
+
+def TTTS_email():
+    send_mail(
+        subject='Subject here',
+        message='Here is the message.',
+        from_email='zxjte9411@gmail.com',
+        recipient_list=['a5852241@gmail.com'],
+        fail_silently=False,
+    )
