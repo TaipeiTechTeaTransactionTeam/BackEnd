@@ -225,6 +225,7 @@ class ShoppingCartTable extends Nawa.Class.DisplayObject
             {
                 this.display.classList.add("d-none");
                 this.emptyDisplay.classList.remove("d-none");
+                document.querySelector(".checkout.btn.glyphicon.glyphicon-menu-left").remove();
             }
         }
     }
