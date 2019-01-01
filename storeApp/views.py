@@ -82,8 +82,6 @@ def user_setting(request):
 
 @require_http_methods(["POST"])
 def edit_password(request):
-    print(request.method)
-    print(request.POST)
     if request.is_ajax():
         username = request.user.username
         old_passwd = request.POST.get('old_passwd', '')
@@ -167,12 +165,16 @@ ORDER_STATUS = {'1': '已送出', '2': '處理中', '3': '已完成'}
 
 
 def order_detail(request, pk=None):
-    types = TeaType.objects.all()
-    order = get_object_or_404(Order, id=pk)
-    order.status = ORDER_STATUS[order.status]
-    products = OrderContainProduct.objects.filter(order=order)
+    if request.user.is_authenticated:
+        types = TeaType.objects.all()
+        orders = Order.objects.filter(own_user=request.user)
+        order = get_object_or_404(orders, id=pk)
+        order.status = ORDER_STATUS[order.status]
+        products = OrderContainProduct.objects.filter(order=order)
 
-    return render(request, 'storeApp/order_detail.html', {'order': order, 'products': list(products), 'types': types})
+        return render(request, 'storeApp/order_detail.html', {'order': order, 'products': list(products), 'types': types})
+    else:
+        return redirect('storeApp:login')
 
 
 def order_list(request):
@@ -277,7 +279,6 @@ def checkout(request):
         for data in datas:
             total_price += Product.objects.get(
                 id=data['uid']).get_discount_price()['price'] * data['quantity']
-        # print("總價",total_price)
         try:
             # 拿出所選的折扣
             eventDiscount = SeasoningDiscount.objects.get(
