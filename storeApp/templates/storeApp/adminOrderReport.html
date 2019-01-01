@@ -1,10 +1,13 @@
 {% extends "admin/change_list.html" %}
-{% load static %}
-<script type="text/javascript" src="{% static 'base/js/jquery-1.11.1.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'base/js/jquery.tablesorter.min.js' %}"></script>
+
+
 
 
 {% block result_list %}
+{% load static %}
+<script type="text/javascript" src="{% static 'base/js/jquery-1.11.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'base/js/jquery.tablesorter.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'admin/css/sort.css' %}">
    <div class="results">
     <table id="myTable" class="tablesorter">
 
@@ -12,12 +15,12 @@
       <tr>
         <th>
           <div class="text">
-            <a href="#">訂單序號</a>
+            <a href="#">訂單序號<span class="mark"></span></a>
           </div>
         </th>
         <th>
           <div class="text">
-            <a href="#">總銷售額</a>
+            <a href="#">總銷售額<span class="mark"></span></a>
           </div>
         </th>
       </tr>
@@ -39,12 +42,12 @@
 
   </table>
 </div>
+<script>
+  $(function() {
+    $("#myTable").tablesorter();
+  });
+  </script>
 {% endblock %}
 
 {% block pagination %}{% endblock %}
 
-<script>
-$(function() {
-  $("#myTable").tablesorter();
-});
-</script>
