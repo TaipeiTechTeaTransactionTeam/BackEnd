@@ -209,11 +209,13 @@ class ShoppingCartTable extends Nawa.Class.DisplayObject
         </thead>`;
         this.display.append(this.bodyDisplay=document.createElement("tbody"));
         this.emptyDisplay=document.createElement("div");
+        this.checkOutButton = new Nawa.Class.DisplayObject(document.querySelector(".checkout.btn.glyphicon.glyphicon-menu-left"));
     }
     set emptyText(val) {this.emptyDisplay.innerHTML=val;}
     get emptyText() {return this.emptyDisplay.innerHTML;}
     set visible(val)
     {
+        this.checkOutButton.visible=val;
         if(val!==this.visible)
         {
             if(val)
@@ -225,7 +227,7 @@ class ShoppingCartTable extends Nawa.Class.DisplayObject
             {
                 this.display.classList.add("d-none");
                 this.emptyDisplay.classList.remove("d-none");
-                document.querySelector(".checkout.btn.glyphicon.glyphicon-menu-left").remove();
+                
             }
         }
     }
