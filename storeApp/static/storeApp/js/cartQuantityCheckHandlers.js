@@ -8,7 +8,10 @@ $(()=>
     function quantityCheck()
     {
         if(this.get("quantity")>this.stock)
+        {
             this.set("quantity",this.stock);
+            $("#exceedStock").modal();
+        }
         updateStock(this);
     }
     paypal.minicart.cart.on("add",
