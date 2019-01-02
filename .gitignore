@@ -187,7 +187,6 @@ pip-selfcheck.json
 .vscode/
 my.cnf
 local.py
-image/
 # End of https://www.gitignore.io/api/python,dja
 
 branch.log
