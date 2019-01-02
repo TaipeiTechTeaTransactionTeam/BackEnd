@@ -86,6 +86,7 @@ class Order(models.Model):
     date = models.DateField(verbose_name="日期", default=timezone.now)
     total_price = models.DecimalField(verbose_name="總金額",
                                       max_digits=10, decimal_places=2, null=False)
+    address = models.CharField(verbose_name="地址", max_length=255, null=False)
 
     def __str__(self):
         return self.own_user.username
@@ -124,9 +125,10 @@ class Discount(models.Model):
 
 class SeasoningDiscount(Discount):
     condition = models.DecimalField(verbose_name="條件",
-                                        max_digits=10, decimal_places=0, null=False, default=0)
+                                    max_digits=10, decimal_places=0, null=False, default=0)
+
     def discountValue(self, price):
-        if price>=float(self.condition):
+        if price >= float(self.condition):
             if 0 <= self.discount and self.discount < 1:
                 return floor(price * (1 - self.discount))
             elif 1 <= self.discount:
@@ -148,8 +150,9 @@ class SeasoningDiscount(Discount):
 class ShippingDiscount(Discount):
     condition = models.DecimalField(verbose_name="條件",
                                     max_digits=10, decimal_places=0, null=False, default=0)
+
     def discountValue(self, price):
-        if price>=float(self.condition):
+        if price >= float(self.condition):
             if 0 <= self.discount and self.discount < 1:
                 return floor(price * (1 - self.discount))
             elif 1 <= self.discount:
@@ -159,8 +162,9 @@ class ShippingDiscount(Discount):
                     return floor(self.discount)
         else:
             return 0
+
     def calculate_price(self, price, shipping_price):
-        return price -self.discountValue(shipping_price)
+        return price - self.discountValue(shipping_price)
 
     class Meta:
         verbose_name = '運費折扣'
@@ -175,16 +179,17 @@ class ProductDiscount(Discount):
         verbose_name = '產品折扣'
         verbose_name_plural = '產品折扣'
 
+
 class ProductReport(OrderContainProduct):
     class Meta:
-        proxy = True # 不會額外建表 直接使用Order
+        proxy = True  # 不會額外建表 直接使用Order
         verbose_name = '產品銷售量報表'
         verbose_name_plural = '產品銷售量報表'
 
 
 class OrderReport(Order):
     class Meta:
-        proxy = True # 不會額外建表 直接使用Order
+        proxy = True  # 不會額外建表 直接使用Order
         verbose_name = '訂單銷售額報表'
         verbose_name_plural = '訂單銷售額報表'
 
@@ -196,5 +201,7 @@ def db_change_password(username, old_password, new_password):
             user.set_password(new_password)
             user.save()
             return 1
-        else: return -2
-    else: return -1
+        else:
+            return -2
+    else:
+        return -1

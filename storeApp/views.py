@@ -82,8 +82,6 @@ def user_setting(request):
 
 @require_http_methods(["POST"])
 def edit_password(request):
-    print(request.method)
-    print(request.POST)
     if request.is_ajax():
         username = request.user.username
         old_passwd = request.POST.get('old_passwd', '')
@@ -167,12 +165,16 @@ ORDER_STATUS = {'1': '已送出', '2': '處理中', '3': '已完成'}
 
 
 def order_detail(request, pk=None):
-    types = TeaType.objects.all()
-    order = get_object_or_404(Order, id=pk)
-    order.status = ORDER_STATUS[order.status]
-    products = OrderContainProduct.objects.filter(order=order)
+    if request.user.is_authenticated:
+        types = TeaType.objects.all()
+        orders = Order.objects.filter(own_user=request.user)
+        order = get_object_or_404(orders, id=pk)
+        order.status = ORDER_STATUS[order.status]
+        products = OrderContainProduct.objects.filter(order=order)
 
-    return render(request, 'storeApp/order_detail.html', {'order': order, 'products': list(products), 'types': types})
+        return render(request, 'storeApp/order_detail.html', {'order': order, 'products': list(products), 'types': types})
+    else:
+        return redirect('storeApp:login')
 
 
 def order_list(request):
@@ -234,8 +236,8 @@ def regesiter(request):
             user.last_name = data['last_name']
             user.is_staff = "False"
             user.save()  # 將資料寫入資料庫
-            # 若成功建立，重新導向至 index.html
-            return redirect("storeApp:home")
+            # 若成功建立，重新導向至登入頁面
+            return redirect("storeApp:login")
     else:
         return render(request, 'storeApp/regesiter.html', locals())
 
@@ -271,12 +273,12 @@ def checkout(request):
         total_price = 0
         # 解析收到的資料
         datas = json.loads(request.POST['items'])
+        address=json.loads(request.POST['address'])
 
         # 計算原總價
         for data in datas:
             total_price += Product.objects.get(
                 id=data['uid']).get_discount_price()['price'] * data['quantity']
-        # print("總價",total_price)
         try:
             # 拿出所選的折扣
             eventDiscount = SeasoningDiscount.objects.get(
@@ -293,7 +295,7 @@ def checkout(request):
             total_price = shippingDiscount.calculate_price(
                 total_price, shippingPrice)
 
-        order = Order(own_user=request.user, total_price=total_price)
+        order = Order(own_user=request.user, total_price=total_price, address=address)
         order.save()
 
         for data in datas:
@@ -303,7 +305,7 @@ def checkout(request):
             product.amount -= data['quantity']
             product.save()
             
-    return redirect('storeApp:order_liset')
+    return redirect('storeApp:order_detail', pk=order.id)
 
 
 def detail(request, pk):
