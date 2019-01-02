@@ -365,7 +365,7 @@ class CheckOutProduct
         this.cartView.closeOnclick=()=>{this.closeOnclick(this);}
         this.cartView.plusOnclick=()=>
         {
-
+            
             if(this.quantity<this.stockQuantity)
             {
                 this.quantity++;
@@ -392,7 +392,10 @@ class CheckOutProduct
     updateButtonStates()
     {
         if(this.quantity>=this.stockQuantity)
+        {
             this.cartView.plusButton.classList.add("disabled");
+            $("#exceedStock").modal();
+        }
         else 
             this.cartView.plusButton.classList.remove("disabled");
         if(this.quantity<=1)
