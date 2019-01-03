@@ -273,7 +273,7 @@ def checkout(request):
         total_price = 0
         # 解析收到的資料
         datas = json.loads(request.POST['items'])
-        address=json.loads(request.POST['address'])
+        address=request.POST['address']
 
         # 計算原總價
         for data in datas:
